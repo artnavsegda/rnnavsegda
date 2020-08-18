@@ -17,12 +17,21 @@ const reducer = (state = initialState, action) => {
 }
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lightOn: true
+    };
+  }
+  changeColor = () => {
+    this.setState({lightOn: !this.state.lightOn});
+  }
   render() {
     return (
       <Provider store={store}>
         <View style={styles.container}>
           <Text>Open up App.js to start working on your app!</Text>
-          <Switch value={true} />
+          <Switch value={this.state.lightOn} onValueChange={this.changeColor} />
           <StatusBar style="auto" />
         </View>
       </Provider>
