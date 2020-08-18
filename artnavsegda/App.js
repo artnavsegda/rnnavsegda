@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { Component } from 'react';
 import { createStore } from "redux";
 import { connect, Provider } from "react-redux";
 import { StyleSheet, Text, View, Switch} from 'react-native';
@@ -16,18 +16,21 @@ const reducer = (state = initialState, action) => {
   return state;
 }
 
-export default function App() {
-  const toggleSwitch = () => {};
-  return (
-    <Provider store={store}>
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Switch value={true} />
-        <StatusBar style="auto" />
-      </View>
-    </Provider>
-  );
+class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <View style={styles.container}>
+          <Text>Open up App.js to start working on your app!</Text>
+          <Switch value={true} />
+          <StatusBar style="auto" />
+        </View>
+      </Provider>
+    );
+  }
 }
+
+export default App;
 
 const store = createStore(reducer);
 
