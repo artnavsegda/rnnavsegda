@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
+          <Text>Свет</Text>
           <Switch value={this.state.lightOn} onValueChange={this.changeColor} />
           <StatusBar style="auto" />
         </View>
