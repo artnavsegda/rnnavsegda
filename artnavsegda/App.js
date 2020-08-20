@@ -6,10 +6,6 @@ import { StyleSheet, Text, View, Switch, TouchableOpacity} from 'react-native';
 import styled from "styled-components";
 import Tile from "./components/Tile";
 
-function mapStateToProps(state) {
-  return { action: state.action }
-}
-
 const initialState = {
 
 };
