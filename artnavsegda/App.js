@@ -17,7 +17,8 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case 'TOGGLE':
-      return !state;
+      console.log("toggle dispatched " + JSON.stringify(state));
+      return { myLight: !state.myLight }
     default:
       return state;
   }

@@ -19,6 +19,7 @@ const Container = styled.TouchableOpacity`
 `;
 
 const mapStateToProps = state => {
+  console.log("state recieved " + JSON.stringify(state));
   return {
     lightOn: state.myLight
   };
@@ -26,7 +27,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onClick: () => dispatch({ type: 'TOGGLE' })
+    onClick: () => {
+      dispatch({ type: 'TOGGLE' })
+    }
   };
 }
 
