@@ -19,7 +19,6 @@ const Container = styled.TouchableOpacity`
 `;
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("state recieved " + JSON.stringify(state) + " for props " + JSON.stringify(ownProps) + " is " + state[ownProps.id]);
   return {
     lightOn: state[ownProps.id].myLight
   };
