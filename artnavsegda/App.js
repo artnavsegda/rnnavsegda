@@ -86,6 +86,21 @@ ws.onopen = () => {
 ws.onmessage = (e) => {
   // a message was received
   console.log(e.data);
+
+  let joinType;
+  switch (e.data.charAt(0))
+  {
+    case 'D':
+      joinType = "digital";
+    break;
+    case 'A':
+      joinType = "analog";
+    break;
+  }
+  let join = e.data.substr(1,4);
+  let payloadValue = e.data.substr(6,5);
+
+  console.log("type: " + joinType + " join: " + join + " value: " + payloadValue);
 };
 
 ws.onerror = (e) => {
