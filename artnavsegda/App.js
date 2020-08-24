@@ -18,7 +18,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      lightOn: true
+      floorLightOn: true
     };
   }
   changeColor = () => {
@@ -28,9 +28,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-        <Tile caption="Потолок"/>
-          <Tile caption="Лампа"/>
-          <StatusBar style="auto" />
+          <Tile caption="Потолок" onClick={() => {}}/>
+          <Tile caption="Лампа" />
         </View>
       </Provider>
     );
