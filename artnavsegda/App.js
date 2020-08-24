@@ -11,7 +11,16 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  return state;
+  if (typeof state === 'undefined') {
+    return 0
+  }
+
+  switch (action.type) {
+    case 'TOGGLE':
+      return !state;
+    default:
+      return state;
+  }
 }
 
 class App extends Component {
