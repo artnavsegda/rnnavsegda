@@ -20,11 +20,21 @@ const reducer = (state = initialState, action) => {
     return 0
   }
 
+  let newstate = {...state};
+
   switch (action.type) {
     case 'TOGGLE':
-      let newstate = {...state};
       newstate[action.id].myLight = !newstate[action.id].myLight;
       return newstate;
+    break;
+    case 'ON':
+      newstate[action.id].myLight = true;
+      return newstate;
+    break;
+    case 'OFF':
+      newstate[action.id].myLight = false;
+      return newstate;
+    break;
     default:
       return state;
   }
