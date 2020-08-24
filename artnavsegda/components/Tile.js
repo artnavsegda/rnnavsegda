@@ -19,7 +19,7 @@ const Container = styled.TouchableOpacity`
 `;
 
 const mapStateToProps = state => ({
-
+  return { lightOn: state.myLight };
 })
 
 const mapDispatchToProps = dispatch => ({

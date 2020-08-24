@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Tile from "./components/Tile";
 
 const initialState = {
-
+  myLight: false
 };
 
 const reducer = (state = initialState, action) => {
