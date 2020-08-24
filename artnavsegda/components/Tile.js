@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import styled from "styled-components";
 import { toggleTodo } from '../actions'
 
-const Tile = ({ onClick, lightOn, caption }) => (
+const Tile = ({ id, onClick, lightOn, caption }) => (
   <Container onPress={onClick} style={ { backgroundColor: `${ lightOn ? "#f99" : "#9f9" }` } } >
     <Text>{caption}</Text>
     <Switch value={lightOn} onValueChange={onClick} />
@@ -18,17 +18,17 @@ const Container = styled.TouchableOpacity`
   border-radius: 14px;
 `;
 
-const mapStateToProps = state => {
-  console.log("state recieved " + JSON.stringify(state));
+const mapStateToProps = (state, ownProps) => {
+  console.log("state recieved " + JSON.stringify(state) + " for props " + JSON.stringify(ownProps) + " is " + state[ownProps.id]);
   return {
-    lightOn: state.myLight
+    lightOn: state[ownProps.id].myLight
   };
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onClick: () => {
-      dispatch({ type: 'TOGGLE' })
+      dispatch({ type: 'TOGGLE', id: ownProps.id })
     }
   };
 }

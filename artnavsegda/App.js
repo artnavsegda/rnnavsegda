@@ -7,7 +7,12 @@ import styled from "styled-components";
 import Tile from "./components/Tile";
 
 const initialState = {
-  myLight: false
+  1:{
+    myLight: false
+  },
+  2:{
+    myLight: false
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -17,8 +22,9 @@ const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case 'TOGGLE':
-      console.log("toggle dispatched " + JSON.stringify(state));
-      return { myLight: !state.myLight }
+      let newstate = {...state};
+      newstate[action.id].myLight = !newstate[action.id].myLight;
+      return newstate;
     default:
       return state;
   }
@@ -38,8 +44,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <Tile caption="Потолок" onClick={() => {}}/>
-          <Tile caption="Лампа" />
+          <Tile id="1" caption="Потолок" onClick={() => {}}/>
+          <Tile id="2" caption="Лампа" />
         </View>
       </Provider>
     );
