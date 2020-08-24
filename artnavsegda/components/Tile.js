@@ -18,12 +18,16 @@ const Container = styled.TouchableOpacity`
   border-radius: 14px;
 `;
 
-const mapStateToProps = state => ({
-  return { lightOn: state.myLight };
-})
+const mapStateToProps = state => {
+  return {
+    lightOn: state.myLight
+  };
+}
 
-const mapDispatchToProps = dispatch => ({
-  toggleTodo: id => dispatch(toggleTodo(id))
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    onClick: () => dispatch({ type: 'TOGGLE' })
+  };
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tile)
