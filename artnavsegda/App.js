@@ -97,10 +97,20 @@ ws.onmessage = (e) => {
       joinType = "analog";
     break;
   }
-  let join = e.data.substr(1,4);
-  let payloadValue = e.data.substr(6,5);
+  let join = parseInt(e.data.substr(1,4),10);
+  let payloadValue = parseInt(e.data.substr(6,5),10);
 
   console.log("type: " + joinType + " join: " + join + " value: " + payloadValue);
+
+  if ( payloadValue == 1 )
+  {
+    store.dispatch({ type: 'ON', id: join });
+  }
+  else if ( payloadValue == 0 )
+  {
+    store.dispatch({ type: 'OFF', id: join });
+  }
+
 };
 
 ws.onerror = (e) => {
