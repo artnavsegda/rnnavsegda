@@ -1,6 +1,8 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createStore } from "redux";
 import { connect, Provider } from "react-redux";
 import { StyleSheet, Text, View, Switch, TouchableOpacity} from 'react-native';
@@ -41,26 +43,27 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      floorLightOn: true
-    };
-  }
-  changeColor = () => {
-    this.setState({lightOn: !this.state.lightOn});
-  }
-  render() {
-    return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          <Tile id="1" caption="Потолок" onClick={() => {}}/>
-          <Tile id="2" caption="Лампа" />
-        </View>
-      </Provider>
-    );
-  }
+function HomeScreen() {
+  return (
+      <View style={styles.container}>
+        <Tile id="1" caption="Потолок" onClick={() => {}}/>
+        <Tile id="2" caption="Лампа" />
+      </View>
+  );
+}
+
+const Stack = createStackNavigator();
+
+function App() {
+  return (
+    <Provider store={store}>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    </Provider>
+  );
 }
 
 export default App;
