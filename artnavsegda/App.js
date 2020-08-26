@@ -43,12 +43,23 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   return (
       <View style={styles.container}>
-        <Tile id="1" caption="Потолок" onClick={() => {}}/>
-        <Tile id="2" caption="Лампа" />
+        <Button
+          title="Студия"
+          onPress{() => navigation.navigate('Studio')}
+        />
       </View>
+  );
+}
+
+function Studio() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Tile id="1" caption="Потолок" onClick={() => {}}/>
+      <Tile id="2" caption="Лампа" />
+    </View>
   );
 }
 
@@ -58,8 +69,9 @@ function App() {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Studio" component={Studio} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>
