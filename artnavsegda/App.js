@@ -122,3 +122,17 @@ ws.onclose = (e) => {
   // connection closed
   console.log(e.code, e.reason);
 };
+
+fetch("http://192.168.88.41:7001/G0001")
+.then((response) => response.text())
+.then((text) => {
+  let value = parseInt(text,10);
+  if (value == 0)
+  {
+    store.dispatch({ type: 'OFF', id: 1 });
+  }
+  if (value == 1)
+  {
+    store.dispatch({ type: 'ON', id: 1 });
+  }
+})
