@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createStore } from "redux";
 import { connect, Provider } from "react-redux";
-import { StyleSheet, Text, View, Switch, TouchableOpacity} from 'react-native';
+import { StyleSheet, Button, Text, View, Switch, TouchableOpacity} from 'react-native';
 import styled from "styled-components";
 import Tile from "./components/Tile";
 
@@ -48,7 +48,7 @@ function HomeScreen({ navigation }) {
       <View style={styles.container}>
         <Button
           title="Студия"
-          onPress{() => navigation.navigate('Studio')}
+          onPress={() => navigation.navigate('Studio')}
         />
       </View>
   );
