@@ -15,6 +15,12 @@ const initialState = {
   },
   2:{
     myLight: false
+  },
+  3:{
+    myLight: false
+  },
+  4:{
+    myLight: false
   }
 };
 
@@ -50,6 +56,10 @@ function HomeScreen({ navigation }) {
           title="Студия"
           onPress={() => navigation.navigate('Studio')}
         />
+        <Button
+          title="Переговорная"
+          onPress={() => navigation.navigate('Meeting')}
+        />
       </View>
   );
 }
@@ -63,6 +73,15 @@ function Studio() {
   );
 }
 
+function Meeting() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Tile id="3" caption="Потолок" onClick={() => {}}/>
+      <Tile id="4" caption="Лампа" />
+    </View>
+  );
+}
+
 const Stack = createStackNavigator();
 
 function App() {
@@ -72,6 +91,7 @@ function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Studio" component={Studio} />
+        <Stack.Screen name="Meeting" component={Meeting} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>
