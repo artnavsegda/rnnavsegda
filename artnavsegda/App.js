@@ -3,7 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import createSagaMiddleware from 'redux-saga';
 import { connect, Provider } from "react-redux";
 import { StyleSheet, Button, Text, View, Switch, TouchableOpacity} from 'react-native';
 import styled from "styled-components";
@@ -100,7 +101,9 @@ function App() {
 
 export default App;
 
-const store = createStore(reducer);
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(reducer,applyMiddleware(sagaMiddleware));
 
 const styles = StyleSheet.create({
   container: {
