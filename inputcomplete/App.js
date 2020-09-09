@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
   const [timerID, setTimerId] = useState(0);
+  const [suggestions, setSuggestions] = useState("suggestions");
 
   return (
     <View style={styles.container}>
@@ -15,10 +16,11 @@ export default function App() {
           setTimerId(setTimeout(askValue => {
             fetch("https://artnavsegda.herokuapp.com/q?ask=" + askValue)
             .then(response => response.json())
-            .then(variants => console.log(variants));
+            .then(variants => setSuggestions(variants.toString()));
           }, 1000, askValue))
         }}
       />
+      <Text>{suggestions}</Text>
       <StatusBar style="auto" />
     </View>
   );
