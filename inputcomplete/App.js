@@ -1,17 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
-  const [value, onChangeText] = React.useState('Hello');
+  const [timerID, setTimerId] = useState(0);
 
   return (
     <View style={styles.container}>
       <Text>Enter something:</Text>
       <TextInput
         style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={text => onChangeText(text)}
-        value={value}
+        onChangeText={askValue => {
+          clearTimeout(timerID)
+          setTimerId(setTimeout(askValue => {
+            fetch("https://artnavsegda.herokuapp.com/q?ask=" + askValue)
+            .then(response => response.json())
+            .then(variants => console.log(variants));
+          }, 1000, askValue))
+        }}
       />
       <StatusBar style="auto" />
     </View>
