@@ -12,22 +12,25 @@ export default function App() {
       <Text>Enter something:</Text>
       <Text>{status}</Text>
       <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        style={{ width: 150, borderColor: 'gray', borderWidth: 1 }}
         onChangeText={askValue => {
           clearTimeout(timerID)
           setStatus("loading")
-          setTimerId(setTimeout(askValue => {
-            fetch("https://artnavsegda.herokuapp.com/q?ask=" + askValue)
+          setTimerId(setTimeout(askValueLower => {
+            fetch("https://artnavsegda.herokuapp.com/q?ask=" + askValueLower)
             .then(response => {
               if (!response.ok)
                 throw new Error("connect failure")
               return response.json()
             })
-            .then(variants => setSuggestions(variants.toString()))
+            .then(variants => {
+              setSuggestions(variants.toString())
+              setStatus("loaded")
+            })
             .catch(error => {
               setStatus('error: ' + error);
             })
-          }, 1000, askValue))
+          }, 1000, askValue.toLowerCase()))
         }}
       />
       <Text>{suggestions}</Text>
