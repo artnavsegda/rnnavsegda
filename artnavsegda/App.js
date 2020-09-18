@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from 'redux-saga';
 import { connect, Provider } from "react-redux";
-import { StyleSheet, Button, Text, View, Switch, TouchableOpacity} from 'react-native';
+import { StyleSheet, Button, Text, View, Switch, TouchableOpacity, ImageBackground} from 'react-native';
 import Constants from 'expo-constants';
 import styled from "styled-components";
 import { Card } from 'react-native-paper';
@@ -18,16 +18,19 @@ function HomeScreen({ navigation }) {
   return (
       <View>
         <Card>
+        <ImageBackground source={require('./assets/store.jpg')} style={styles.image}>
+        <BlurView intensity={100}>
           <Button
             title="Студия"
             onPress={() => navigation.navigate('Studio')}
           />
+        </BlurView>
+        </ImageBackground>
         </Card>
           <Button
             title="Переговорная"
             onPress={() => navigation.navigate('Meeting')}
           />
-        
       </View>
   );
 }
@@ -81,6 +84,10 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     backgroundColor: '#ecf0f1',
     padding: 8,
+  },
+  image: {
+    width: 500,
+    height: 500,
   },
 });
 
