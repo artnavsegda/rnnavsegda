@@ -74,16 +74,6 @@ const store = createStore(reducer,applyMiddleware(sagaMiddleware));
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  },
-  image: {
-
   }
 });
 
