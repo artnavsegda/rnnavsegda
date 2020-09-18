@@ -9,7 +9,7 @@ import { connect, Provider } from "react-redux";
 import { StyleSheet, Button, Text, View, Switch, TouchableOpacity, ImageBackground} from 'react-native';
 import Constants from 'expo-constants';
 import styled from "styled-components";
-import { Card } from 'react-native-paper';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import { BlurView } from 'expo-blur';
 import Tile from "./components/Tile";
 import reducer from "./reducer.js";
@@ -17,15 +17,13 @@ import reducer from "./reducer.js";
 function HomeScreen({ navigation }) {
   return (
       <View>
-        <Card>
-        <ImageBackground source={require('./assets/store.jpg')} style={styles.image}>
-        <BlurView intensity={100}>
-          <Button
-            title="Студия"
-            onPress={() => navigation.navigate('Studio')}
-          />
-        </BlurView>
-        </ImageBackground>
+        <Card onPress={() => navigation.navigate('Studio')}>
+          <ImageBackground source={require('./assets/store.jpg')} style={styles.image}>
+          <View style={ { height: 100 } }/>
+            <BlurView intensity={100} style={ {  } }>
+              <Card.Title title="Студия" />
+            </BlurView>
+          </ImageBackground>
         </Card>
           <Button
             title="Переговорная"
@@ -86,9 +84,8 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   image: {
-    width: 500,
-    height: 500,
-  },
+
+  }
 });
 
 var ws = new WebSocket('ws://192.168.88.41:8080');
