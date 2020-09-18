@@ -15,7 +15,7 @@ import Tile from "./components/Tile";
 import reducer from "./reducer.js";
 
 const RoomCard = ({onClick, caption, image}) => (
-  <Card onPress={onClick} style={ { borderRadius: 20, overflow: "hidden" } }>
+  <Card onPress={onClick} style={ { margin: 10, borderRadius: 20, overflow: "hidden" } }>
     <ImageBackground source={image} style={ {  } }>
     <View style={ { height: 100 } }/>
       <BlurView intensity={100} style={ {  } }>
@@ -26,7 +26,7 @@ const RoomCard = ({onClick, caption, image}) => (
 )
 
 const HomeScreen = ({ navigation })  => (
-  <View>
+  <View style={styles.container}>
     <RoomCard onClick={() => navigation.navigate('Studio')} caption="Студия" image={require('./assets/store.jpg')}/>
     <RoomCard onClick={() => navigation.navigate('Meeting')} caption="Переговорная" image={require('./assets/meeting.jpg')}/>
   </View>
@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation })  => (
 
 function Studio() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
       <Tile id="1" caption="Потолок" onClick={() => {}}/>
       <Tile id="2" caption="Лампа" />
     </View>
@@ -43,7 +43,7 @@ function Studio() {
 
 function Meeting() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
       <Tile id="3" caption="Потолок" onClick={() => {}}/>
       <Tile id="4" caption="Лампа" />
     </View>
@@ -74,7 +74,12 @@ const store = createStore(reducer,applyMiddleware(sagaMiddleware));
 
 const styles = StyleSheet.create({
   container: {
-  }
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
 });
 
 var ws = new WebSocket('ws://192.168.88.41:8080');

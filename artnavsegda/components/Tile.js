@@ -12,6 +12,7 @@ const Tile = ({ id, onClick, lightOn, caption }) => (
 )
 
 const Container = styled.TouchableOpacity`
+  margin: 10px;
   background: gray;
   width: 100px;
   height: 100px;
