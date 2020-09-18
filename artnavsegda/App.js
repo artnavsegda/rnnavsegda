@@ -7,21 +7,25 @@ import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from 'redux-saga';
 import { connect, Provider } from "react-redux";
 import { StyleSheet, Button, Text, View, Switch, TouchableOpacity} from 'react-native';
+import Constants from 'expo-constants';
 import styled from "styled-components";
+import { Card } from 'react-native-paper';
 import Tile from "./components/Tile";
 import reducer from "./reducer.js";
 
 function HomeScreen({ navigation }) {
   return (
       <View style={styles.container}>
-        <Button
-          title="Студия"
-          onPress={() => navigation.navigate('Studio')}
-        />
-        <Button
-          title="Переговорная"
-          onPress={() => navigation.navigate('Meeting')}
-        />
+        <Card>
+          <Button
+            title="Студия"
+            onPress={() => navigation.navigate('Studio')}
+          />
+          <Button
+            title="Переговорная"
+            onPress={() => navigation.navigate('Meeting')}
+          />
+        </Card>
       </View>
   );
 }
@@ -72,6 +76,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
   },
 });
 
