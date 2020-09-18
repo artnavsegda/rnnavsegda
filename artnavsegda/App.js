@@ -10,22 +10,24 @@ import { StyleSheet, Button, Text, View, Switch, TouchableOpacity} from 'react-n
 import Constants from 'expo-constants';
 import styled from "styled-components";
 import { Card } from 'react-native-paper';
+import { BlurView } from 'expo-blur';
 import Tile from "./components/Tile";
 import reducer from "./reducer.js";
 
 function HomeScreen({ navigation }) {
   return (
-      <View style={styles.container}>
+      <View>
         <Card>
           <Button
             title="Студия"
             onPress={() => navigation.navigate('Studio')}
           />
+        </Card>
           <Button
             title="Переговорная"
             onPress={() => navigation.navigate('Meeting')}
           />
-        </Card>
+        
       </View>
   );
 }
