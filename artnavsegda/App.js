@@ -37,6 +37,8 @@ function Studio() {
     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
       <Tile id="1" caption="Потолок" onClick={() => {}}/>
       <Tile id="2" caption="Лампа" />
+      <Tile id="3" caption="Споты" />
+      <Tile id="4" caption="Лента" />
     </View>
   );
 }
@@ -44,8 +46,14 @@ function Studio() {
 function Meeting() {
   return (
     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-      <Tile id="3" caption="Потолок" onClick={() => {}}/>
-      <Tile id="4" caption="Лампа" />
+      <Tile id="5" caption="Потолок" onClick={() => {}}/>
+      <Tile id="6" caption="Лампа" />
+      <Tile id="7" caption="Споты 1" />
+      <Tile id="7" caption="Споты 2" />
+      <Tile id="8" caption="Лента" />
+      <Tile id="9" caption="Стол" />
+      <Tile id="10" caption="Ниша" />
+      <Tile id="11" caption="Софиты" />
     </View>
   );
 }
