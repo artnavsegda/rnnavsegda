@@ -20,9 +20,16 @@ const Container = styled.TouchableOpacity`
 `;
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    lightOn: state[ownProps.id].myLight
-  };
+  if (state[ownProps.id])
+  {
+    return {
+        lightOn: state[ownProps.id].myLight
+    };
+  }
+  else
+  {
+    return {};
+  }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
