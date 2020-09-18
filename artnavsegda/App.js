@@ -15,7 +15,7 @@ import Tile from "./components/Tile";
 import reducer from "./reducer.js";
 
 const RoomCard = ({onClick, caption, image}) => (
-  <Card onPress={onClick}>
+  <Card onPress={onClick} style={ { borderRadius: 20, overflow: "hidden" } }>
     <ImageBackground source={image} style={ {  } }>
     <View style={ { height: 100 } }/>
       <BlurView intensity={100} style={ {  } }>
