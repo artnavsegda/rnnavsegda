@@ -14,24 +14,23 @@ import { BlurView } from 'expo-blur';
 import Tile from "./components/Tile";
 import reducer from "./reducer.js";
 
-function HomeScreen({ navigation }) {
-  return (
-      <View>
-        <Card onPress={() => navigation.navigate('Studio')}>
-          <ImageBackground source={require('./assets/store.jpg')} style={styles.image}>
-          <View style={ { height: 100 } }/>
-            <BlurView intensity={100} style={ {  } }>
-              <Card.Title title="Студия" />
-            </BlurView>
-          </ImageBackground>
-        </Card>
-          <Button
-            title="Переговорная"
-            onPress={() => navigation.navigate('Meeting')}
-          />
-      </View>
-  );
-}
+const RoomCard = ({onClick, caption, image}) => (
+  <Card onPress={onClick}>
+    <ImageBackground source={image} style={ {  } }>
+    <View style={ { height: 100 } }/>
+      <BlurView intensity={100} style={ {  } }>
+        <Card.Title title={caption} />
+      </BlurView>
+    </ImageBackground>
+  </Card>
+)
+
+const HomeScreen = ({ navigation })  => (
+  <View>
+    <RoomCard onClick={() => navigation.navigate('Studio')} caption="Студия" image={require('./assets/store.jpg')}/>
+    <RoomCard onClick={() => navigation.navigate('Meeting')} caption="Переговорная" image={require('./assets/meeting.jpg')}/>
+  </View>
+)
 
 function Studio() {
   return (
