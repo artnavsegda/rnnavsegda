@@ -28,8 +28,8 @@ const RoomCard = ({onClick, caption, image}) => (
 
 const HomeScreen = ({ navigation })  => (
   <View style={styles.container}>
-    <RoomCard onClick={() => navigation.navigate('Studio')} caption="Студия" image={require('./assets/store.jpg')}/>
-    <RoomCard onClick={() => navigation.navigate('Meeting')} caption="Переговорная" image={require('./assets/meeting.jpg')}/>
+    <RoomCard onClick={() => navigation.navigate('Студия')} caption="Студия" image={require('./assets/store.jpg')}/>
+    <RoomCard onClick={() => navigation.navigate('Переговорная')} caption="Переговорная" image={require('./assets/meeting.jpg')}/>
   </View>
 )
 
@@ -103,9 +103,9 @@ function App() {
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Studio" component={Studio} />
-        <Stack.Screen name="Meeting" component={Meeting} />
+        <Stack.Screen name="Офис" component={HomeScreen} />
+        <Stack.Screen name="Студия" component={Studio} />
+        <Stack.Screen name="Переговорная" component={Meeting} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>
