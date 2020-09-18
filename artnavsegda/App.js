@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation })  => (
   </View>
 )
 
-function Studio() {
+function StudioLight() {
   return (
     <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
       <Tile id="1" caption="Потолок" onClick={() => {}}/>
@@ -44,18 +44,51 @@ function Studio() {
   );
 }
 
+function StudioShades() {
+  return (
+    <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+      <Tile caption="Левая" />
+      <Tile caption="Правая" />
+    </View>
+  );
+}
+
 const Tab = createMaterialTopTabNavigator();
 
-function TabScreen() {
+function Studio() {
   return(
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={Studio} />
-      <Tab.Screen name="Settings" component={Meeting} />
+      <Tab.Screen name="Свет" component={StudioLight} />
+      <Tab.Screen name="Шторы" component={StudioShades} />
     </Tab.Navigator>
   )
 }
 
 function Meeting() {
+  return(
+    <Tab.Navigator>
+      <Tab.Screen name="Свет" component={MeetingLight} />
+      <Tab.Screen name="Шторы" component={MeetingShades} />
+    </Tab.Navigator>
+  )
+}
+
+function MeetingLight() {
+  return (
+    <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+      <Tile id="3" caption="Потолок" onClick={() => {}}/>
+      <Tile id="4" caption="Лампа" />
+      <Tile caption="Споты 1" />
+      <Tile caption="Споты 2" />
+      <Tile caption="Лента" />
+      <Tile caption="Стол" />
+      <Tile caption="Ниша" />
+      <Tile caption="Софиты" />
+    </View>
+  );
+}
+
+function MeetingShades() {
   return (
     <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
       <Tile id="3" caption="Потолок" onClick={() => {}}/>
@@ -78,7 +111,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Studio" component={TabScreen} />
+        <Stack.Screen name="Studio" component={Studio} />
         <Stack.Screen name="Meeting" component={Meeting} />
       </Stack.Navigator>
     </NavigationContainer>
