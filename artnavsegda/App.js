@@ -91,14 +91,7 @@ function MeetingLight() {
 function MeetingShades() {
   return (
     <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-      <Tile id="3" caption="Потолок" onClick={() => {}}/>
-      <Tile id="4" caption="Лампа" />
-      <Tile caption="Споты 1" />
-      <Tile caption="Споты 2" />
-      <Tile caption="Лента" />
-      <Tile caption="Стол" />
-      <Tile caption="Ниша" />
-      <Tile caption="Софиты" />
+      <Tile caption="Шторы" />
     </View>
   );
 }
