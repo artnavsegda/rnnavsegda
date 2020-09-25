@@ -155,6 +155,22 @@ ws.onmessage = (e) => {
 
   console.log("type: " + joinType + " join: " + join + " value: " + payloadValue);
 
+  if (joinType == "digital")
+  {
+    switch (join)
+    {
+      case 1:
+        store.dispatch({ type: 'SET', id: "Store.Ceiling", value: value });
+      break;
+      case 3:
+        store.dispatch({ type: 'SET', id: "Store.Phytolamp", value: value });
+      break;
+      case 5:
+        store.dispatch({ type: 'SET', id: "Meeting.Ceiling", value: value });
+      break;
+    }
+  }
+
   if ( payloadValue == 1 )
   {
     store.dispatch({ type: 'ON', id: join });
