@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
   if (state[ownProps.id])
   {
     return {
-        lightOn: state[ownProps.id].myLight
+        lightOn: state[ownProps.id].light
     };
   }
   else

@@ -36,10 +36,10 @@ const HomeScreen = ({ navigation })  => (
 function StudioLight() {
   return (
     <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-      <Tile id="1" caption="Потолок" onClick={() => {}}/>
-      <Tile id="2" caption="Лампа" />
-      <Tile caption="Споты" />
-      <Tile caption="Лента" />
+      <Tile id="Store.Ceiling" caption="Потолок" onClick={() => {}}/>
+      <Tile id="Store.Phytolamp" caption="Лампа" />
+      <Tile id="Store.Spotlights" caption="Споты" />
+      <Tile id="Store.Ledstrip" caption="Лента" />
     </View>
   );
 }
@@ -76,14 +76,14 @@ function Meeting() {
 function MeetingLight() {
   return (
     <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-      <Tile id="3" caption="Потолок" onClick={() => {}}/>
-      <Tile id="4" caption="Лампа" />
-      <Tile caption="Споты 1" />
-      <Tile caption="Споты 2" />
-      <Tile caption="Лента" />
-      <Tile caption="Стол" />
-      <Tile caption="Ниша" />
-      <Tile caption="Софиты" />
+      <Tile id="Meeting.Ceiling" caption="Потолок" onClick={() => {}}/>
+      <Tile id="Meeting.Phytolamp" caption="Лампа" />
+      <Tile id="Meeting.Spotlights" caption="Споты 1" />
+      <Tile id="Meeting.Spotlights.2" caption="Споты 2" />
+      <Tile id="Meeting.Ledstrip" caption="Лента" />
+      <Tile id="Meeting.Table" caption="Стол" />
+      <Tile id="Meeting.Recess" caption="Ниша" />
+      <Tile id="Meeting.Stagelights" caption="Софиты" />
     </View>
   );
 }
@@ -151,7 +151,7 @@ ws.onmessage = (e) => {
     break;
   }
   let join = parseInt(e.data.substr(1,4),10);
-  let payloadValue = parseInt(e.data.substr(6,5),10);
+  let payloadValue = !!parseInt(e.data.substr(6,5),10);
 
   console.log("type: " + joinType + " join: " + join + " value: " + payloadValue);
 
@@ -160,26 +160,43 @@ ws.onmessage = (e) => {
     switch (join)
     {
       case 1:
-        store.dispatch({ type: 'SET', id: "Store.Ceiling", value: value });
+        store.dispatch({ type: 'SET', id: "Store.Ceiling", payload: payloadValue });
       break;
       case 3:
-        store.dispatch({ type: 'SET', id: "Store.Phytolamp", value: value });
+        store.dispatch({ type: 'SET', id: "Store.Phytolamp", valpayloadue: payloadValue });
       break;
       case 5:
-        store.dispatch({ type: 'SET', id: "Meeting.Ceiling", value: value });
+        store.dispatch({ type: 'SET', id: "Meeting.Ceiling", payload: payloadValue });
+      break;
+      case 7:
+        store.dispatch({ type: 'SET', id: "Meeting.Phytolamp", payload: payloadValue });
+      break;
+      case 9:
+        store.dispatch({ type: 'SET', id: "Meeting.Recess", payload: payloadValue });
+      break;
+      case 11:
+        store.dispatch({ type: 'SET', id: "Meeting.Stagelights", payload: payloadValue });
+      break;
+      case 13:
+        store.dispatch({ type: 'SET', id: "Store.Spotlights", payload: payloadValue });
+      break;
+      case 15:
+        store.dispatch({ type: 'SET', id: "Meeting.Spotlights", payload: payloadValue });
+      break;
+      case 17:
+        store.dispatch({ type: 'SET', id: "Meeting.Spotlights.2", payload: payloadValue });
+      break;
+      case 19:
+        store.dispatch({ type: 'SET', id: "Meeting.Table", payload: payloadValue });
+      break;
+      case 21:
+        store.dispatch({ type: 'SET', id: "Store.Ledstrip", payload: payloadValue });
+      break;
+      case 23:
+        store.dispatch({ type: 'SET', id: "Meeting.Ledstrip", payload: payloadValue });
       break;
     }
   }
-
-  if ( payloadValue == 1 )
-  {
-    store.dispatch({ type: 'ON', id: join });
-  }
-  else if ( payloadValue == 0 )
-  {
-    store.dispatch({ type: 'OFF', id: join });
-  }
-
 };
 
 ws.onerror = (e) => {

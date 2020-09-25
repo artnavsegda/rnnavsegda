@@ -63,15 +63,19 @@ const reducer = (state = initialState, action) => {
   
     switch (action.type) {
       case 'TOGGLE':
-        newstate[action.id].myLight = !newstate[action.id].myLight;
+        newstate[action.id].light = !newstate[action.id].light;
         return newstate;
       break;
-      case 'ON':
-        newstate[action.id].myLight = true;
+      case 'SET':
+        newstate[action.id].light = action.payload;
         return newstate;
       break;
-      case 'OFF':
-        newstate[action.id].myLight = false;
+      case 'DIM':
+        newstate[action.id].intensity = action.level;
+        return newstate;
+      break;
+      case 'HUE':
+        newstate[action.id].hue = action.color;
         return newstate;
       break;
       default:
