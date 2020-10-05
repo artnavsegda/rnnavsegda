@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider, Query } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -28,6 +28,13 @@ const LIST_QUERY = gql`
 export default function App() {
   return (
     <ApolloProvider client={client}>
+      <Query query={LIST_QUERY} >
+      {({ loading, error, data }) => {
+            if (loading || error) return <View />
+            return <View style={{ flex: 1 }}>
+            </View>
+        }}
+      </Query>
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app!</Text>
         <StatusBar style="auto" />
