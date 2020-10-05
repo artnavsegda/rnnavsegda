@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 
-import { ApolloProvider, Query } from 'react-apollo'
+import { ApolloProvider, Mutation, Query } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -48,7 +48,7 @@ const LIST_QUERY = gql`
 
 const TOGGLE_MUTATION = gql`
   mutation {
-    toggle(id: "light0")
+    toggle(id: $id)
     {
       id
       isOn
@@ -56,9 +56,9 @@ const TOGGLE_MUTATION = gql`
   }
 `
 
-const UPDATE_SUBSCRIPTION = gql`
-
-`
+//const UPDATE_SUBSCRIPTION = gql`
+//
+//`
 
 export default function App() {
   return (
@@ -74,6 +74,9 @@ export default function App() {
               />
           }}
         </Query>
+        <Mutation mutation={TOGGLE_MUTATION} variables={{ id }}>
+        {() => (<Button title="Push"/>)}
+        </Mutation>
         <StatusBar style="auto" />
       </View>
     </ApolloProvider>
