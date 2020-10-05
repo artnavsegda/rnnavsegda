@@ -17,7 +17,13 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-//const LIST_QUERY = 
+const LIST_QUERY = gql`
+  query {
+    lights {
+      id
+    }
+  }
+`
 
 export default function App() {
   return (
