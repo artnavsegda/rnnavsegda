@@ -75,7 +75,7 @@ export default function App() {
           }}
         </Query>
         <Mutation mutation={TOGGLE_MUTATION} variables={{ id }}>
-        {() => (<Button title="Push"/>)}
+        {postMutation  => <Button onPress={postMutation} title="Push"/>}
         </Mutation>
         <StatusBar style="auto" />
       </View>
