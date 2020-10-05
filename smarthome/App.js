@@ -17,7 +17,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 })
 
-const LIST_QUERY = 
+//const LIST_QUERY = 
 
 export default function App() {
   return (
