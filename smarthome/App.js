@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
+import { Mutation } from 'react-apollo'
 import { createHttpLink } from 'apollo-link-http'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
@@ -72,6 +73,9 @@ export default function App() {
     <ApolloProvider client={client}>
       <View style={styles.container}>
         <LightsList />
+        <Mutation mutation={TOGGLE_MUTATION}>
+        {postMutation  => <Button onPress={postMutation} title="Push"/>}
+        </Mutation>
         <StatusBar style="auto" />
       </View>
     </ApolloProvider>
