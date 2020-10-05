@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import { ApolloProvider, Query } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
@@ -21,6 +21,8 @@ const LIST_QUERY = gql`
   query {
     lights {
       id
+      description
+      isOn
     }
   }
 `
@@ -32,7 +34,10 @@ export default function App() {
         <Query query={LIST_QUERY} >
         {({ loading, error, data }) => {
               if (loading || error) return <Text>loading</Text>
-              return data.lights.map(light => <Text>{light.id}</Text>)
+              return <FlatList
+                data={data.lights.map(light => {return {key: light.id, text: light.description, value: JSON.stringify(light.isOn)}})}
+                renderItem={({item}) => <Text>{item.text}: {item.value}</Text>}
+              />
           }}
         </Query>
         <StatusBar style="auto" />
