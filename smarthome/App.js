@@ -9,7 +9,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import gql from 'graphql-tag'
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000'
+  uri: 'http://192.168.88.23:4000'
 })
 
 const client = new ApolloClient({
@@ -28,15 +28,13 @@ const LIST_QUERY = gql`
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <Query query={LIST_QUERY} >
-      {({ loading, error, data }) => {
-            if (loading || error) return <View />
-            return <View style={{ flex: 1 }}>
-            </View>
-        }}
-      </Query>
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Query query={LIST_QUERY} >
+        {({ loading, error, data }) => {
+              if (loading || error) return <Text>loading</Text>
+              return data.lights.map(light => <Text>{light.id}</Text>)
+          }}
+        </Query>
         <StatusBar style="auto" />
       </View>
     </ApolloProvider>
