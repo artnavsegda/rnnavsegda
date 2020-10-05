@@ -46,6 +46,16 @@ const LIST_QUERY = gql`
   }
 `
 
+const TOGGLE_MUTATION = gql`
+  mutation {
+    toggle(id: "light0")
+    {
+      id
+      isOn
+    }
+  }
+`
+
 const UPDATE_SUBSCRIPTION = gql`
 
 `
