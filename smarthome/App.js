@@ -81,7 +81,10 @@ const LightsList = () => {
   return (
     <FlatList
       data={data.lights.map(light => {return {key: light.id, text: light.description, value: JSON.stringify(light.isOn)}})}
-      renderItem={({item}) => <Text>{item.text}: {item.value}</Text>}
+      renderItem={({item}) => 
+        <Text>{item.text}: {item.value}</Text>
+        
+      }
     />
   )
 }

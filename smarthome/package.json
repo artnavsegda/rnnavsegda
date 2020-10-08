@@ -20,6 +20,7 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
     "react-native-web": "~0.13.12",
+    "styled-components": "^5.2.0",
     "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
