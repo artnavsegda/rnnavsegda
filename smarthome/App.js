@@ -47,6 +47,7 @@ const TOGGLE_MUTATION = gql`
     toggle(id: $id)
     {
       id
+      description
       isOn
     }
   }
@@ -56,6 +57,7 @@ const UPDATE_SUBSCRIPTION = gql`
   subscription {
     lightChange {
         id
+        description
         isOn
     }
   }
@@ -68,12 +70,11 @@ const LightsList = () => {
   subscribeToMore({
     document: UPDATE_SUBSCRIPTION,
     updateQuery: (prev, { subscriptionData }) => {
-      console.log("prev:" + JSON.stringify(prev));
-      console.log("data:" + JSON.stringify(subscriptionData));
       if (!subscriptionData.data) return prev;
-      //return "hello";
-      //return subscriptionData.data.lightChange.id;
-      return prev;
+      let result = Object.assign({}, prev);
+      let tIndex = prev.lights.findIndex(element => {return element.id == subscriptionData.data.lightChange.id})
+      result.lights[tIndex] = subscriptionData.data.lightChange;
+      return result;
     }
   });
 
