@@ -62,8 +62,21 @@ const UPDATE_SUBSCRIPTION = gql`
 `
 
 const LightsList = () => {
-  const { data, loading, error } = useQuery(LIST_QUERY);
+  const { data, loading, error, subscribeToMore } = useQuery(LIST_QUERY);
   if (loading || error) return <Text>loading</Text>
+
+  subscribeToMore({
+    document: UPDATE_SUBSCRIPTION,
+    updateQuery: (prev, { subscriptionData }) => {
+      console.log("prev:" + JSON.stringify(prev));
+      console.log("data:" + JSON.stringify(subscriptionData));
+      if (!subscriptionData.data) return prev;
+      //return "hello";
+      //return subscriptionData.data.lightChange.id;
+      return prev;
+    }
+  });
+
   return (
     <FlatList
       data={data.lights.map(light => {return {key: light.id, text: light.description, value: JSON.stringify(light.isOn)}})}
@@ -93,7 +106,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <View style={styles.container}>
-        <LightSub />
+        {/* <LightSub /> */}
         <LightsList />
         <ToggleLight />
         <StatusBar style="auto" />
