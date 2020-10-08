@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery, useMutation, useSubscription } from "@apollo/client";
+import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery, useMutation } from "@apollo/client";
 import { createHttpLink } from 'apollo-link-http'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
@@ -84,12 +84,6 @@ const LightsList = () => {
       renderItem={({item}) => <Text>{item.text}: {item.value}</Text>}
     />
   )
-}
-
-const LightSub = () => {
-  const { data, loading, error } = useSubscription(UPDATE_SUBSCRIPTION);
-  if (loading || error) return <Text>loading sub</Text>
-  return <Text>Sub: {data.lightChange.id} : {JSON.stringify(data.lightChange.isOn)}</Text>
 }
 
 const ToggleLight = () => {
