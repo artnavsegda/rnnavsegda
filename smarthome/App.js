@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
-import { Mutation } from 'react-apollo'
+import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery, useMutation } from "@apollo/client";
 import { createHttpLink } from 'apollo-link-http'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
@@ -65,7 +64,12 @@ const LightsList = () => {
       data={data.lights.map(light => {return {key: light.id, text: light.description, value: JSON.stringify(light.isOn)}})}
       renderItem={({item}) => <Text>{item.text}: {item.value}</Text>}
     />
-  );
+  )
+}
+
+const ToggleLight = () => {
+  const [toggleLight, { data }] = useMutation(TOGGLE_MUTATION);
+  return <Button onPress={toggleLight} title="Push"/>
 }
 
 export default function App() {
@@ -73,13 +77,11 @@ export default function App() {
     <ApolloProvider client={client}>
       <View style={styles.container}>
         <LightsList />
-        <Mutation mutation={TOGGLE_MUTATION}>
-        {postMutation  => <Button onPress={postMutation} title="Push"/>}
-        </Mutation>
+        <ToggleLight />
         <StatusBar style="auto" />
       </View>
     </ApolloProvider>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
