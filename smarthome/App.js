@@ -43,8 +43,8 @@ const LIST_QUERY = gql`
 `
 
 const TOGGLE_MUTATION = gql`
-  mutation {
-    toggle(id: "light0")
+  mutation toggle($id: ID!) {
+    toggle(id: $id)
     {
       id
       isOn
@@ -68,8 +68,14 @@ const LightsList = () => {
 }
 
 const ToggleLight = () => {
-  const [toggleLight, { data }] = useMutation(TOGGLE_MUTATION);
-  return <Button onPress={toggleLight} title="Push"/>
+  const [toggleLight] = useMutation(TOGGLE_MUTATION);
+
+  function shit()
+  {
+    toggleLight({variables: { id: "light0" }})
+  }
+
+  return <Button onPress={shit} title="Push"/>
 }
 
 export default function App() {
