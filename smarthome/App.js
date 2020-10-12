@@ -6,6 +6,7 @@ import { createHttpLink } from 'apollo-link-http'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
+import styled from "styled-components";
 
 const httpLink = createHttpLink({
   uri: 'http://192.168.88.23:4000'
@@ -78,16 +79,30 @@ const LightsList = () => {
     }
   });
 
+  function pushMe()
+  {
+    console.log("toggle");
+  }
+
   return (
-    <FlatList
+    <FlatList numColumns={2}
       data={data.lights.map(light => {return {key: light.id, text: light.description, value: JSON.stringify(light.isOn)}})}
-      renderItem={({item}) => 
-        <Text>{item.text}: {item.value}</Text>
-        
+      renderItem={({item}) =>
+        <Container onPress={pushMe}>
+          <Text>{item.text}: {item.value}</Text>
+        </Container>
       }
     />
   )
 }
+
+const Container = styled.TouchableOpacity`
+  margin: 10px;
+  background: gray;
+  width: 100px;
+  height: 100px;
+  border-radius: 14px;
+`;
 
 const ToggleLight = () => {
   const [toggleLight] = useMutation(TOGGLE_MUTATION);
