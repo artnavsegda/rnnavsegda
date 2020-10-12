@@ -9,11 +9,11 @@ import { getMainDefinition } from 'apollo-utilities'
 import styled from "styled-components";
 
 const httpLink = createHttpLink({
-  uri: 'http://192.168.88.23:4000'
+  uri: 'http://192.168.0.113:4000'
 })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://192.168.88.23:4000`,
+  uri: `ws://192.168.0.113:4000`,
   options: {
     reconnect: true
   }
@@ -65,6 +65,7 @@ const UPDATE_SUBSCRIPTION = gql`
 `
 
 const LightsList = () => {
+  const [toggleLight] = useMutation(TOGGLE_MUTATION);
   const { data, loading, error, subscribeToMore } = useQuery(LIST_QUERY);
   if (loading || error) return <Text>loading</Text>
 
@@ -79,16 +80,11 @@ const LightsList = () => {
     }
   });
 
-  function pushMe()
-  {
-    console.log("toggle");
-  }
-
   return (
     <FlatList numColumns={2}
       data={data.lights.map(light => {return {key: light.id, text: light.description, value: JSON.stringify(light.isOn)}})}
       renderItem={({item}) =>
-        <Container onPress={pushMe}>
+        <Container onPress={() => toggleLight({variables: { id: item.key }})}>
           <Text>{item.text}: {item.value}</Text>
         </Container>
       }
@@ -112,7 +108,7 @@ const ToggleLight = () => {
     toggleLight({variables: { id: "light0" }})
   }
 
-  return <Button onPress={shit} title="Push"/>
+  return <Button onPress={() => toggleLight({variables: { id: "light0" }})} title="Push"/>
 }
 
 export default function App() {
