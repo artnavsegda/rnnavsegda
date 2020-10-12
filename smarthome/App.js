@@ -12,6 +12,42 @@ import { getMainDefinition } from 'apollo-utilities'
 import styled from "styled-components";
 import { Card, Title, Paragraph } from 'react-native-paper';
 
+const RoomCard = ({onClick, caption, image}) => (
+  <Card onPress={onClick} style={ { margin: 10, borderRadius: 20, overflow: "hidden" } }>
+    <ImageBackground source={image} style={ {  } }>
+    <View style={ { height: 100 } }/>
+      <BlurView intensity={100} style={ {  } }>
+        <Card.Title title={caption} />
+      </BlurView>
+    </ImageBackground>
+  </Card>
+)
+
+const HomeScreen = ({ navigation })  => (
+  <View style={styles.container}>
+    <RoomCard onClick={() => navigation.navigate('Студия')} caption="Студия" image={require('./assets/store.jpg')}/>
+    <RoomCard onClick={() => navigation.navigate('Переговорная')} caption="Переговорная" image={require('./assets/meeting.jpg')}/>
+  </View>
+)
+
+const Tab = createMaterialTopTabNavigator();
+
+function Studio() {
+  return(
+    <Tab.Navigator>
+      <Tab.Screen name="Свет" component={StudioLight} />
+    </Tab.Navigator>
+  )
+}
+
+function Meeting() {
+  return(
+    <Tab.Navigator>
+      <Tab.Screen name="Свет" component={MeetingLight} />
+    </Tab.Navigator>
+  )
+}
+
 const httpLink = createHttpLink({
   uri: 'http://192.168.0.113:4000'
 })
@@ -106,6 +142,8 @@ const Container = styled.TouchableOpacity`
   height: 100px;
   border-radius: 14px;
 `;
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
