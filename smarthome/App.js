@@ -1,5 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery, useMutation } from "@apollo/client";
 import { createHttpLink } from 'apollo-link-http'
@@ -7,6 +10,7 @@ import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 import styled from "styled-components";
+import { Card, Title, Paragraph } from 'react-native-paper';
 
 const httpLink = createHttpLink({
   uri: 'http://192.168.0.113:4000'
@@ -106,13 +110,15 @@ const Container = styled.TouchableOpacity`
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <View style={styles.container}>
-        <Text>Store</Text>
-        <LightsList room="STORE"/>
-        <Text>Meeting</Text>
-        <LightsList room="MEETING"/>
-        <StatusBar style="auto" />
-      </View>
+      <NavigationContainer>
+        <View style={styles.container}>
+          <Text>Store</Text>
+          <LightsList room="STORE"/>
+          <Text>Meeting</Text>
+          <LightsList room="MEETING"/>
+          <StatusBar style="auto" />
+        </View>
+      </NavigationContainer>
     </ApolloProvider>
   )
 }
