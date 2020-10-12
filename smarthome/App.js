@@ -39,6 +39,7 @@ const LIST_QUERY = gql`
       id
       description
       isOn
+      location
     }
   }
 `
@@ -64,7 +65,7 @@ const UPDATE_SUBSCRIPTION = gql`
   }
 `
 
-const LightsList = () => {
+const LightsList = (props) => {
   const [toggleLight] = useMutation(TOGGLE_MUTATION);
   const { data, loading, error, subscribeToMore } = useQuery(LIST_QUERY);
   if (loading || error) return <Text>loading</Text>
@@ -82,7 +83,9 @@ const LightsList = () => {
 
   return (
     <FlatList numColumns={2}
-      data={data.lights.map(light => {return {key: light.id, text: light.description, value: light.isOn}})}
+      data={data.lights
+        .filter((roomElement) => roomElement.location == props.room)
+        .map(light => {return {key: light.id, text: light.description, value: light.isOn}})}
       renderItem={({item}) =>
         <Container onPress={() => toggleLight({variables: { id: item.key }})} style={ { backgroundColor: `${ item.value ? "#f99" : "#9f9" }` } }>
           <Text>{item.text}</Text>
@@ -104,8 +107,10 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <View style={styles.container}>
-        {/* <LightSub /> */}
-        <LightsList />
+        <Text>Store</Text>
+        <LightsList room="STORE"/>
+        <Text>Meeting</Text>
+        <LightsList room="MEETING"/>
         <StatusBar style="auto" />
       </View>
     </ApolloProvider>
