@@ -85,7 +85,7 @@ const LightsList = () => {
       data={data.lights.map(light => {return {key: light.id, text: light.description, value: light.isOn}})}
       renderItem={({item}) =>
         <Container onPress={() => toggleLight({variables: { id: item.key }})} style={ { backgroundColor: `${ item.value ? "#f99" : "#9f9" }` } }>
-          <Text>{item.text}: {JSON.stringify(item.value)}</Text>
+          <Text>{item.text}</Text>
         </Container>
       }
     />
