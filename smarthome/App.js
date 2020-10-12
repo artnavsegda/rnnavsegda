@@ -82,10 +82,10 @@ const LightsList = () => {
 
   return (
     <FlatList numColumns={2}
-      data={data.lights.map(light => {return {key: light.id, text: light.description, value: JSON.stringify(light.isOn)}})}
+      data={data.lights.map(light => {return {key: light.id, text: light.description, value: light.isOn}})}
       renderItem={({item}) =>
-        <Container onPress={() => toggleLight({variables: { id: item.key }})}>
-          <Text>{item.text}: {item.value}</Text>
+        <Container onPress={() => toggleLight({variables: { id: item.key }})} style={ { backgroundColor: `${ item.value ? "#f99" : "#9f9" }` } }>
+          <Text>{item.text}: {JSON.stringify(item.value)}</Text>
         </Container>
       }
     />
@@ -100,24 +100,12 @@ const Container = styled.TouchableOpacity`
   border-radius: 14px;
 `;
 
-const ToggleLight = () => {
-  const [toggleLight] = useMutation(TOGGLE_MUTATION);
-
-  function shit()
-  {
-    toggleLight({variables: { id: "light0" }})
-  }
-
-  return <Button onPress={() => toggleLight({variables: { id: "light0" }})} title="Push"/>
-}
-
 export default function App() {
   return (
     <ApolloProvider client={client}>
       <View style={styles.container}>
         {/* <LightSub /> */}
         <LightsList />
-        <ToggleLight />
         <StatusBar style="auto" />
       </View>
     </ApolloProvider>
