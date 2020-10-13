@@ -3,7 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery, useMutation } from "@apollo/client";
 import { createHttpLink } from 'apollo-link-http'
 import { split } from 'apollo-link'
@@ -11,6 +11,8 @@ import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 import styled from "styled-components";
 import { Card, Title, Paragraph } from 'react-native-paper';
+import { BlurView } from 'expo-blur';
+import Constants from 'expo-constants';
 
 const RoomCard = ({onClick, caption, image}) => (
   <Card onPress={onClick} style={ { margin: 10, borderRadius: 20, overflow: "hidden" } }>
@@ -31,6 +33,24 @@ const HomeScreen = ({ navigation })  => (
 )
 
 const Tab = createMaterialTopTabNavigator();
+
+function StudioLight() {
+  return (
+    <View style={old_styles.container}>
+      <Text>Store</Text>
+      <LightsList room="STORE"/>
+    </View>
+  );
+}
+
+function MeetingLight() {
+  return (
+    <View style={old_styles.container}>
+      <Text>Store</Text>
+      <LightsList room="MEETING"/>
+    </View>
+  );
+}
 
 function Studio() {
   return(
@@ -149,23 +169,31 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <NavigationContainer>
-        <View style={styles.container}>
-          <Text>Store</Text>
-          <LightsList room="STORE"/>
-          <Text>Meeting</Text>
-          <LightsList room="MEETING"/>
-          <StatusBar style="auto" />
-        </View>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Офис" component={HomeScreen} />
+          <Stack.Screen name="Студия" component={Studio} />
+          <Stack.Screen name="Переговорная" component={Meeting} />
+        </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
   )
 }
 
-const styles = StyleSheet.create({
+const old_styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
   },
 });
