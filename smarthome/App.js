@@ -13,12 +13,12 @@ import styled from "styled-components";
 import { Switch, Card, Title, Paragraph } from 'react-native-paper';
 import { BlurView } from 'expo-blur';
 import Constants from 'expo-constants';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const RoomCard = ({onClick, caption, image}) => (
-  <Card onPress={onClick} style={ { margin: 10, borderRadius: 20, overflow: "hidden" } }>
+  <Card onPress={onClick} style={ { margin: 10, borderRadius: 20, overflow: "hidden", width: 500 } }>
     <ImageBackground source={image} style={ {  } }>
-    <View style={ { height: 100 } }/>
+    <View style={ { height: 200 } }/>
       <BlurView intensity={100} style={ {  } }>
         <Card.Title title={caption} />
       </BlurView>
@@ -38,7 +38,6 @@ const Tab = createMaterialTopTabNavigator();
 function StudioLight() {
   return (
     <View style={old_styles.container}>
-      <Text>Store</Text>
       <LightsList room="STORE"/>
     </View>
   );
@@ -47,7 +46,6 @@ function StudioLight() {
 function MeetingLight() {
   return (
     <View style={old_styles.container}>
-      <Text>Store</Text>
       <LightsList room="MEETING"/>
     </View>
   );
@@ -149,19 +147,19 @@ const LightsList = (props) => {
         .map(light => {return {key: light.id, text: light.description, value: light.isOn}})}
       renderItem={({item}) =>
         <Container onPress={() => toggleLight({variables: { id: item.key }})} style={ { 
-          backgroundColor: `${ item.value ? "#f99" : "#9f9" }`,
+          backgroundColor: `${ item.value ? "#ff9" : "#eee" }`,
           shadowOffset: {
-            width: 14,
-            height: 14
+            width: 3,
+            height: 3
           },
-          shadowOpacity: 0.5,
-          shadowRadius: 10,
+          shadowOpacity: 0.3,
+          shadowRadius: 3,
           shadowColor: "black"
           } }>
-          <Text>{item.text}</Text>
+          <FontAwesome5 name="lightbulb" size={44} color={item.value ? "white" : "black"} />
+          <Text style={bad_styles.paragraph}>{item.text}</Text>
           <Switch value={item.value} onValueChange={() => toggleLight({variables: { id: item.key }})} 
-          style={{ transform: [{ scaleX: .4 }, { scaleY: .4 }] }} />
-          <Ionicons name="ios-bulb" size={32} />
+          style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }} />
         </Container>
       }
     />
@@ -171,9 +169,10 @@ const LightsList = (props) => {
 const Container = styled.TouchableOpacity`
   margin: 10px;
   background: gray;
-  width: 100px;
-  height: 100px;
+  width: 180px;
+  height: 180px;
   border-radius: 14px;
+  padding: 24px;
 `;
 
 const Stack = createStackNavigator();
@@ -209,4 +208,34 @@ const styles = StyleSheet.create({
     backgroundColor: '#ecf0f1',
     padding: 8,
   },
+});
+
+const bad_styles = StyleSheet.create({
+  container: {
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    padding: 24
+  },
+  paragraph: {
+    margin: 18,
+    marginLeft: 0,
+    fontSize: 17,
+    fontWeight: 'bold',
+    textAlign: 'left',
+  }
+});
+
+const other_styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+  mycard: {
+    width: 180,
+    height: 180,
+    borderRadius: 20
+  }
 });
