@@ -3,14 +3,14 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Button, FlatList, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { FlatList, StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { ApolloProvider, ApolloClient, InMemoryCache, gql, useQuery, useMutation } from "@apollo/client";
 import { createHttpLink } from 'apollo-link-http'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 import styled from "styled-components";
-import { Card, Title, Paragraph } from 'react-native-paper';
+import { Switch, Card, Title, Paragraph } from 'react-native-paper';
 import { BlurView } from 'expo-blur';
 import Constants from 'expo-constants';
 
@@ -69,11 +69,11 @@ function Meeting() {
 }
 
 const httpLink = createHttpLink({
-  uri: 'http://192.168.0.113:4000'
+  uri: 'http://192.168.88.23:4000'
 })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://192.168.0.113:4000`,
+  uri: `ws://192.168.88.23:4000`,
   options: {
     reconnect: true
   }
@@ -149,6 +149,7 @@ const LightsList = (props) => {
       renderItem={({item}) =>
         <Container onPress={() => toggleLight({variables: { id: item.key }})} style={ { backgroundColor: `${ item.value ? "#f99" : "#9f9" }` } }>
           <Text>{item.text}</Text>
+          <Switch value={item.value} onValueChange={() => toggleLight({variables: { id: item.key }})} />
         </Container>
       }
     />
