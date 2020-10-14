@@ -148,7 +148,16 @@ const LightsList = (props) => {
         .filter((roomElement) => roomElement.location == props.room)
         .map(light => {return {key: light.id, text: light.description, value: light.isOn}})}
       renderItem={({item}) =>
-        <Container onPress={() => toggleLight({variables: { id: item.key }})} style={ { backgroundColor: `${ item.value ? "#f99" : "#9f9" }` } }>
+        <Container onPress={() => toggleLight({variables: { id: item.key }})} style={ { 
+          backgroundColor: `${ item.value ? "#f99" : "#9f9" }`,
+          shadowOffset: {
+            width: 14,
+            height: 14
+          },
+          shadowOpacity: 0.5,
+          shadowRadius: 10,
+          shadowColor: "black"
+          } }>
           <Text>{item.text}</Text>
           <Switch value={item.value} onValueChange={() => toggleLight({variables: { id: item.key }})} />
           <Ionicons name="ios-bulb" size={32} />
