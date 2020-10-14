@@ -159,7 +159,8 @@ const LightsList = (props) => {
           shadowColor: "black"
           } }>
           <Text>{item.text}</Text>
-          <Switch value={item.value} onValueChange={() => toggleLight({variables: { id: item.key }})} />
+          <Switch value={item.value} onValueChange={() => toggleLight({variables: { id: item.key }})} 
+          style={{ transform: [{ scaleX: .4 }, { scaleY: .4 }] }} />
           <Ionicons name="ios-bulb" size={32} />
         </Container>
       }
