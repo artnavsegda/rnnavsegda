@@ -13,6 +13,7 @@ import styled from "styled-components";
 import { Switch, Card, Title, Paragraph } from 'react-native-paper';
 import { BlurView } from 'expo-blur';
 import Constants from 'expo-constants';
+import { Ionicons } from '@expo/vector-icons';
 
 const RoomCard = ({onClick, caption, image}) => (
   <Card onPress={onClick} style={ { margin: 10, borderRadius: 20, overflow: "hidden" } }>
@@ -150,6 +151,7 @@ const LightsList = (props) => {
         <Container onPress={() => toggleLight({variables: { id: item.key }})} style={ { backgroundColor: `${ item.value ? "#f99" : "#9f9" }` } }>
           <Text>{item.text}</Text>
           <Switch value={item.value} onValueChange={() => toggleLight({variables: { id: item.key }})} />
+          <Ionicons name="ios-bulb" size={32} />
         </Container>
       }
     />
