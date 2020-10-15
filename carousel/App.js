@@ -16,13 +16,13 @@ const ENTRIES1 = [
         title: 'Студия',
         subtitle: 'Включен свет, шторы опущены',
         illustration: require('./assets/store.jpg'),
-        navigate: 'Details'
+        navigate: 'Студия'
     },
     {
         title: 'Переговорная',
         subtitle: 'Выключен свет, жалюзи открыты',
         illustration: require('./assets/meeting.jpg'),
-        navigate: 'Details'
+        navigate: 'Переговорная'
     }
 ];
 
@@ -122,10 +122,18 @@ class HomeScreen extends Component {
     }
 }
 
-function DetailsScreen() {
+function StudioLights() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
+        <Text>StudioLights</Text>
+      </View>
+    );
+}
+
+function MeetingLights() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>MeetingLights</Text>
       </View>
     );
 }
@@ -137,7 +145,8 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Офис">
         <Stack.Screen name="Офис" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Студия" component={StudioLights} />
+        <Stack.Screen name="Переговорная" component={StudioLights} />
       </Stack.Navigator>
     </NavigationContainer>
   );
