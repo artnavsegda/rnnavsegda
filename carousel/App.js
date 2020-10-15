@@ -100,6 +100,17 @@ class HomeScreen extends Component {
         );
     }
 
+    get gradient () {
+      return (
+          <LinearGradient
+            colors={[colors.background1, colors.background2]}
+            startPoint={{ x: 1, y: 0 }}
+            endPoint={{ x: 0, y: 1 }}
+            style={styles.gradient}
+          />
+      );
+    }
+
     render () {
         const example1 = this.mainExample(1, 'Офис');
 
@@ -111,17 +122,7 @@ class HomeScreen extends Component {
                     backgroundColor={'rgba(0, 0, 0, 0.3)'}
                     barStyle={'light-content'}
                     />
-                    <LinearGradient
-                      // Background Linear Gradient
-                      colors={['rgba(0,0,0,0.8)', 'transparent']}
-                      style={{
-                        position: 'absolute',
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        height: 300,
-                      }}
-                    />
+                    { this.gradient }
                     <ScrollView
                     style={styles.scrollview}
                     scrollEventThrottle={200}
