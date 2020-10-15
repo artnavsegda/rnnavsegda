@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
-import { Platform, View, ScrollView, Text, StatusBar, SafeAreaView } from 'react-native';
+import { View, ScrollView, Text, StatusBar, SafeAreaView } from 'react-native';
 import LinearGradient from 'expo-linear-gradient';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
 import SliderEntry from './components/SliderEntry';
 import styles, { colors } from './styles/index.style';
-import { ENTRIES1, ENTRIES2 } from './static/entries';
-import { scrollInterpolators, animatedStyles } from './utils/animations';
 
-const IS_ANDROID = Platform.OS === 'android';
 const SLIDER_1_FIRST_ITEM = 1;
+
+const ENTRIES1 = [
+    {
+        title: 'Beautiful and dramatic Antelope Canyon',
+        subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
+        illustration: require('../assets/store.jpg')
+    },
+    {
+        title: 'Earlier this morning, NYC',
+        subtitle: 'Lorem ipsum dolor sit amet',
+        illustration: require('../assets/meeting.jpg')
+    }
+];
 
 export default class example extends Component {
 
