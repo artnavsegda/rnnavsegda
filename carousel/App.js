@@ -1,9 +1,9 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions } from 'react-native';
+import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LinearGradient from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
 import SliderEntry from './components/SliderEntry';
@@ -111,6 +111,17 @@ class HomeScreen extends Component {
                     backgroundColor={'rgba(0, 0, 0, 0.3)'}
                     barStyle={'light-content'}
                     />
+                    <LinearGradient
+                      // Background Linear Gradient
+                      colors={['rgba(0,0,0,0.8)', 'transparent']}
+                      style={{
+                        position: 'absolute',
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        height: 300,
+                      }}
+                    />
                     <ScrollView
                     style={styles.scrollview}
                     scrollEventThrottle={200}
@@ -124,7 +135,7 @@ class HomeScreen extends Component {
     }
 }
 
-function StudioLights() {
+function StudioLights({ navigation }) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <ImageBackground source={require('./assets/store.jpg')} blurRadius={20} style={{ 
@@ -136,6 +147,13 @@ function StudioLights() {
             height: viewportHeight
           }}>
           <Text>StudioLights</Text>
+          <Button
+            title="Press me"
+            onPress={() => {
+              //Alert.alert('Simple Button pressed')
+              navigation.goBack();
+            }}
+          />
         </ImageBackground>
       </View>
     );
@@ -156,8 +174,8 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Офис">
         <Stack.Screen name="Офис" component={HomeScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="Студия" component={StudioLights} />
-        <Stack.Screen name="Переговорная" component={StudioLights} />
+        <Stack.Screen name="Студия" component={StudioLights} options={{ headerShown: false }}/>
+        <Stack.Screen name="Переговорная" component={MeetingLights} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
