@@ -60,8 +60,8 @@ class HomeScreen extends Component {
 
         return (
             <View style={styles.exampleContainer}>
-{/*                 <Text style={styles.title}>AV Install</Text>
-                <Text style={styles.subtitle}>{title}</Text> */}
+                <Text style={styles.title}>AV Install</Text>
+                <Text style={styles.subtitle}>{title}</Text>
                 <Carousel
                   ref={c => this._slider1Ref = c}
                   data={ENTRIES1}
@@ -144,7 +144,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Офис">
-        <Stack.Screen name="Офис" component={HomeScreen} />
+        <Stack.Screen name="Офис" component={HomeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Студия" component={StudioLights} />
         <Stack.Screen name="Переговорная" component={StudioLights} />
       </Stack.Navigator>
