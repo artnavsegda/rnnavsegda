@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StatusBar, SafeAreaView } from 'react-native';
+import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'expo-linear-gradient';
@@ -8,6 +8,8 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
 import SliderEntry from './components/SliderEntry';
 import styles, { colors } from './styles/index.style';
+
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
 const SLIDER_1_FIRST_ITEM = 1;
 
@@ -125,7 +127,16 @@ class HomeScreen extends Component {
 function StudioLights() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>StudioLights</Text>
+        <ImageBackground source={require('./assets/store.jpg')} blurRadius={20} style={{ 
+            flex: 1,
+            resizeMode: "cover",
+            alignItems: 'center',
+            justifyContent: "center",
+            width: viewportWidth,
+            height: viewportHeight
+          }}>
+          <Text>StudioLights</Text>
+        </ImageBackground>
       </View>
     );
 }
