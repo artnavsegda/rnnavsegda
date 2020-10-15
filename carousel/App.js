@@ -1,5 +1,8 @@
+import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import { View, ScrollView, Text, StatusBar, SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import LinearGradient from 'expo-linear-gradient';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
@@ -10,18 +13,20 @@ const SLIDER_1_FIRST_ITEM = 1;
 
 const ENTRIES1 = [
     {
-        title: 'Beautiful and dramatic Antelope Canyon',
-        subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-        illustration: require('./assets/store.jpg')
+        title: 'Студия',
+        subtitle: 'Включен свет, шторы опущены',
+        illustration: require('./assets/store.jpg'),
+        navigate: 'Details'
     },
     {
-        title: 'Earlier this morning, NYC',
-        subtitle: 'Lorem ipsum dolor sit amet',
-        illustration: require('./assets/meeting.jpg')
+        title: 'Переговорная',
+        subtitle: 'Выключен свет, жалюзи открыты',
+        illustration: require('./assets/meeting.jpg'),
+        navigate: 'Details'
     }
 ];
 
-export default class example extends Component {
+class HomeScreen extends Component {
 
     constructor (props) {
         super(props);
@@ -54,8 +59,8 @@ export default class example extends Component {
 
         return (
             <View style={styles.exampleContainer}>
-                <Text style={styles.title}>Office Demo</Text>
-                <Text style={styles.subtitle}>{title}</Text>
+{/*                 <Text style={styles.title}>AV Install</Text>
+                <Text style={styles.subtitle}>{title}</Text> */}
                 <Carousel
                   ref={c => this._slider1Ref = c}
                   data={ENTRIES1}
@@ -93,25 +98,48 @@ export default class example extends Component {
     }
 
     render () {
-        const example1 = this.mainExample(1, 'Hello Demo');
+        const example1 = this.mainExample(1, 'Офис');
 
         return (
-            <SafeAreaView style={styles.safeArea}>
+            // <SafeAreaView style={styles.safeArea}>
                 <View style={styles.container}>
                     <StatusBar
-                      translucent={true}
-                      backgroundColor={'rgba(0, 0, 0, 0.3)'}
-                      barStyle={'light-content'}
+                    translucent={true}
+                    backgroundColor={'rgba(0, 0, 0, 0.3)'}
+                    barStyle={'light-content'}
                     />
                     <ScrollView
-                      style={styles.scrollview}
-                      scrollEventThrottle={200}
-                      directionalLockEnabled={true}
+                    style={styles.scrollview}
+                    scrollEventThrottle={200}
+                    directionalLockEnabled={true}
                     >
                         { example1 }
                     </ScrollView>
                 </View>
-            </SafeAreaView>
+            // </SafeAreaView>
         );
     }
 }
+
+function DetailsScreen() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+      </View>
+    );
+}
+
+const Stack = createStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Офис">
+        <Stack.Screen name="Офис" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
