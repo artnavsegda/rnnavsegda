@@ -42,6 +42,7 @@ class HomeScreen extends Component {
               even={(index + 1) % 2 === 0}
               parallax={true}
               parallaxProps={parallaxProps}
+              navigation={this.props.navigation}
             />
         );
     }
@@ -64,7 +65,7 @@ class HomeScreen extends Component {
                 <Carousel
                   ref={c => this._slider1Ref = c}
                   data={ENTRIES1}
-                  renderItem={this._renderItemWithParallax}
+                  renderItem={this._renderItemWithParallax.bind(this)}
                   sliderWidth={sliderWidth}
                   itemWidth={itemWidth}
                   hasParallaxImages={true}
