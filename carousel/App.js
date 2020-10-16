@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React, { Component } from 'react';
-import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableOpacity, FlatList} from 'react-native';
+import React, { Component, useState } from 'react';
+import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableOpacity, FlatList, Switch} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -138,24 +138,31 @@ class HomeScreen extends Component {
     }
 }
 
-function Tile() {
+function Tile(props) {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
-    <TouchableOpacity style={{
+    <TouchableOpacity onPress={toggleSwitch} style={{
         width:150, 
         height:150, 
         margin:10, 
         borderRadius: 10, 
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        backgroundColor: `${ isEnabled ? 'rgba(200, 255, 200, 0.5)' : 'rgba(255, 255, 255, 0.5)' }`,
         shadowOffset: {
           width: 3,
           height: 3
         },
         shadowOpacity: 0.3,
         shadowRadius: 3,
-        shadowColor: "black"
+        shadowColor: "black",
       }}>
-      <FontAwesome5 style={{ position: "absolute", top: 25, left:25}} name="lightbulb" size={40} color={"gray"} />
-      <Text style={{ position: "absolute", bottom: 25, left:25}}>Hello</Text>
+      <FontAwesome5 style={{ padding: 5, position: "absolute", top: 25, left:25,
+        textShadowColor: `${ isEnabled ? 'rgba(200, 255, 200, 0.5)' : 'rgba(255, 255, 255, 0.5)' }`,
+        textShadowOffset: {width: 1, height: 1},
+        textShadowRadius: 3
+    }} name="lightbulb" size={40} color={isEnabled ? "orange" : "gray"} />
+      <Text style={{ fontFamily: 'System', fontWeight: '500', fontSize: 15, position: "absolute", bottom: 20, left:25}}>{props.title}</Text>
+      <Switch style={{ position: "absolute", top: 30, right:15, transform: [{ scaleX: .8 }, { scaleY: .8 }] }} onValueChange={toggleSwitch} value={isEnabled}/>
     </TouchableOpacity>
   )
 }
@@ -181,9 +188,9 @@ function StudioLights({ navigation }) {
         </View>
 
         <View style={{width: 350, flexDirection: 'row', flexWrap: 'wrap', alignSelf: 'center'}}>
-          <Tile />
-          <Tile />
-          <Tile />
+          <Tile title="Потолок"/>
+          <Tile title="Фитолампа"/>
+          <Tile title="Споты"/>
         </View>
       </ImageBackground>
     </View>
