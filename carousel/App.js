@@ -1,10 +1,11 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableWithoutFeedback } from 'react-native';
+import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableOpacity} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { Ionicons } from '@expo/vector-icons';
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
 import SliderEntry from './components/SliderEntry';
 import styles, { colors } from './styles/index.style';
@@ -139,7 +140,7 @@ class HomeScreen extends Component {
 function StudioLights({ navigation }) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ImageBackground source={require('./assets/store.jpg')} blurRadius={20} style={{ 
+        <ImageBackground source={require('./assets/meeting.jpg')} blurRadius={20} style={{ 
             flex: 1,
             resizeMode: "cover",
             alignItems: 'center',
@@ -147,14 +148,15 @@ function StudioLights({ navigation }) {
             width: viewportWidth,
             height: viewportHeight
           }}>
-          <Text>StudioLights</Text>
-          <Button
-            title="Press me"
-            onPress={() => {
-              //Alert.alert('Simple Button pressed')
-              navigation.goBack();
-            }}
-          />
+          <View style={{position: 'absolute', top: 0, left: 0}}>
+            <TouchableOpacity onPress={() => {
+                //Alert.alert('Something pressed')
+                navigation.goBack();
+              }}>
+              <Ionicons style={{padding: 50}} name="ios-arrow-back" size={32} color="white" />
+            </TouchableOpacity>
+          </View>
+          <Text>Hello, StudioLights</Text>
         </ImageBackground>
       </View>
     );
@@ -163,14 +165,24 @@ function StudioLights({ navigation }) {
 function MeetingLights({ navigation }) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{position: 'absolute', top: 50, left: 50}}>
-          <TouchableWithoutFeedback onPress={() => {
-              //Alert.alert('Something pressed')
-              navigation.goBack();
-            }}>
-            <Text>MeetingLights</Text>
-          </TouchableWithoutFeedback>
-        </View>
+        <ImageBackground source={require('./assets/meeting.jpg')} blurRadius={20} style={{ 
+            flex: 1,
+            resizeMode: "cover",
+            alignItems: 'center',
+            justifyContent: "center",
+            width: viewportWidth,
+            height: viewportHeight
+          }}>
+          <View style={{position: 'absolute', top: 0, left: 0}}>
+            <TouchableOpacity onPress={() => {
+                //Alert.alert('Something pressed')
+                navigation.goBack();
+              }}>
+              <Ionicons style={{padding: 50}} name="ios-arrow-back" size={32} color="white" />
+            </TouchableOpacity>
+          </View>
+          <Text>Hello, MeetingLights</Text>
+        </ImageBackground>
       </View>
     );
 }
