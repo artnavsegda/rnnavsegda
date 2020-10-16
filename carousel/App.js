@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableOpacity} from 'react-native';
+import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableOpacity, FlatList} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -138,28 +138,49 @@ class HomeScreen extends Component {
 }
 
 function StudioLights({ navigation }) {
+  function renderItem ({ item }) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ImageBackground source={require('./assets/meeting.jpg')} blurRadius={20} style={{ 
-            flex: 1,
-            resizeMode: "cover",
-            alignItems: 'center',
-            justifyContent: "center",
-            width: viewportWidth,
-            height: viewportHeight
-          }}>
-          <View style={{position: 'absolute', top: 0, left: 0}}>
-            <TouchableOpacity onPress={() => {
-                //Alert.alert('Something pressed')
-                navigation.goBack();
-              }}>
-              <Ionicons style={{padding: 50}} name="ios-arrow-back" size={32} color="white" />
-            </TouchableOpacity>
-          </View>
-          <Text>Hello, StudioLights</Text>
-        </ImageBackground>
-      </View>
+      <Text>Hello</Text>
     );
+  };
+
+  const DATA = [
+    {
+      id: "1"
+    },
+    {
+      id: "2"
+    },
+    {
+      id: "3"
+    }
+  ]
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ImageBackground source={require('./assets/meeting.jpg')} blurRadius={20} style={{ 
+          flex: 1,
+          resizeMode: "cover",
+          alignItems: 'center',
+          justifyContent: "center",
+          width: viewportWidth,
+          height: viewportHeight
+        }}>
+        <View style={{position: 'absolute', top: 0, left: 0}}>
+          <TouchableOpacity onPress={() => {
+              //Alert.alert('Something pressed')
+              navigation.goBack();
+            }}>
+            <Ionicons style={{padding: 50}} name="ios-arrow-back" size={32} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        <FlatList numColumns={2} data={DATA} renderItem={renderItem} />
+
+        <Text>Hello, StudioLights</Text>
+      </ImageBackground>
+    </View>
+  );
 }
 
 function MeetingLights({ navigation }) {
