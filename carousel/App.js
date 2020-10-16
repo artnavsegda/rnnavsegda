@@ -5,7 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { Card } from 'react-native-paper';
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
 import SliderEntry from './components/SliderEntry';
 import styles, { colors } from './styles/index.style';
@@ -137,28 +138,32 @@ class HomeScreen extends Component {
     }
 }
 
+function Tile() {
+  return (
+    <TouchableOpacity style={{
+        width:150, 
+        height:150, 
+        margin:10, 
+        borderRadius: 10, 
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        shadowOffset: {
+          width: 3,
+          height: 3
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        shadowColor: "black"
+      }}>
+      <FontAwesome5 style={{ position: "absolute", top: 25, left:25}} name="lightbulb" size={40} color={"gray"} />
+      <Text style={{ position: "absolute", bottom: 25, left:25}}>Hello</Text>
+    </TouchableOpacity>
+  )
+}
+
 function StudioLights({ navigation }) {
-  function renderItem ({ item }) {
-    return (
-      <Text>Hello</Text>
-    );
-  };
-
-  const DATA = [
-    {
-      id: "1"
-    },
-    {
-      id: "2"
-    },
-    {
-      id: "3"
-    }
-  ]
-
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <ImageBackground source={require('./assets/meeting.jpg')} blurRadius={20} style={{ 
+      <ImageBackground source={require('./assets/store.jpg')} blurRadius={20} style={{ 
           flex: 1,
           resizeMode: "cover",
           alignItems: 'center',
@@ -175,9 +180,11 @@ function StudioLights({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <FlatList numColumns={2} data={DATA} renderItem={renderItem} />
-
-        <Text>Hello, StudioLights</Text>
+        <View style={{width: 350, flexDirection: 'row', flexWrap: 'wrap', alignSelf: 'center'}}>
+          <Tile />
+          <Tile />
+          <Tile />
+        </View>
       </ImageBackground>
     </View>
   );
