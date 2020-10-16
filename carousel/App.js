@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert } from 'react-native';
+import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableWithoutFeedback } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -160,10 +160,17 @@ function StudioLights({ navigation }) {
     );
 }
 
-function MeetingLights() {
+function MeetingLights({ navigation }) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>MeetingLights</Text>
+        <View style={{position: 'absolute', top: 50, left: 50}}>
+          <TouchableWithoutFeedback onPress={() => {
+              //Alert.alert('Something pressed')
+              navigation.goBack();
+            }}>
+            <Text>MeetingLights</Text>
+          </TouchableWithoutFeedback>
+        </View>
       </View>
     );
 }
