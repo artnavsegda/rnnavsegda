@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component, useState } from 'react';
-import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableOpacity, FlatList, Switch} from 'react-native';
+import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableOpacity, FlatList, Switch, Modal} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -171,25 +171,32 @@ function old_Tile(props) {
 
 class Tile extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {isEnabled: false};
+    super(props)
+    this.state = {
+      isEnabled: false,
+      modalVisible: false
+    }
   }
   toggleSwitch = () => {
-    this.setState({isEnabled: !this.state.isEnabled});
+    this.setState({isEnabled: !this.state.isEnabled})
     if (this.state.isEnabled)
     {
-      this.animation.reset();
-      this.animation.play(60, 74);
+      this.animation.reset()
+      this.animation.play(60, 74)
     }
     else
     {
       this.animation.reset();
-      this.animation.play(0, 40);
+      this.animation.play(0, 40)
     }
-  };
+  }
+  showModal = (visible) => {
+    //alert('You tapped the button!');
+    this.setState({ modalVisible: visible });
+  }
   render(){
     return (
-      <TouchableOpacity onPress={this.toggleSwitch} style={{
+      <TouchableOpacity onPress={this.toggleSwitch} onLongPress={() => {this.showModal(true)}} style={{
           width:150, 
           height:150, 
           margin:10, 
@@ -203,11 +210,6 @@ class Tile extends React.Component {
           shadowRadius: 3,
           shadowColor: "black",
         }}>
-{/*         <FontAwesome5 style={{ padding: 5, position: "absolute", top: 25, left:25,
-          textShadowColor: `${ this.state.isEnabled ? 'rgba(200, 255, 200, 0.5)' : 'rgba(255, 255, 255, 0.5)' }`,
-          textShadowOffset: {width: 1, height: 1},
-          textShadowRadius: 3
-      }} name="lightbulb" size={40} color={this.state.isEnabled ? "orange" : "gray"} /> */}
         <LottieView ref={animation => { this.animation = animation}}
           style={{
             position: "absolute",
@@ -220,8 +222,47 @@ class Tile extends React.Component {
           loop={false}
           source={require('./assets/lamp.json')}
         />
-        <Text style={{ fontFamily: 'System', fontWeight: '500', fontSize: 15, position: "absolute", bottom: 20, left:25}}>{this.props.title}</Text>
+        <Text style={{ color: `${ this.state.isEnabled ? 'black' : 'gray' }`,fontFamily: 'System', fontWeight: '500', fontSize: 15, position: "absolute", bottom: 20, left:25}}>{this.props.title}</Text>
         <Switch style={{ position: "absolute", top: 30, right:15, transform: [{ scaleX: .8 }, { scaleY: .8 }] }} onValueChange={this.toggleSwitch} value={this.state.isEnabled}/>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", marginTop: 22 }}>
+            <View style={{
+                          margin: 20,
+                          backgroundColor: "white",
+                          borderRadius: 20,
+                          padding: 35,
+                          alignItems: "center",
+                          shadowColor: "#000",
+                          shadowOffset: {
+                            width: 0,
+                            height: 2
+                          },
+                          shadowOpacity: 0.25,
+                          shadowRadius: 3.84,
+                          elevation: 5
+                        }}>
+              <Text style={{ marginBottom: 15, textAlign: "center" }}>Hello World!</Text>
+              <Text>AAAAAAAAAAAAAAAAAA</Text>
+
+              <TouchableOpacity style={{
+                  backgroundColor: "#F194FF",
+                  borderRadius: 20,
+                  padding: 10,
+                  elevation: 2,
+                  backgroundColor: "#2196F3" }}
+                onPress={() => { this.showModal(false) }}>
+                <Text style={{ color: "white", fontWeight: "bold", textAlign: "center" }}>Hide Modal</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </TouchableOpacity>
     )
   }
