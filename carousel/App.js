@@ -9,6 +9,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Card } from 'react-native-paper';
 import LottieView from 'lottie-react-native';
+import Slider from '@react-native-community/slider';
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
 import SliderEntry from './components/SliderEntry';
 import styles, { colors } from './styles/index.style';
@@ -249,8 +250,15 @@ class Tile extends React.Component {
                           elevation: 5
                         }}>
               <Text style={{ marginBottom: 15, textAlign: "center" }}>Hello World!</Text>
-              <Text>AAAAAAAAAAAAAAAAAA</Text>
-
+              <Slider
+                style={{width: 200, height: 40}}
+                trackStyle={{height: 1, borderRadius:1}}
+                thumbStyle={{width: 30, height: 30}}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor="#FF0000"
+                maximumTrackTintColor="#00FF00"
+              />
               <TouchableOpacity style={{
                   backgroundColor: "#F194FF",
                   borderRadius: 20,
