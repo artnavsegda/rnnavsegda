@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { Card } from 'react-native-paper';
+import LottieView from 'lottie-react-native';
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
 import SliderEntry from './components/SliderEntry';
 import styles, { colors } from './styles/index.style';
@@ -139,7 +140,7 @@ class HomeScreen extends Component {
     }
 }
 
-function Tile(props) {
+function old_Tile(props) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
@@ -166,6 +167,64 @@ function Tile(props) {
       <Switch style={{ position: "absolute", top: 30, right:15, transform: [{ scaleX: .8 }, { scaleY: .8 }] }} onValueChange={toggleSwitch} value={isEnabled}/>
     </TouchableOpacity>
   )
+}
+
+class Tile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {isEnabled: false};
+  }
+  toggleSwitch = () => {
+    this.setState({isEnabled: !this.state.isEnabled});
+    if (this.state.isEnabled)
+    {
+      this.animation.reset();
+      this.animation.play(60, 74);
+    }
+    else
+    {
+      this.animation.reset();
+      this.animation.play(0, 40);
+    }
+  };
+  render(){
+    return (
+      <TouchableOpacity onPress={this.toggleSwitch} style={{
+          width:150, 
+          height:150, 
+          margin:10, 
+          borderRadius: 10, 
+          backgroundColor: `${ this.state.isEnabled ? 'rgba(255, 255, 200, 0.5)' : 'rgba(255, 255, 255, 0.5)' }`,
+          shadowOffset: {
+            width: 3,
+            height: 3
+          },
+          shadowOpacity: 0.3,
+          shadowRadius: 3,
+          shadowColor: "black",
+        }}>
+{/*         <FontAwesome5 style={{ padding: 5, position: "absolute", top: 25, left:25,
+          textShadowColor: `${ this.state.isEnabled ? 'rgba(200, 255, 200, 0.5)' : 'rgba(255, 255, 255, 0.5)' }`,
+          textShadowOffset: {width: 1, height: 1},
+          textShadowRadius: 3
+      }} name="lightbulb" size={40} color={this.state.isEnabled ? "orange" : "gray"} /> */}
+        <LottieView ref={animation => { this.animation = animation}}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: 90,
+            height: 90,
+            backgroundColor: 'transparent',
+          }}
+          loop={false}
+          source={require('./assets/lamp.json')}
+        />
+        <Text style={{ fontFamily: 'System', fontWeight: '500', fontSize: 15, position: "absolute", bottom: 20, left:25}}>{this.props.title}</Text>
+        <Switch style={{ position: "absolute", top: 30, right:15, transform: [{ scaleX: .8 }, { scaleY: .8 }] }} onValueChange={this.toggleSwitch} value={this.state.isEnabled}/>
+      </TouchableOpacity>
+    )
+  }
 }
 
 const Tab = createMaterialTopTabNavigator();
