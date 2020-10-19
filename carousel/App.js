@@ -3,6 +3,7 @@ import React, { Component, useState } from 'react';
 import { View, ScrollView, Text, StatusBar, ImageBackground, Dimensions, Button, Alert, TouchableOpacity, FlatList, Switch} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
@@ -167,6 +168,17 @@ function Tile(props) {
   )
 }
 
+const Tab = createMaterialTopTabNavigator();
+
+function Studio() {
+  return(
+    <Tab.Navigator tabBarOptions={{indicatorStyle: { backgroundColor: 'transparent' }, tabStyle: {width: 100}, style: { backgroundColor: 'transparent', position: "absolute", top: 70, width: viewportWidth }}}>
+      <Tab.Screen name="Свет" component={StudioLights} />
+      <Tab.Screen name="Шторы" component={StudioShades} />
+    </Tab.Navigator>
+  )
+}
+
 function StudioLights({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -178,20 +190,29 @@ function StudioLights({ navigation }) {
           width: viewportWidth,
           height: viewportHeight
         }}>
-        <View style={{position: 'absolute', top: 0, left: 0}}>
-          <TouchableOpacity onPress={() => {
-              //Alert.alert('Something pressed')
-              navigation.goBack();
-            }}>
-            <Ionicons style={{padding: 50}} name="ios-arrow-back" size={32} color="white" />
-          </TouchableOpacity>
-        </View>
 
         <View style={{width: 350, flexDirection: 'row', flexWrap: 'wrap', alignSelf: 'center'}}>
           <Tile title="Потолок"/>
           <Tile title="Фитолампа"/>
           <Tile title="Споты"/>
         </View>
+      </ImageBackground>
+    </View>
+  );
+}
+
+function StudioShades({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ImageBackground source={require('./assets/store.jpg')} blurRadius={20} style={{ 
+          flex: 1,
+          resizeMode: "cover",
+          alignItems: 'center',
+          justifyContent: "center",
+          width: viewportWidth,
+          height: viewportHeight
+        }}>
+        <Text>Hello, StudioShades</Text>
       </ImageBackground>
     </View>
   );
@@ -208,14 +229,6 @@ function MeetingLights({ navigation }) {
             width: viewportWidth,
             height: viewportHeight
           }}>
-          <View style={{position: 'absolute', top: 0, left: 0}}>
-            <TouchableOpacity onPress={() => {
-                //Alert.alert('Something pressed')
-                navigation.goBack();
-              }}>
-              <Ionicons style={{padding: 50}} name="ios-arrow-back" size={32} color="white" />
-            </TouchableOpacity>
-          </View>
           <Text>Hello, MeetingLights</Text>
         </ImageBackground>
       </View>
@@ -229,8 +242,8 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Офис">
         <Stack.Screen name="Офис" component={HomeScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="Студия" component={StudioLights} options={{ headerShown: false }}/>
-        <Stack.Screen name="Переговорная" component={MeetingLights} options={{ headerShown: false }}/>
+        <Stack.Screen name="Студия" component={Studio} options={{ headerTransparent: true, headerBackTitleVisible: false, headerTintColor: 'black' }}/>
+        <Stack.Screen name="Переговорная" component={MeetingLights} options={{ headerTransparent: true }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
