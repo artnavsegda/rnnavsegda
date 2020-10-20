@@ -298,11 +298,11 @@ function StudioLights({ navigation }) {
           width: viewportWidth,
           height: viewportHeight
         }}>
-
         <View style={{width: 350, flexDirection: 'row', flexWrap: 'wrap', alignSelf: 'center'}}>
           <Tile title="Потолок"/>
           <Tile title="Фитолампа"/>
           <Tile title="Споты"/>
+          <Tile title="Лента"/>
         </View>
       </ImageBackground>
     </View>
@@ -337,7 +337,16 @@ function MeetingLights({ navigation }) {
             width: viewportWidth,
             height: viewportHeight
           }}>
-          <Text>Hello, MeetingLights</Text>
+        <View style={{width: 350, flexDirection: 'row', flexWrap: 'wrap', alignSelf: 'center'}}>
+          <Tile title="Потолок"/>
+          <Tile title="Фитолампа"/>
+          <Tile title="Споты 1"/>
+          <Tile title="Споты 1"/>
+          <Tile title="Софиты"/>
+          <Tile title="Стол"/>
+          <Tile title="Ниша"/>
+          <Tile title="Лента"/>
+        </View>
         </ImageBackground>
       </View>
     );
