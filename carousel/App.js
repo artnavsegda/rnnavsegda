@@ -309,21 +309,26 @@ function StudioLights({ navigation }) {
   );
 }
 
-function StudioShades({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <ImageBackground source={require('./assets/store.jpg')} blurRadius={20} style={{ 
-          flex: 1,
-          resizeMode: "cover",
-          alignItems: 'center',
-          justifyContent: "center",
-          width: viewportWidth,
-          height: viewportHeight
-        }}>
-        <Text>Hello, StudioShades</Text>
-      </ImageBackground>
-    </View>
-  );
+class StudioShades extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ImageBackground source={require('./assets/store.jpg')} blurRadius={20} style={{ 
+            flex: 1,
+            resizeMode: "cover",
+            alignItems: 'center',
+            justifyContent: "center",
+            width: viewportWidth,
+            height: viewportHeight
+          }}>
+          <LottieView source={require('./assets/blinds.json')} autoPlay/>
+        </ImageBackground>
+      </View>
+    );
+  }
 }
 
 function MeetingLights({ navigation }) {
