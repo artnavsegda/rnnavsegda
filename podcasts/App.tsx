@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Button, StyleSheet, Text, View } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
@@ -21,11 +21,29 @@ const store = createStore(
 
 sagaMiddleware.run(watchFetchPodcasts)
 
+function EpisodeList(props)
+{
+  return (
+    <Text>Episode List</Text>
+  )
+}
+
 function PodcastList(props) {
+  const renderItem = ({ item }) => (
+    <View>
+      <Text>{item.title}</Text>
+      <Text>{item.id}</Text>
+      <Button title="List" onPress={() => props.navigation.navigate('Эпизоды')}/>
+    </View>
+  );
   return (
     <View style={styles.container}>
       <Button onPress={() => props.dispatch(fetchPodcasts())} title="Load"/>
-      <Text>{JSON.stringify(props.podcasts.collection)}</Text>
+      <FlatList 
+        data={props.podcasts.collection}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -44,6 +62,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Подкасты" component={ConnectedPodcastList} />
+          <Stack.Screen name="Эпизоды" component={EpisodeList} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
