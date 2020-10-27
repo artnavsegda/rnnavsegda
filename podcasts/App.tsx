@@ -21,7 +21,7 @@ const store = createStore(
 
 sagaMiddleware.run(watchFetchPodcasts)
 
-function PodcastList() {
+function PodcastList(props) {
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
