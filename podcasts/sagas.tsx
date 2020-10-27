@@ -1,24 +1,12 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
 
-let authHeader = new Headers({'Authorization':'Bearer eyJhcGlfa2V5IjoiNzVkMzc3N2M3NWFhM2QwOTkxOWEyZTI4ZjhiM2M1YTkifQ=='})
+import {requestPodcasts, requestPodcastsSuccess, requestPodcastsError, requestEpisodes, requestEpisodesSuccess, requestEpisodesError} from './actions'
 
-const requestPodcasts = () => {
-    return { type: 'REQUESTED_PODCASTS' }
-};
-
-const requestPodcastsSuccess = (data) => {
-    return { type: 'REQUESTED_PODCASTS_SUCCEEDED', podcasts: data }
-};
-
-const requestPodcastsError = () => {
-    return { type: 'REQUESTED_PODCASTS_FAILED' }
-};
-
-function* fetchPodcastsAsync() {
+function* fetchPodcastsAsync(action) {
     try {
         yield put(requestPodcasts());
         const data = yield call(() => {
-            return fetch('https://api.simplecast.com/podcasts/', {headers: authHeader})
+            return fetch('https://api.simplecast.com/podcasts/', {headers: new Headers({'Authorization':'Bearer ' + action.key})})
                     .then(res => res.json())
             }
         )
@@ -32,4 +20,22 @@ function* watchFetchPodcasts() {
     yield takeEvery('FETCHED_PODCASTS', fetchPodcastsAsync)
 }
 
-export default watchFetchPodcasts;
+function* fetchEpisodesAsync(action) {
+    try {
+        yield put(requestEpisodes());
+        const data = yield call(() => {
+            return fetch('https://api.simplecast.com/podcasts/' + action.id + '/episodes')
+                    .then(res => res.json())
+            }
+        )
+        yield put(requestEpisodesSuccess(data));
+    } catch (error) {
+        yield put(requestEpisodesError())
+    }
+}
+
+function* watchFetchEpisodes() {
+    yield takeEvery('FETCHED_EPISODES', fetchEpisodesAsync)
+}
+
+export { watchFetchPodcasts, watchFetchEpisodes };

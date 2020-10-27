@@ -9,8 +9,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import reducer from './reducer';
-import watchFetchPodcasts from './sagas';
-import fetchPodcasts from './actions';
+import { watchFetchPodcasts, watchFetchEpisodes } from './sagas'
+import {fetchPodcasts, fetchEpisodes} from './actions'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -20,25 +20,48 @@ const store = createStore(
 )
 
 sagaMiddleware.run(watchFetchPodcasts)
+sagaMiddleware.run(watchFetchEpisodes)
 
 function EpisodeList(props)
 {
+  const renderItem = ({ item }) => (
+    <View>
+      <Text>{item.title}</Text>
+      <Text>{item.id}</Text>
+    </View>
+  );
   return (
-    <Text>Episode List</Text>
+    <View>
+      <FlatList 
+        data={props.episodes.collection}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+    </View>
   )
 }
+
+const ConnectedEpisodeList = connect((state) => {
+  console.log(state);
+  return state;
+})(EpisodeList);
+
+const authKey = 'eyJhcGlfa2V5IjoiNzVkMzc3N2M3NWFhM2QwOTkxOWEyZTI4ZjhiM2M1YTkifQ==';
 
 function PodcastList(props) {
   const renderItem = ({ item }) => (
     <View>
       <Text>{item.title}</Text>
       <Text>{item.id}</Text>
-      <Button title="List" onPress={() => props.navigation.navigate('Эпизоды')}/>
+      <Button title="List" onPress={() => {
+        props.navigation.navigate('Эпизоды')
+        props.dispatch(fetchEpisodes(item.id))
+      }}/>
     </View>
   );
   return (
     <View style={styles.container}>
-      <Button onPress={() => props.dispatch(fetchPodcasts())} title="Load"/>
+      <Button onPress={() => props.dispatch(fetchPodcasts(authKey))} title="Load"/>
       <FlatList 
         data={props.podcasts.collection}
         renderItem={renderItem}
@@ -62,7 +85,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Подкасты" component={ConnectedPodcastList} />
-          <Stack.Screen name="Эпизоды" component={EpisodeList} />
+          <Stack.Screen name="Эпизоды" component={ConnectedEpisodeList} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

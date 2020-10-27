@@ -1,32 +1,40 @@
 const initialState = {
-    podcasts: '',
-    loading: false,
-    error: false,
-  };
-  
-  const reducer = (state = initialState, action) => {
-    switch (action.type) {
-      case 'REQUESTED_PODCASTS':
-        return {
-          podcasts: '',
-          loading: true,
-          error: false,
-        };
-      case 'REQUESTED_PODCASTS_SUCCEEDED':
-        return {
-          podcasts: action.podcasts,
-          loading: false,
-          error: false,
-        };
-      case 'REQUESTED_PODCASTS_FAILED':
-        return {
-          podcasts: '',
-          loading: false,
-          error: true,
-        };
-      default:
-        return state
-    }
+  podcasts: '',
+  episodes: '',
+  loading: false,
+  error: false,
+  episodesLoading: false,
+};
+
+const reducer = (state = initialState, action) => {
+
+  let newstate = {...state};
+
+  switch (action.type) {
+    case 'REQUESTED_PODCASTS':
+      newstate.loading = true;
+    break
+    case 'REQUESTED_PODCASTS_SUCCEEDED':
+      newstate.loading = false;
+      newstate.podcasts = action.podcasts;
+    break
+    case 'REQUESTED_PODCASTS_FAILED':
+      newstate.error = true;
+    break
+    case 'REQUESTED_EPISODES':
+      newstate.episodesLoading = true;
+    break;
+    case 'REQUESTED_EPISODES_SUCCEEDED':
+      newstate.episodesLoading = false;
+      newstate.episodes = action.episodes;
+    break;
+    case 'REQUESTED_EPISODES_FAILED':
+      newstate.error = true;
+    break;
+    default:
+      return state
   }
-  
-  export default reducer;
+  return newstate;
+}
+
+export default reducer;
