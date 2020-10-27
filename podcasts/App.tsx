@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useEffect} from 'react';
 import { FlatList, Button, StyleSheet, Text, View } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Audio } from 'expo-av';
 
 import reducer from './reducer';
 import { watchFetchPodcasts, watchFetchEpisodes } from './sagas'
@@ -22,12 +22,43 @@ const store = createStore(
 sagaMiddleware.run(watchFetchPodcasts)
 sagaMiddleware.run(watchFetchEpisodes)
 
+const soundObject = new Audio.Sound();
+async function audioPlay(source)
+{
+  const status = await soundObject.getStatusAsync();
+  console.log(status);
+
+  if (status.isLoaded && source.includes(status.uri))
+  {
+    console.log("play/pause");
+    if (status.isPlaying)
+      await soundObject.pauseAsync();
+    else
+      await soundObject.playAsync();
+  }
+  else
+  {
+    //Audio.Sound.createAsync({ uri:source }, { shouldPlay: true });
+    await soundObject.unloadAsync();
+    console.log("sound over");
+    console.log("sound starting " + source);
+    await soundObject.loadAsync({uri:source});
+    console.log("sound loaded");
+    await soundObject.playAsync();
+    console.log("sound played");
+  }
+}
+
 function EpisodeList(props)
 {
   const renderItem = ({ item }) => (
     <View>
       <Text>{item.title}</Text>
       <Text>{item.id}</Text>
+      <Text>{item.enclosure_url}</Text>
+      <Button title="PlayPause" onPress={() => {
+        audioPlay(item.enclosure_url);
+      }}/>
     </View>
   );
   return (
@@ -49,6 +80,10 @@ const ConnectedEpisodeList = connect((state) => {
 const authKey = 'eyJhcGlfa2V5IjoiNzVkMzc3N2M3NWFhM2QwOTkxOWEyZTI4ZjhiM2M1YTkifQ==';
 
 function PodcastList(props) {
+  useEffect(() => {
+    props.dispatch(fetchPodcasts(authKey))
+  }, [])
+
   const renderItem = ({ item }) => (
     <View>
       <Text>{item.title}</Text>
@@ -61,13 +96,11 @@ function PodcastList(props) {
   );
   return (
     <View style={styles.container}>
-      <Button onPress={() => props.dispatch(fetchPodcasts(authKey))} title="Load"/>
       <FlatList 
         data={props.podcasts.collection}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-      <StatusBar style="auto" />
     </View>
   );
 }
