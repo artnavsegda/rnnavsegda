@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
-import { FlatList, Button, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Button, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
@@ -38,24 +38,17 @@ async function audioPlay(source)
   }
   else
   {
-    //Audio.Sound.createAsync({ uri:source }, { shouldPlay: true });
     await soundObject.unloadAsync();
-    console.log("sound over");
-    console.log("sound starting " + source);
     await soundObject.loadAsync({uri:source});
-    console.log("sound loaded");
     await soundObject.playAsync();
-    console.log("sound played");
   }
 }
 
 function EpisodeList(props)
 {
   const renderItem = ({ item }) => (
-    <View>
+    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
       <Text>{item.title}</Text>
-      <Text>{item.id}</Text>
-      <Text>{item.enclosure_url}</Text>
       <Button title="PlayPause" onPress={() => {
         audioPlay(item.enclosure_url);
       }}/>
@@ -63,11 +56,12 @@ function EpisodeList(props)
   );
   return (
     <View>
-      <FlatList 
+      {props.episodesLoading ? <Text>Loading...</Text>
+      : <FlatList 
         data={props.episodes.collection}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-      />
+      />}
     </View>
   )
 }
@@ -85,22 +79,23 @@ function PodcastList(props) {
   }, [])
 
   const renderItem = ({ item }) => (
-    <View>
-      <Text>{item.title}</Text>
-      <Text>{item.id}</Text>
-      <Button title="List" onPress={() => {
-        props.navigation.navigate('Эпизоды')
-        props.dispatch(fetchEpisodes(item.id))
-      }}/>
-    </View>
+    <TouchableOpacity onPress={() => {
+      props.navigation.navigate('Эпизоды')
+      props.dispatch(fetchEpisodes(item.id))
+    }} style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+      <Image style={{width: 100, height: 100}} source={{uri: item.image_url}}/>
+      <Text style={{textAlignVertical: 'center', fontSize: 20}}>{item.title}</Text>
+    </TouchableOpacity>
   );
   return (
-    <View style={styles.container}>
-      <FlatList 
+    <View >
+      {props.loading ? <Text>Loading...</Text>
+      : <FlatList 
         data={props.podcasts.collection}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
+      }
     </View>
   );
 }
