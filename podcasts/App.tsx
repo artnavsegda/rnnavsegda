@@ -4,8 +4,22 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import reducer from './reducer';
+import watchFetchPodcasts from './sagas';
+import fetchPodcasts from './actions';
+
+const sagaMiddleware = createSagaMiddleware()
+
+const store = createStore(
+  reducer,
+  applyMiddleware(sagaMiddleware)
+)
+
+sagaMiddleware.run(watchFetchPodcasts)
 
 function PodcastList() {
   return (
@@ -16,15 +30,22 @@ function PodcastList() {
   );
 }
 
+const ConnectedPodcastList = connect((state) => {
+  console.log(state);
+  return state;
+})(PodcastList);
+
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Подкасты" component={PodcastList} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Подкасты" component={ConnectedPodcastList} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
