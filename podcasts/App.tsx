@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { createStore, applyMiddleware } from 'redux';
 import { connect, Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
@@ -24,7 +24,8 @@ sagaMiddleware.run(watchFetchPodcasts)
 function PodcastList(props) {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Button onPress={() => props.dispatch(fetchPodcasts())} title="Load"/>
+      <Text>{JSON.stringify(props.podcasts.collection)}</Text>
       <StatusBar style="auto" />
     </View>
   );
