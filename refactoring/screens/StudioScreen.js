@@ -1,14 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-function HomeScreen({ navigation }) {
+function StudioScreen() {
     return (
         <View style={styles.container}>
         <Text>Open up App.js to start working on your app!</Text>
-        <Button
-            onPress={() => navigation.navigate('Студия')}
-            title="Студия"
-        />
         </View>
     );
 }
@@ -22,4 +18,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HomeScreen;
+export default StudioScreen;
