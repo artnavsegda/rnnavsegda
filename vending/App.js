@@ -7,14 +7,13 @@ export default function App() {
     password: ''
   });
 
-
   return (
     <View style={styles.container}>
       <Text>Авторизация</Text>
       <TextInput
         style={styles.login}
-        onChangeText={text => onChangeText(text)}
-        value={value}
+        onChangeText={text => onChangeText({...value, username: text})}
+        value={value.username}
       />
     </View>
   );
