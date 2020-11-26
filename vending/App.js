@@ -1,10 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
+  const [value, onChangeText] = React.useState({
+    username: '',
+    password: ''
+  });
+
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Авторизация</Text>
+      <TextInput
+        style={styles.login}
+        onChangeText={text => onChangeText(text)}
+        value={value}
+      />
     </View>
   );
 }
@@ -16,4 +27,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  login: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1
+  }
 });
