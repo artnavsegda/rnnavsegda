@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 export default function App() {
   const [value, onChangeText] = React.useState({
@@ -23,6 +23,7 @@ export default function App() {
         onChangeText={text => onChangeText({...value, password: text})}
         value={value.password}
       />
+      <Button title="Вход" />
     </View>
   );
 }
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
   login: {
     height: 40,
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+    margin: 5
   }
 });
