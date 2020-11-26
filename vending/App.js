@@ -11,9 +11,17 @@ export default function App() {
     <View style={styles.container}>
       <Text>Авторизация</Text>
       <TextInput
+        placeholder="Логин"
         style={styles.login}
         onChangeText={text => onChangeText({...value, username: text})}
         value={value.username}
+      />
+      <TextInput
+        placeholder="Пароль"
+        secureTextEntry
+        style={styles.login}
+        onChangeText={text => onChangeText({...value, password: text})}
+        value={value.password}
       />
     </View>
   );
