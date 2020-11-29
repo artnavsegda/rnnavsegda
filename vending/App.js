@@ -61,6 +61,11 @@ export default function App({ navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
+        case 'USER_NAME':
+          return {
+            ...prevState,
+            userName: action.username,
+          };
         case 'RESTORE_TOKEN':
           return {
             ...prevState,
@@ -122,12 +127,17 @@ export default function App({ navigation }) {
           body: JSON.stringify(payload)
         })
         .then(response => {
-          let token = response.headers.get('token');
-          dispatch({ type: 'SIGN_IN', token: token });
+          if (!response.ok)
+            throw new Error('Login incorrect');
+          dispatch({ type: 'SIGN_IN', token: response.headers.get('token') });
           return response.json();
         })
         .then(json => {
+          dispatch({ type: 'USER_NAME', username: json.Name });
         })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' })
     }),
