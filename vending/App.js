@@ -112,6 +112,7 @@ export default function App({ navigation }) {
         // We will also need to handle errors if sign in failed
         // After getting token, we need to persist the token using `AsyncStorage`
         // In the example, we'll use a dummy token
+        console.log("user: " + data.username + " pass: " + data.password)
 
         dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
       },
