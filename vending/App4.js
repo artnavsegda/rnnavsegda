@@ -1,8 +1,12 @@
 import * as React from 'react';
-import { Button, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Button, Text, TextInput, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+const api = 'https://app.tseh85.com/DemoService/api';
+const auth = api + '/AuthenticateVending';
+const machines = api + '/vending/machines';
 
 const AuthContext = React.createContext();
 
@@ -18,7 +22,7 @@ function HomeScreen() {
   const { signOut } = React.useContext(AuthContext);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Signed in!</Text>
       <Button title="Sign out" onPress={signOut} />
     </View>
@@ -32,13 +36,15 @@ function SignInScreen() {
   const { signIn } = React.useContext(AuthContext);
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
+        style={styles.login}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
+        style={styles.login}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
@@ -55,6 +61,11 @@ export default function App({ navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
+        case 'USER_NAME':
+          return {
+            ...prevState,
+            userName: action.username,
+          };
         case 'RESTORE_TOKEN':
           return {
             ...prevState,
@@ -105,23 +116,30 @@ export default function App({ navigation }) {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async data => {
-        // In a production app, we need to send some data (usually username, password) to server and get a token
-        // We will also need to handle errors if sign in failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+      signIn: data => {
+        let payload = {
+          "Login": data.username,
+          "Password": data.password,
+        }
+        fetch(auth, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(response => {
+          if (!response.ok)
+            throw new Error('Login incorrect');
+          dispatch({ type: 'SIGN_IN', token: response.headers.get('token') });
+          return response.json();
+        })
+        .then(json => {
+          dispatch({ type: 'USER_NAME', username: json.Name });
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
       },
-      signOut: () => dispatch({ type: 'SIGN_OUT' }),
-      signUp: async data => {
-        // In a production app, we need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-      },
+      signOut: () => dispatch({ type: 'SIGN_OUT' })
     }),
     []
   );
@@ -153,3 +171,20 @@ export default function App({ navigation }) {
     </AuthContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    login: {
+        width: 150,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        margin: 5,
+        padding: 5
+    }
+  });
