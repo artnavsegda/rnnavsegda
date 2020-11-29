@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { createStore } from 'redux'
 import { Button, Text, TextInput, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
