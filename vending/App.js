@@ -1,17 +1,21 @@
 import * as React from 'react';
 import { createStore } from 'redux'
 import { Provider, useSelector } from 'react-redux'
-import { Button, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Button, Text, TextInput, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-function reducer(prevState = {
+const api = 'https://app.tseh85.com/DemoService/api';
+const auth = api + '/AuthenticateVending';
+const machines = api + '/vending/machines';
+
+let store = createStore((prevState = {
   isLoading: true,
   isSignout: false,
   userToken: null,
   userName: "",
-}, action) {
+}, action) => {
   switch (action.type) {
     case 'USER_NAME':
       return {
@@ -39,17 +43,15 @@ function reducer(prevState = {
     default:
       return prevState;
   }
-}
+})
 
-let store = createStore(reducer)
-
-store.subscribe(() => console.log(store.getState()))
+//store.subscribe(() => console.log(store.getState()))
 
 const AuthContext = React.createContext();
 
 function SplashScreen() {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Loading...</Text>
     </View>
   );
@@ -59,7 +61,7 @@ function HomeScreen() {
   const { signOut } = React.useContext(AuthContext);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Signed in!</Text>
       <Button title="Sign out" onPress={signOut} />
     </View>
@@ -73,13 +75,15 @@ function SignInScreen() {
   const { signIn } = React.useContext(AuthContext);
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
+        style={styles.login}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
+        style={styles.login}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
@@ -96,7 +100,6 @@ function App({ navigation }) {
   const state = useSelector(state => state)
 
   React.useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
     const bootstrapAsync = async () => {
       let userToken;
 
@@ -105,11 +108,6 @@ function App({ navigation }) {
       } catch (e) {
         // Restoring token failed
       }
-
-      // After restoring token, we may need to validate it in production apps
-
-      // This will switch to the App screen or Auth screen and this loading
-      // screen will be unmounted and thrown away.
       store.dispatch({ type: 'RESTORE_TOKEN', token: userToken });
     };
 
@@ -118,23 +116,30 @@ function App({ navigation }) {
 
   const authContext = React.useMemo(
     () => ({
-      signIn: async data => {
-        // In a production app, we need to send some data (usually username, password) to server and get a token
-        // We will also need to handle errors if sign in failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        store.dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+      signIn: data => {
+        let payload = {
+          "Login": data.username,
+          "Password": data.password,
+        }
+        fetch(auth, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(response => {
+          if (!response.ok)
+            throw new Error('Login incorrect');
+          store.dispatch({ type: 'SIGN_IN', token: response.headers.get('token') });
+          return response.json();
+        })
+        .then(json => {
+          store.dispatch({ type: 'USER_NAME', username: json.Name });
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
       },
-      signOut: () => store.dispatch({ type: 'SIGN_OUT' }),
-      signUp: async data => {
-        // In a production app, we need to send user data to server and get a token
-        // We will also need to handle errors if sign up failed
-        // After getting token, we need to persist the token using `AsyncStorage`
-        // In the example, we'll use a dummy token
-
-        store.dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
-      },
+      signOut: () => store.dispatch({ type: 'SIGN_OUT' })
     }),
     []
   );
@@ -144,21 +149,17 @@ function App({ navigation }) {
       <NavigationContainer>
         <Stack.Navigator>
           {state.isLoading ? (
-            // We haven't finished checking for the token yet
             <Stack.Screen name="Splash" component={SplashScreen} />
           ) : state.userToken == null ? (
-            // No token found, user isn't signed in
             <Stack.Screen
               name="SignIn"
               component={SignInScreen}
               options={{
                 title: 'Sign in',
-            // When logging out, a pop animation feels intuitive
                 animationTypeForReplace: state.isSignout ? 'pop' : 'push',
               }}
             />
           ) : (
-            // User is signed in
             <Stack.Screen name="Home" component={HomeScreen} />
           )}
         </Stack.Navigator>
@@ -174,3 +175,20 @@ export default function ConnectedApp() {
     </Provider>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  login: {
+      width: 150,
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      margin: 5,
+      padding: 5
+  }
+});
