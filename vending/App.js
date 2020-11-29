@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AsyncStorage, Button, Text, TextInput, View } from 'react-native';
+import { StyleSheet, AsyncStorage, Button, Text, TextInput, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -31,13 +31,15 @@ function SignInScreen() {
   const { signIn } = React.useContext(AuthContext);
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
+        style={styles.login}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
+        style={styles.login}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
@@ -152,3 +154,20 @@ export default function App({ navigation }) {
     </AuthContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    login: {
+        width: 150,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        margin: 5,
+        padding: 5
+    }
+  });
