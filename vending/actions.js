@@ -1,12 +1,6 @@
 import { Alert } from 'react-native';
 import store from './store.js';
-
-const API_PATH = 'https://app.tseh85.com/DemoService/api';
-
-const api = {
-  auth: API_PATH + '/AuthenticateVending',
-  machines: API_PATH + '/vending/machines'
-}
+import api from './api.js';
 
 const actions = {
     signIn: data => {

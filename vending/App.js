@@ -8,18 +8,20 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import store from './store';
 import actions from './actions';
 import styles from './styles';
+import api from './api.js';
 
 import SplashScreen from './screens/SplashScreen';
 import SignInScreen from './screens/SignInScreen';
 
 function VendingScreen() {
+  const token = useSelector(state => state.userToken)
   const [data, setData] = React.useState({ loaded: false, machines: [] });
 
   React.useEffect(() => {
-    
+     fetch(api.machines, {headers: { token }})
+      .then(response => response.json())
+      .then(json => setData({loaded: true, machines: json}))
   });
-
-
 
   return (
     <View style={styles.container}>
