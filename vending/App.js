@@ -13,6 +13,14 @@ import SplashScreen from './screens/SplashScreen';
 import SignInScreen from './screens/SignInScreen';
 
 function VendingScreen() {
+  const [data, setData] = React.useState({ loaded: false, machines: [] });
+
+  React.useEffect(() => {
+    
+  });
+
+
+
   return (
     <View style={styles.container}>
       <Text>Vending!</Text>
