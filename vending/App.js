@@ -25,7 +25,7 @@ function VendingScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Vending!</Text>
+      <Text>{JSON.stringify(data)}</Text>
     </View>
   );
 }
