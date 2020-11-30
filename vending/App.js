@@ -4,43 +4,47 @@ import { Button, Text, TextInput, View, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import store from './store';
 import actions from './actions';
 import styles from './styles';
 
-import SplashScreen from './screens/SplashScreen'
+import SplashScreen from './screens/SplashScreen';
+import SignInScreen from './screens/SignInScreen';
 
-function HomeScreen() {
-  const userName = useSelector(state => state.userName)
+function VendingScreen() {
   return (
     <View style={styles.container}>
-      <Text>Welcome in, {userName}</Text>
-      <Button title="Sign out" onPress={actions.signOut} />
+      <Text>Vending!</Text>
     </View>
   );
 }
 
-function SignInScreen() {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-
+function StorageScreen() {
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.login}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.login}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title="Sign in" onPress={() => actions.signIn({ username, password })} />
+      <Text>Storage!</Text>
     </View>
+  );
+}
+
+function ProfileScreen() {
+    return (
+      <View style={styles.container}>
+        <Button title="Sign out" onPress={actions.signOut} />
+      </View>
+    );
+  }
+
+const Tab = createBottomTabNavigator();
+
+function HomeScreen() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Вендинговые аппараты" component={VendingScreen} />
+      <Tab.Screen name="Склад" component={StorageScreen} />
+      <Tab.Screen name="Профиль" component={ProfileScreen} />
+    </Tab.Navigator>
   );
 }
 
