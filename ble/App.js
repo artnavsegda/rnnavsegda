@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -24,7 +16,32 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import { BleManager } from 'react-native-ble-plx';
+
+const manager = new BleManager();
+
 const App: () => React$Node = () => {
+  function scanAndConnect() {
+    manager.startDeviceScan(null, null, (error, device) => {
+        if (error) {
+            console.log("some kind of BLE error");
+            console.error(error);
+            return
+        }
+        console.log("Found: " + device.name);
+    });
+}
+
+  React.useEffect(() => {
+    const subscription = manager.onStateChange((state) => {
+      if (state === 'PoweredOn') {
+          console.log("BLE ok");
+          scanAndConnect();
+          //subscription.remove();
+      }
+  }, true);
+  }, []);
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
