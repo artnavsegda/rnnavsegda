@@ -6,6 +6,7 @@ import {
   View,
   Text,
   StatusBar,
+  PermissionsAndroid
 } from 'react-native';
 
 import {
@@ -20,6 +21,30 @@ import { BleManager } from 'react-native-ble-plx';
 
 const manager = new BleManager();
 
+const requestBLEPermission = async (callback) => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+      {
+        title: "BLE Permission",
+        message:
+          "We need your permissons to use BLE.",
+        buttonNeutral: "Ask Me Later",
+        buttonNegative: "Cancel",
+        buttonPositive: "OK"
+      }
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log("You can use the BLE");
+      callback();
+    } else {
+      console.log("BLE permission denied");
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+};
+
 const App: () => React$Node = () => {
   function scanAndConnect() {
     manager.startDeviceScan(null, null, (error, device) => {
@@ -28,18 +53,20 @@ const App: () => React$Node = () => {
             console.error(error);
             return
         }
-        console.log("Found: " + device.name);
+        console.log("Found: " + device.name + "id: " +  device.id);
     });
 }
 
   React.useEffect(() => {
-    const subscription = manager.onStateChange((state) => {
-      if (state === 'PoweredOn') {
-          console.log("BLE ok");
-          scanAndConnect();
-          //subscription.remove();
-      }
-  }, true);
+    requestBLEPermission(()=>{
+      const subscription = manager.onStateChange((state) => {
+        if (state === 'PoweredOn') {
+            console.log("BLE ok");
+            scanAndConnect();
+            subscription.remove();
+        }
+    }, true);
+    })
   }, []);
 
   return (
