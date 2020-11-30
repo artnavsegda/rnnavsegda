@@ -1,57 +1,20 @@
 import * as React from 'react';
 import { Provider, useSelector } from 'react-redux'
-import { StyleSheet, Button, Text, TextInput, View } from 'react-native';
+import { Button, Text, TextInput, View, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import store from './store.js'
+import store from './store';
+import actions from './actions';
+import styles from './styles';
 
-const API_PATH = 'https://app.tseh85.com/DemoService/api';
-
-const api = {
-  auth: API_PATH + '/AuthenticateVending',
-  machines: API_PATH + '/vending/machines'
-}
-
-const actions = {
-  signIn: data => {
-    let payload = {
-      "Login": data.username,
-      "Password": data.password,
-    }
-    fetch(api.auth, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(response => {
-      if (!response.ok)
-        throw "Login incorrect";
-      store.dispatch({ type: 'SIGN_IN', token: response.headers.get('token') });
-      return response.json();
-    })
-    .then(json => {
-      store.dispatch({ type: 'USER_NAME', username: json.Name });
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  },
-  signOut: () => store.dispatch({ type: 'SIGN_OUT' })
-}
-
-function SplashScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>Loading...</Text>
-    </View>
-  );
-}
+import SplashScreen from './screens/SplashScreen'
 
 function HomeScreen() {
+  const userName = useSelector(state => state.userName)
   return (
     <View style={styles.container}>
-      <Text>Signed in!</Text>
+      <Text>Welcome in, {userName}</Text>
       <Button title="Sign out" onPress={actions.signOut} />
     </View>
   );
@@ -116,7 +79,7 @@ function App({ navigation }) {
             }}
           />
         ) : (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: state.userName }}/>
         )}
       </Stack.Navigator>
     </NavigationContainer>
@@ -130,20 +93,3 @@ export default function ConnectedApp() {
     </Provider>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  login: {
-      width: 150,
-      height: 40,
-      borderColor: 'gray',
-      borderWidth: 1,
-      margin: 5,
-      padding: 5
-  }
-});
