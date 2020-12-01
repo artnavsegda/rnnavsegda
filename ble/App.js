@@ -1,158 +1,93 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  PermissionsAndroid
-} from 'react-native';
+import * as React from 'react';
+import { Provider, useSelector } from 'react-redux'
+import { Button, Text, TextInput, View, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import store from './store';
+import actions from './actions';
+import styles from './styles';
 
-import { BleManager } from 'react-native-ble-plx';
+import SplashScreen from './screens/SplashScreen';
+import SignInScreen from './screens/SignInScreen';
+import VendingScreen from './screens/VendingScreen';
 
-const manager = new BleManager();
-
-const requestBLEPermission = async (callback) => {
-  try {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
-      {
-        title: "BLE Permission",
-        message:
-          "We need your permissons to use BLE.",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK"
-      }
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("You can use the BLE");
-      callback();
-    } else {
-      console.log("BLE permission denied");
-    }
-  } catch (err) {
-    console.warn(err);
-  }
-};
-
-const App: () => React$Node = () => {
-  function scanAndConnect() {
-    manager.startDeviceScan(null, null, (error, device) => {
-        if (error) {
-            console.log("some kind of BLE error");
-            console.error(error);
-            return
-        }
-        console.log("Found: " + device.name + "id: " +  device.id);
-    });
+function StorageScreen() {
+  return (
+    <View style={styles.container}>
+      <Text>Storage!</Text>
+    </View>
+  );
 }
 
+function ProfileScreen() {
+    return (
+      <View style={styles.container}>
+        <Button title="Sign out" onPress={actions.signOut} />
+      </View>
+    );
+  }
+
+const Tab = createBottomTabNavigator();
+
+function HomeScreen() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Вендинговые аппараты" component={VendingScreen} />
+      <Tab.Screen name="Склад" component={StorageScreen} />
+      <Tab.Screen name="Профиль" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+}
+
+const Stack = createStackNavigator();
+
+function App({ navigation }) {
+  const state = useSelector(state => state)
+
   React.useEffect(() => {
-    requestBLEPermission(()=>{
-      const subscription = manager.onStateChange((state) => {
-        if (state === 'PoweredOn') {
-            console.log("BLE ok");
-            scanAndConnect();
-            subscription.remove();
-        }
-    }, true);
-    })
+    const bootstrapAsync = async () => {
+      let userToken;
+
+      try {
+        userToken = await AsyncStorage.getItem('userToken');
+      } catch (e) {
+        // Restoring token failed
+      }
+      store.dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+    };
+
+    bootstrapAsync();
   }, []);
 
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {state.isLoading ? (
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        ) : state.userToken == null ? (
+          <Stack.Screen
+            name="SignIn"
+            component={SignInScreen}
+            options={{
+              title: 'Sign in',
+              animationTypeForReplace: state.isSignout ? 'pop' : 'push',
+            }}
+          />
+        ) : (
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: state.userName }}/>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
-
-export default App;
+export default function ConnectedApp() {
+  return(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+}
