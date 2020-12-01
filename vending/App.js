@@ -1,6 +1,6 @@
 import React from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View, Dimensions } from 'react-native';
 
 const DATA = [
     {
@@ -41,34 +41,48 @@ const DATA = [
     }
 ]
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <MapView style={styles.mapStyle}>
-          {DATA.map((marker, index) => (
-            <MapView.Marker
-              key={marker.GUID}
-              coordinate={{latitude: marker.Latitude, longitude: marker.Longitude}}
-              title={marker.Name}
-              description={marker.Address}
-            />
-          ))}
-        </MapView>
-      </View>
-    );
-  }
+const Item = ({ title }) => (
+  <View style={styles.item}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
+
+export default function App() {
+  const renderItem = ({ item }) => (
+    <Item title={item.Name} />
+  );
+
+  return (
+    <View style={{flex: 1}}>
+      <MapView style={{flex: 1}}>
+        {DATA.map((marker, index) => (
+          <MapView.Marker
+            key={marker.GUID}
+            coordinate={{latitude: marker.Latitude, longitude: marker.Longitude}}
+            title={marker.Name}
+            description={marker.Address}
+          />
+        ))}
+      </MapView>
+      <SafeAreaView style={{flex: 1}}>
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.GUID}
+        />
+      </SafeAreaView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
-  mapStyle: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+  title: {
+    fontSize: 32,
   },
 });
