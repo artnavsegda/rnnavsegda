@@ -15,6 +15,7 @@ export default function VendingScreen() {
     const state = useSelector(state => state)
     const [data, setData] = React.useState({ isLoading: true, machines: [] });
     const map = React.useRef(null);
+    const flatlist = React.useRef(null);
   
     React.useEffect(() => {
       state.userToken ? fetch(api.machines, {headers: { token: state.userToken }})
@@ -47,7 +48,7 @@ export default function VendingScreen() {
         </View>
       ) : (
         <View style={{flex: 1}}>
-          <MapView style={{flex: 1}}
+          <MapView style={{flex: 9}}
             ref={map}
             initialRegion={{
               ...state.location.coords,
@@ -63,12 +64,16 @@ export default function VendingScreen() {
                 coordinate={{latitude: marker.Latitude, longitude: marker.Longitude}}
                 title={marker.Name}
                 description={marker.Address}
-                onPress={()=>{console.log(marker.GUID)}}
+                onPress={()=>{
+                  console.log(marker.GUID)
+                  flatlist.current.scrollToIndex({animated: true, index})
+                }}
               />
             ))}
           </MapView>
           <View style={{flex: 1}}>
             <FlatList
+              ref={flatlist}
               data={data.machines}
               renderItem={renderItem}
               keyExtractor={item => item.GUID}
