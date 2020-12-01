@@ -1,19 +1,20 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import styles from '../styles';
 import api from '../api.js';
 
-const Item = ({ title }) => (
-  <View style={styles.item}>
+const Item = ({ title, onPress }) => (
+  <TouchableOpacity style={styles.item} onPress={onPress}>
     <Text style={styles.title}>{title}</Text>
-  </View>
+  </TouchableOpacity>
 );
 
 export default function VendingScreen() {
     const state = useSelector(state => state)
     const [data, setData] = React.useState({ isLoading: true, machines: [] });
+    const map = React.useRef(null);
   
     React.useEffect(() => {
       state.userToken ? fetch(api.machines, {headers: { token: state.userToken }})
@@ -22,7 +23,21 @@ export default function VendingScreen() {
     });
 
     const renderItem = ({ item }) => (
-      <Item title={item.Name} />
+      <Item title={item.Name} onPress={()=>{
+        console.log(item.Name)
+
+        map.current.animateCamera(
+          {
+            center: {
+              latitude: item.Latitude,
+              longitude: item.Longitude
+            },
+            zoom: 15
+          },
+          5000
+        );
+
+      }}/>
     );
   
     return (
@@ -33,6 +48,7 @@ export default function VendingScreen() {
       ) : (
         <View style={{flex: 1}}>
           <MapView style={{flex: 1}}
+            ref={map}
             initialRegion={{
               ...state.location.coords,
               latitudeDelta: 0.0922,
