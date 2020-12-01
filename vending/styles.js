@@ -14,5 +14,11 @@ export default styles = StyleSheet.create({
         borderWidth: 1,
         margin: 5,
         padding: 5
+    },
+    item: {
+      backgroundColor: '#f9c2ff',
+      padding: 20,
+      marginVertical: 8,
+      marginHorizontal: 16,
     }
 });
