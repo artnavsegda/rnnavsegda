@@ -4,27 +4,17 @@ import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location';
 
 export default function App() {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [permission, askForPermission] = Permissions.usePermissions(Permissions.LOCATION, { ask: true });
+  const [location, setLocation] = useState("loading");
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-      }
-
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
   }, []);
 
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
+  let text = JSON.stringify(location);
 
   return (
     <View style={styles.container}>
