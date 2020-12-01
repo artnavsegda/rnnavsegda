@@ -5,8 +5,14 @@ let store = createStore((prevState = {
     isSignout: false,
     userToken: null,
     userName: "",
+    location: null
   }, action) => {
     switch (action.type) {
+      case 'LOCATION':
+        return {
+          ...prevState,
+          location: action.location,
+        };
       case 'USER_NAME':
         return {
           ...prevState,

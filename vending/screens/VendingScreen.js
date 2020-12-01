@@ -12,13 +12,13 @@ const Item = ({ title }) => (
 );
 
 export default function VendingScreen() {
-    const token = useSelector(state => state.userToken)
+    const state = useSelector(state => state)
     const [data, setData] = React.useState({ isLoading: true, machines: [] });
   
     React.useEffect(() => {
-       fetch(api.machines, {headers: { token }})
+      state.userToken ? fetch(api.machines, {headers: { token: state.userToken }})
         .then(response => response.json())
-        .then(json => setData({isLoading: false, machines: json}))
+        .then(json => setData({isLoading: false, machines: json})) : null
     });
 
     const renderItem = ({ item }) => (
@@ -32,7 +32,15 @@ export default function VendingScreen() {
         </View>
       ) : (
         <View style={{flex: 1}}>
-          <MapView style={{flex: 1}}>
+          <MapView style={{flex: 1}}
+            initialRegion={{
+              ...state.location.coords,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            showsUserLocation={true}
+            followsUserLocation={true}
+          >
             {data.machines.map((marker, index) => (
               <MapView.Marker
                 key={marker.GUID}
