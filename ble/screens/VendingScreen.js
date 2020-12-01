@@ -16,9 +16,9 @@ export default function VendingScreen() {
     const [data, setData] = React.useState({ isLoading: true, machines: [] });
   
     React.useEffect(() => {
-       fetch(api.machines, {headers: { token }})
+       token ? fetch(api.machines, {headers: { token }})
         .then(response => response.json())
-        .then(json => setData({isLoading: false, machines: json}))
+        .then(json => setData({isLoading: false, machines: json})) : undefined
     });
 
     const renderItem = ({ item }) => (
