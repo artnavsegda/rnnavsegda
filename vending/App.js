@@ -61,6 +61,7 @@ export default function App() {
             coordinate={{latitude: marker.Latitude, longitude: marker.Longitude}}
             title={marker.Name}
             description={marker.Address}
+            onPress={()=>{console.log(marker.GUID)}}
           />
         ))}
       </MapView>
