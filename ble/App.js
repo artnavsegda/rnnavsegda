@@ -16,7 +16,7 @@ import SplashScreen from './screens/SplashScreen';
 import SignInScreen from './screens/SignInScreen';
 import VendingScreen from './screens/VendingScreen';
 
-import { BleManager } from 'react-native-ble-plx';
+const manager = new BleManager();
 
 function StorageScreen() {
   return (
@@ -88,7 +88,7 @@ function App({ navigation }) {
                   console.error(error);
                   return
               }
-              console.log("Found: " + device.name + "id: " +  device.id);
+              console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
             });
             subscription.remove();
         }
