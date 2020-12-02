@@ -6,7 +6,15 @@ import styles from '../styles';
 import api from '../api.js';
 
 const Item = ({ item, onPress }) => {
-  const beacons = useSelector(state => state.beacons)
+  const state = useSelector(state => state)
+
+  function openLock()
+  {
+    state.userToken ? fetch(api.openlock + '?' + new URLSearchParams({ MachineGUID: item.GUID }), {headers: { token: state.userToken }})
+        .then(response => response.text())
+        .then(text => console.log(text)) : null
+  }
+
   return (
   <TouchableOpacity style={styles.item} onPress={onPress}>
     <Text style={styles.title}>Название: {item.Name}</Text>
@@ -16,7 +24,7 @@ const Item = ({ item, onPress }) => {
     <Text style={styles.title}>Время работы: {item.Start}-{item.Finish}</Text>
     <Text style={styles.title}>Дата обслуживания: {item.ServiceDate}</Text>
     <Text style={styles.title}>iBeacon: {item.IBeaconUDID}</Text>
-    { beacons.includes(item.IBeaconUDID) && <Button title="Открыть замок"/>}
+    { state.beacons.includes(item.IBeaconUDID) && <Button title="Открыть замок" onPress={openLock} />}
   </TouchableOpacity>
 )}
 
