@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Provider, useSelector } from 'react-redux'
 import { Button, Text, View, PermissionsAndroid } from 'react-native';
+import { BleManager } from 'react-native-ble-plx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -14,6 +15,8 @@ import styles from './styles';
 import SplashScreen from './screens/SplashScreen';
 import SignInScreen from './screens/SignInScreen';
 import VendingScreen from './screens/VendingScreen';
+
+import { BleManager } from 'react-native-ble-plx';
 
 function StorageScreen() {
   return (
@@ -75,8 +78,24 @@ function App({ navigation }) {
       }
       Geolocation.getCurrentPosition(setloc);
       Geolocation.watchPosition(setloc);
-    })
 
+      const subscription = manager.onStateChange((state) => {
+        if (state === 'PoweredOn') {
+            console.log("BLE ok");
+            manager.startDeviceScan(null, null, (error, device) => {
+              if (error) {
+                  console.log("some kind of BLE error");
+                  console.error(error);
+                  return
+              }
+              console.log("Found: " + device.name + "id: " +  device.id);
+            });
+            subscription.remove();
+        }
+        else
+          console.log("BLE: " + JSON.stringify(state));
+      }, true);
+    })
   }, []);
 
   return (
