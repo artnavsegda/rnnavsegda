@@ -1,18 +1,20 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, Dimensions, Button } from 'react-native';
 import MapView from 'react-native-maps';
 import styles from '../styles';
 import api from '../api.js';
 
 const Item = ({ item, onPress }) => (
   <TouchableOpacity style={styles.item} onPress={onPress}>
-    <Text style={styles.title}>{item.Name}</Text>
-    <Text style={styles.title}>{item.Address}</Text>
-    <Text style={styles.title}>{item.Start}</Text>
-    <Text style={styles.title}>{item.Finish}</Text>
-    <Text style={styles.title}>{item.Comment}</Text>
-    <Text style={styles.title}>{item.ServiceDate}</Text>
+    <Text style={styles.title}>Название: {item.Name}</Text>
+    <Text style={styles.title}>Адрес: {item.Address}</Text>
+    <Text style={styles.title}>Расстояние: 0000000</Text>
+    <Text style={styles.title}>Комментарий: {item.Comment}</Text>
+    <Text style={styles.title}>Время работы: {item.Start}-{item.Finish}</Text>
+    <Text style={styles.title}>Дата обслуживания: {item.ServiceDate}</Text>
+    {/* <Button title="Go"/> */}
+    <Button title="Открыть замок"/>
   </TouchableOpacity>
 );
 
