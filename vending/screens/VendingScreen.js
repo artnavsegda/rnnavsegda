@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import styles from '../styles';
@@ -14,7 +14,10 @@ const Item = ({ item, onPress }) => (
         <Paragraph />
       </Card.Content>
       <Card.Actions>
-        <Button>Навигация</Button>
+        <Button onPress={() => {
+          Linking.openURL("geo:" + item.Latitude + "," + item.Longitude);
+          console.log('Pressed');
+        }}>Навигация</Button>
         <Button disabled={true}>Открыть замок</Button>
       </Card.Actions>
 {/*       <Text style={styles.title}>Название: {item.Name}</Text>
@@ -72,6 +75,7 @@ export default function VendingScreen() {
                 coordinate={{latitude: marker.Latitude, longitude: marker.Longitude}}
                 title={marker.Name}
                 description={marker.Address}
+                showsMyLocationButton={true}
                 onPress={()=>{
                   console.log(marker.GUID)
                   flatlist.current.scrollToIndex({animated: true, index})
@@ -79,17 +83,16 @@ export default function VendingScreen() {
               />
             ))}
           </MapView>
-          <View style={{flex: 1}}>
-            <FlatList
-              ref={flatlist}
-              data={data.machines}
-              renderItem={renderItem}
-              keyExtractor={item => item.GUID}
-              horizontal
-              snapToAlignment='start'
-              snapToInterval={Dimensions.get('window').width}
-            />
-          </View>
+          <FlatList style={{flex: 1}}
+            style={{position: 'absolute', bottom: 0}}
+            ref={flatlist}
+            data={data.machines}
+            renderItem={renderItem}
+            keyExtractor={item => item.GUID}
+            horizontal
+            snapToAlignment='start'
+            snapToInterval={Dimensions.get('window').width}
+          />
         </View>
       )
     );

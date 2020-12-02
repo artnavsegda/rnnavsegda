@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Provider, useSelector } from 'react-redux'
-import { Button, Text, TextInput, View, Alert } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Text, TextInput, View, Alert } from 'react-native';
+import { Provider as PaperProvider, Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,7 +21,8 @@ import VendingScreen from './screens/VendingScreen';
 function StorageScreen() {
   return (
     <View style={styles.container}>
-      <Text>Storage!</Text>
+      <Button>Получение</Button>
+      <Button>Сдача</Button>
     </View>
   );
 }
@@ -29,7 +30,7 @@ function StorageScreen() {
 function ProfileScreen() {
     return (
       <View style={styles.container}>
-        <Button title="Sign out" onPress={actions.signOut} />
+        <Button onPress={actions.signOut}>Выход</Button>
       </View>
     );
   }
