@@ -17,10 +17,10 @@ export default styles = StyleSheet.create({
 //      padding: 5
     },
     item: {
-      backgroundColor: '#f9c2ff',
+//      backgroundColor: '#f9c2ff',
       padding: 20,
-//      marginVertical: 8,
-//      marginHorizontal: 16,
-      width: Dimensions.get('window').width
+      marginVertical: 8,
+      marginHorizontal: 16,
+      width: Dimensions.get('window').width - 32
     }
 });
