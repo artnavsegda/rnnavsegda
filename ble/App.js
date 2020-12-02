@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Provider, useSelector } from 'react-redux'
-import { Button, Text, TextInput, View, Alert } from 'react-native';
+import { Button, Text, View, PermissionsAndroid } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -60,6 +60,15 @@ function App({ navigation }) {
     };
 
     bootstrapAsync();
+
+    PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION, 
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+    ])
+    .then(permissions => {
+      console.log(permissions + "granted");
+    }}
+
   }, []);
 
   return (
