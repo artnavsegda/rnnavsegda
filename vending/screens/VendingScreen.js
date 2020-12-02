@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, Dimensions } from 'react-native';
 import MapView from 'react-native-maps';
 import styles from '../styles';
 import api from '../api.js';
 
-const Item = ({ title, onPress }) => (
+const Item = ({ item, onPress }) => (
   <TouchableOpacity style={styles.item} onPress={onPress}>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.title}>{item.Name}</Text>
+    <Text style={styles.title}>{item.Address}</Text>
+    <Text style={styles.title}>{item.Start}</Text>
+    <Text style={styles.title}>{item.Finish}</Text>
+    <Text style={styles.title}>{item.Comment}</Text>
+    <Text style={styles.title}>{item.ServiceDate}</Text>
   </TouchableOpacity>
 );
 
@@ -23,21 +28,11 @@ export default function VendingScreen() {
         .then(json => setData({isLoading: false, machines: json})) : null
     });
 
-    const renderItem = ({ item }) => (
-      <Item title={item.Name} onPress={()=>{
+    const renderItem = ({ item, index }) => (
+      <Item item={item} onPress={()=>{
         console.log(item.Name)
-
-        map.current.animateCamera(
-          {
-            center: {
-              latitude: item.Latitude,
-              longitude: item.Longitude
-            },
-            zoom: 15
-          },
-          5000
-        );
-
+        map.current.animateCamera({center: {latitude: item.Latitude, longitude: item.Longitude }, zoom: 15 }, 5000 );
+        //flatlist.current.scrollToIndex({animated: true, index})
       }}/>
     );
   
@@ -48,7 +43,7 @@ export default function VendingScreen() {
         </View>
       ) : (
         <View style={{flex: 1}}>
-          <MapView style={{flex: 9}}
+          <MapView style={{flex: 2}}
             ref={map}
             initialRegion={{
               ...state.location.coords,
@@ -77,6 +72,9 @@ export default function VendingScreen() {
               data={data.machines}
               renderItem={renderItem}
               keyExtractor={item => item.GUID}
+              horizontal
+              snapToAlignment='start'
+              snapToInterval={Dimensions.get('window').width}
             />
           </View>
         </View>

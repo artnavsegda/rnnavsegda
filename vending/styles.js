@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default styles = StyleSheet.create({
     container: {
@@ -8,17 +8,18 @@ export default styles = StyleSheet.create({
       justifyContent: 'center',
     },
     login: {
-        width: 150,
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        margin: 5,
-        padding: 5
+      width: 150,
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      margin: 5,
+      padding: 5
     },
     item: {
       backgroundColor: '#f9c2ff',
       padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
+//      marginVertical: 8,
+//      marginHorizontal: 16,
+      width: Dimensions.get('window').width
     }
 });
