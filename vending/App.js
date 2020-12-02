@@ -5,7 +5,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location';
@@ -34,12 +34,12 @@ function ProfileScreen() {
     );
   }
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 function HomeScreen() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Вендинговые аппараты" component={VendingScreen} />
+      <Tab.Screen name="Аппараты" component={VendingScreen} />
       <Tab.Screen name="Склад" component={StorageScreen} />
       <Tab.Screen name="Профиль" component={ProfileScreen} />
     </Tab.Navigator>
