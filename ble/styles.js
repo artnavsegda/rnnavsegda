@@ -10,16 +10,17 @@ export default styles = StyleSheet.create({
     login: {
       width: 150,
       height: 40,
-      borderColor: 'gray',
-      borderWidth: 1,
+//      borderColor: 'gray',
+//      borderWidth: 1,
+      backgroundColor: '#fff',
       margin: 5,
-      padding: 5
+//      padding: 5
     },
     item: {
-      backgroundColor: '#f9c2ff',
+//      backgroundColor: '#fff',
       padding: 20,
-//      marginVertical: 8,
-//      marginHorizontal: 16,
-      width: Dimensions.get('window').width
+      marginVertical: 8,
+      marginHorizontal: 16,
+      width: Dimensions.get('window').width - 32
     }
 });

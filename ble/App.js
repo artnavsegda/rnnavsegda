@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Provider, useSelector } from 'react-redux'
-import { Button, Text, View, PermissionsAndroid } from 'react-native';
+import { Text, View, PermissionsAndroid } from 'react-native';
+import { Provider as PaperProvider, Button } from 'react-native-paper';
 import { BleManager } from 'react-native-ble-plx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Geolocation from '@react-native-community/geolocation';
 
 import store from './store';
@@ -21,25 +22,26 @@ const manager = new BleManager();
 function StorageScreen() {
   return (
     <View style={styles.container}>
-      <Text>Storage!</Text>
+      <Button>Получение</Button>
+      <Button>Сдача</Button>
     </View>
   );
 }
 
 function ProfileScreen() {
-    return (
-      <View style={styles.container}>
-        <Button title="Sign out" onPress={actions.signOut} />
-      </View>
-    );
-  }
+  return (
+    <View style={styles.container}>
+      <Button onPress={actions.signOut}>Выход</Button>
+    </View>
+  );
+}
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Вендинговые аппараты" component={VendingScreen} />
+      <Tab.Screen name="Аппараты" component={VendingScreen} />
       <Tab.Screen name="Склад" component={StorageScreen} />
       <Tab.Screen name="Профиль" component={ProfileScreen} />
     </Tab.Navigator>
@@ -135,7 +137,9 @@ function App({ navigation }) {
 export default function ConnectedApp() {
   return(
     <Provider store={store}>
-      <App />
+      <PaperProvider>
+        <App />
+      </PaperProvider>
     </Provider>
   )
 }

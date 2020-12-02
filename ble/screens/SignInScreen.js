@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { TextInput, View, Button } from 'react-native';
+import { View } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import styles from '../styles';
 import actions from '../actions';
+import Logo from '../logo';
 
 export default function SignInScreen() {
     const [username, setUsername] = React.useState('');
@@ -9,20 +11,21 @@ export default function SignInScreen() {
   
     return (
       <View style={styles.container}>
+        <Logo />
         <TextInput
           style={styles.login}
-          placeholder="Username"
+          placeholder="Логин"
           value={username}
           onChangeText={setUsername}
         />
         <TextInput
           style={styles.login}
-          placeholder="Password"
+          placeholder="Пароль"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
         />
-        <Button title="Sign in" onPress={() => actions.signIn({ username, password })} />
+        <Button onPress={() => actions.signIn({ username, password })}>Вход</Button>
       </View>
     );
   }
