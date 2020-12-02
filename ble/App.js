@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Geolocation from '@react-native-community/geolocation';
 
 import store from './store';
 import actions from './actions';
@@ -67,6 +68,11 @@ function App({ navigation }) {
     ])
     .then(permissions => {
       console.log(permissions + "granted");
+
+      geolocation.watchPosition((location) => {
+        console.log(JSON.stringify(location))
+      });
+
     }}
 
   }, []);
