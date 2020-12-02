@@ -5,7 +5,9 @@ import MapView from 'react-native-maps';
 import styles from '../styles';
 import api from '../api.js';
 
-const Item = ({ item, onPress }) => (
+const Item = ({ item, onPress }) => {
+  const beacons = useSelector(state => state.beacons)
+  return (
   <TouchableOpacity style={styles.item} onPress={onPress}>
     <Text style={styles.title}>Название: {item.Name}</Text>
     <Text style={styles.title}>Адрес: {item.Address}</Text>
@@ -13,10 +15,10 @@ const Item = ({ item, onPress }) => (
     <Text style={styles.title}>Комментарий: {item.Comment}</Text>
     <Text style={styles.title}>Время работы: {item.Start}-{item.Finish}</Text>
     <Text style={styles.title}>Дата обслуживания: {item.ServiceDate}</Text>
-    {/* <Button title="Go"/> */}
-    <Button title="Открыть замок"/>
+    <Text style={styles.title}>iBeacon: {item.IBeaconUDID}</Text>
+    { beacons.includes(item.IBeaconUDID) && <Button title="Открыть замок"/>}
   </TouchableOpacity>
-);
+)}
 
 export default function VendingScreen() {
     const state = useSelector(state => state)

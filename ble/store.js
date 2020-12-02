@@ -5,9 +5,15 @@ let store = createStore((prevState = {
     isSignout: false,
     userToken: null,
     userName: "",
-    location: null
+    location: null,
+    beacons: []
   }, action) => {
     switch (action.type) {
+      case 'BEACONS':
+        return {
+          ...prevState,
+          beacons: action.beacons,
+        };
       case 'LOCATION':
         return {
           ...prevState,
