@@ -67,13 +67,15 @@ function App({ navigation }) {
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
     ])
     .then(permissions => {
-      console.log(permissions + "granted");
-
-      geolocation.watchPosition((location) => {
+      console.log(JSON.stringify(permissions) + "granted");
+      function setloc(location)
+      {
         console.log(JSON.stringify(location))
-      });
-
-    }}
+        store.dispatch({ type: 'LOCATION', location: location });
+      }
+      Geolocation.getCurrentPosition(setloc);
+      Geolocation.watchPosition(setloc);
+    })
 
   }, []);
 
