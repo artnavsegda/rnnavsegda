@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, Button } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { View } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import styles from '../styles';
 import actions from '../actions';
 import Logo from '../logo';
@@ -25,7 +25,7 @@ export default function SignInScreen() {
           onChangeText={setPassword}
           secureTextEntry
         />
-        <Button title="Sign in" onPress={() => actions.signIn({ username, password })} />
+        <Button onPress={() => actions.signIn({ username, password })}>Вход</Button>
       </View>
     );
   }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Provider, useSelector } from 'react-redux'
 import { Button, Text, TextInput, View, Alert } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -97,7 +98,9 @@ export default function ConnectedApp() {
 
   return(
     <Provider store={store}>
-      <App />
+      <PaperProvider>
+        <App />
+      </PaperProvider>
     </Provider>
   )
 }

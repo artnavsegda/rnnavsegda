@@ -15,7 +15,7 @@ const actions = {
       })
       .then(response => {
         if (!response.ok)
-          throw "Login incorrect";
+          throw "Неверный логин или пароль";
         store.dispatch({ type: 'SIGN_IN', token: response.headers.get('token') });
         return response.json();
       })

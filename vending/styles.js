@@ -10,10 +10,11 @@ export default styles = StyleSheet.create({
     login: {
       width: 150,
       height: 40,
-      borderColor: 'gray',
-      borderWidth: 1,
+//      borderColor: 'gray',
+//      borderWidth: 1,
+      backgroundColor: '#fff',
       margin: 5,
-      padding: 5
+//      padding: 5
     },
     item: {
       backgroundColor: '#f9c2ff',
