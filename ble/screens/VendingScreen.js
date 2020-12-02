@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import styles from '../styles';
