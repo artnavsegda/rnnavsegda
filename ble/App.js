@@ -5,7 +5,8 @@ import { BleManager } from 'react-native-ble-plx';
 
 const manager = new BleManager();
 
-let devices = new Map()
+let devices = new Map();
+let uuids = new Set();
 
 function App({ navigation }) {
   React.useEffect(() => {
@@ -25,8 +26,23 @@ function App({ navigation }) {
                   console.error(error);
                   return
               }
+
+              if (device.serviceUUIDs)
+              {
+                device.serviceUUIDs.forEach(value => {
+                    uuids.add(value);
+                })
+              }
+
               //console.log("Found: " + device.name + " id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
-              devices.set(device.id, {name: device.name, uuids: device.serviceUUIDs, lastSeen: Date.now() })
+              devices.set(device.id, {name: device.name, uuids: device.serviceUUIDs, lastSeen: Date.now()})
+/*               console.log("Devices:")
+              for (let [key, value] of devices) {
+                console.log(key + ' = ' + JSON.stringify(value))
+              }
+              console.log("Size:" + devices.size) */
+
+              //console.log(uuids);
             });
             subscription.remove();
         }
