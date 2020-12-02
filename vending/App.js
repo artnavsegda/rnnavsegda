@@ -5,8 +5,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location';
@@ -35,17 +34,12 @@ function ProfileScreen() {
     );
   }
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
   return (
-    <Tab.Navigator style={{ backgroundColor: 'tomato' }}>
-      <Tab.Screen name="Аппараты" component={VendingScreen} options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
-          ),
-        }}
-      />
+    <Tab.Navigator>
+      <Tab.Screen name="Аппараты" component={VendingScreen} />
       <Tab.Screen name="Склад" component={StorageScreen} />
       <Tab.Screen name="Профиль" component={ProfileScreen} />
     </Tab.Navigator>
