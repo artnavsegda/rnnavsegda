@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location';
@@ -38,8 +39,13 @@ const Tab = createMaterialBottomTabNavigator();
 
 function HomeScreen() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Аппараты" component={VendingScreen} />
+    <Tab.Navigator style={{ backgroundColor: 'tomato' }}>
+      <Tab.Screen name="Аппараты" component={VendingScreen} options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <MaterialCommunityIcons name="bell" color={color} size={26} />
+          ),
+        }}
+      />
       <Tab.Screen name="Склад" component={StorageScreen} />
       <Tab.Screen name="Профиль" component={ProfileScreen} />
     </Tab.Navigator>
