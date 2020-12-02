@@ -28,7 +28,7 @@ const Item = ({ item, onPress }) => {
           Linking.openURL("geo:" + item.Latitude + "," + item.Longitude);
           console.log('Pressed');
         }}>Навигация</Button>
-        <Button disabled={state.beacons.includes(item.IBeaconUDID)}>Открыть замок</Button>
+        <Button disabled={!state.beacons.includes(item.IBeaconUDID)}>Открыть замок</Button>
       </Card.Actions>
     </TouchableOpacity>
     </Card>

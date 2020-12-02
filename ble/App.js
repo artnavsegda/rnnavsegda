@@ -122,7 +122,7 @@ function App({ navigation }) {
             name="SignIn"
             component={SignInScreen}
             options={{
-              title: 'Sign in',
+              title: 'Цех 85',
               animationTypeForReplace: state.isSignout ? 'pop' : 'push',
             }}
           />
