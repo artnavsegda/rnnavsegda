@@ -26,23 +26,24 @@ function App({ navigation }) {
                   console.error(error);
                   return
               }
-
-              if (device.serviceUUIDs)
+/*               if (device.serviceUUIDs)
               {
                 device.serviceUUIDs.forEach(value => {
                     uuids.add(value);
                 })
-              }
-
+              } */
               //console.log("Found: " + device.name + " id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
               devices.set(device.id, {name: device.name, uuids: device.serviceUUIDs, lastSeen: Date.now()})
-/*               console.log("Devices:")
+              //console.log("Devices:")
+              uuids = new Set();
               for (let [key, value] of devices) {
-                console.log(key + ' = ' + JSON.stringify(value))
+                //console.log(key + ' = ' + JSON.stringify(value))
+                if ((Date.now() - value.lastSeen) < 5000)
+                  if (value.uuids)
+                    value.uuids.forEach(uuid => uuids.add(uuid))
               }
-              console.log("Size:" + devices.size) */
-
-              //console.log(uuids);
+              //console.log("Size:" + devices.size)
+              console.log(uuids);
             });
             subscription.remove();
         }
