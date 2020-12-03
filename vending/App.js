@@ -1,66 +1,156 @@
-import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image } from 'react-native';
-import { Button, DataTable, Paragraph } from 'react-native-paper';
+import * as React from 'react';
+import { Provider, useSelector } from 'react-redux'
+import { Text, TextInput, View, Alert } from 'react-native';
+import { Provider as PaperProvider, Button } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-const products = [{"ID":40,"Name":"Цехобон с карамелью","PictureID":20316,"PictureTime":"2020-06-01T21:00:25.623"},{"ID":41,"Name":"Цехобон с корицей","PictureID":20320,"PictureTime":"2020-06-01T21:06:51.953"},{"ID":42,"Name":"Цехобон с шоколадом и малиной","PictureID":20324,"PictureTime":"2020-06-01T21:25:48.923"},{"ID":32,"Name":"Краст из овсянки с клюквой","PictureID":10131,"PictureTime":"2018-11-12T16:42:44.637"},{"ID":22,"Name":"Брауни карамельный","PictureID":10127,"PictureTime":"2018-11-12T16:42:44.637"},{"ID":31,"Name":"Брауни классический","PictureID":20722,"PictureTime":"2018-11-12T16:42:44.637"},{"ID":35,"Name":"Маффин шоколадный","PictureID":20256,"PictureTime":"2018-11-12T16:42:44.637"},{"ID":37,"Name":"Ром-баба","PictureID":20288,"PictureTime":"2018-11-12T16:42:44.637"},{"ID":39,"Name":"Сочень с творогом","PictureID":10139,"PictureTime":"2018-11-12T16:42:44.637"},{"ID":10244,"Name":"Сырный шарик","PictureID":20889,"PictureTime":"2019-02-02T09:56:28.077"},{"ID":71,"Name":"Сметанник с черной смородиной","PictureID":20276,"PictureTime":"2018-11-12T16:42:44.637"},{"ID":63,"Name":"Медовик классический","PictureID":20424,"PictureTime":"2018-11-12T16:42:44.637"}]
+import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location';
 
-const Spinner = (props) => (
-      <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-        <Button onPress={props.onMinus}>-</Button><Text>{props.value}</Text><Button onPress={props.onPlus}>+</Button>
+import store from './store';
+import actions from './actions';
+import styles from './styles';
+
+import SplashScreen from './screens/SplashScreen';
+import SignInScreen from './screens/SignInScreen';
+import VendingScreen from './screens/VendingScreen';
+import StorageScreen from './screens/StorageScreen';
+
+function ServiceScreen() {
+  const state = useSelector(state => state)
+  const [serviceState, setServiceState] = React.useState({stage: 0});
+
+  React.useEffect(() => {
+    let timerID = setInterval(()=>{
+      console.log("service " + state.servicingMachineID + " heartbeat");
+      fetch(api.status + '?' + new URLSearchParams({ MachineGUID: state.servicingMachineID }), {headers: { token: state.userToken }})
+      .then(response => response.json())
+      .then(status => {
+        console.log("status: " + JSON.stringify(status))
+        if (status.Door == 0)
+        {
+          clearInterval(timerID);
+          store.dispatch({ type: 'MACHINE', machine: null })
+        }
+      })
+    },5000)
+
+    
+
+  }, []);
+
+  switch (stage)
+  {
+    case 0:
+      return (
+        <View style={styles.container}>
+          <Text>Инвентаризация</Text>
+          <Button onPress={()=>{setServiceState({stage: 1})}}>Дальше</Button>
+        </View>
+      );
+    case 1:
+      return (
+        <View style={styles.container}>
+          <Text>Изъятие</Text>
+          <Button onPress={()=>{setServiceState({stage: 2})}}>Дальше</Button>
+        </View>
+      );
+    case 2:
+      return (
+        <View style={styles.container}>
+          <Text>Пополнение</Text>
+          <Button onPress={()=>{setServiceState({stage: 3})}}>Дальше</Button>
+        </View>
+      );
+    case 3:
+      return (
+        <View style={styles.container}>
+          <Text>Закройте дверь !</Text>
+        </View>
+      );
+  }
+}
+
+function ProfileScreen() {
+    return (
+      <View style={styles.container}>
+        <Button onPress={actions.signOut}>Выход</Button>
       </View>
-)
+    );
+  }
 
-const App = () => {
-  const [state, setState] = React.useState(products);
+const Tab = createMaterialTopTabNavigator();
 
-
-  const renderItem = ({ item, index }) => (
-    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-      <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
-      <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph>
-      <Spinner value={item.value ? item.value : 0} onPlus={()=>{
-        let newState = [...state];
-        if (!newState[index].value)
-          newState[index].value = 0;
-        newState[index].value++        
-        setState(newState);
-      }}
-      onMinus={()=>{
-        let newState = [...state];
-        if (!newState[index].value)
-          newState[index].value = 0;
-        if (newState[index].value > 0)
-          newState[index].value--        
-        setState(newState);
-      }}
-      
-      />
-    </View>
-  );
-
+function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={state}
-        renderItem={renderItem}
-        keyExtractor={item => item.ID}
-      />
-      <Button onPress={()=>{
-        console.log(JSON.stringify(
-          state.map((element)=>{
-            return { ProductID: element.ID, Quantity: element.value ? element.value : 0 }
-          })
-        ))
-      }}>Send</Button>
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="Аппараты" component={VendingScreen} />
+      <Tab.Screen name="Склад" component={StorageScreen} />
+      <Tab.Screen name="Профиль" component={ProfileScreen} />
+    </Tab.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-});
+const Stack = createStackNavigator();
 
-export default App;
+function App({ navigation }) {
+  const state = useSelector(state => state)
+
+  React.useEffect(() => {
+    const bootstrapAsync = async () => {
+      let userToken;
+
+      try {
+        userToken = await AsyncStorage.getItem('userToken');
+      } catch (e) {
+        // Restoring token failed
+      }
+      store.dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+    };
+
+    bootstrapAsync();
+  }, []);
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {state.isLoading ? (
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        ) : state.userToken == null ? (
+          <Stack.Screen
+            name="SignIn"
+            component={SignInScreen}
+            options={{
+              title: 'Цех 85',
+              animationTypeForReplace: state.isSignout ? 'pop' : 'push',
+            }}
+          />
+        ) : state.servicingMachineID == null ? (
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: state.userName }}/>
+        ) : (
+          <Stack.Screen name="Service" component={ServiceScreen} options={{ title: "Обслуживание" }}/>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default function ConnectedApp() {
+  const [permission, askForPermission] = Permissions.usePermissions(Permissions.LOCATION, { ask: true });
+
+  Location.watchPositionAsync({}, (location) => {
+    store.dispatch({ type: 'LOCATION', location: location });
+    console.log(JSON.stringify(location));
+  })
+
+  return(
+    <Provider store={store}>
+      <PaperProvider>
+        <App />
+      </PaperProvider>
+    </Provider>
+  )
+}
