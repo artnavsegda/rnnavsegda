@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux'
 import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking } from 'react-native';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import styles from '../styles';
 import api from '../api.js';
 
 const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
+  const [loading, setLoading] = React.useState(false);
 
   function openLock()
   {
+    setLoading(true);
     state.userToken ? fetch(api.openlock + '?' + new URLSearchParams({ MachineGUID: item.GUID }), {headers: { token: state.userToken }})
         .then(response => response.text())
         .then(text => console.log(text)) : null
@@ -32,6 +34,7 @@ const Item = ({ item, onPress }) => {
             disabled={false}
             onPress={openLock}
           >Открыть замок</Button>
+          <ActivityIndicator animating={loading} />
         </Card.Actions>
         {/*<Text style={styles.title}>Название: {item.Name}</Text>
         <Text style={styles.title}>Адрес: {item.Address}</Text>
