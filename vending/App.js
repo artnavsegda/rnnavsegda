@@ -81,7 +81,7 @@ function StorageScreen() {
 
 function ServiceScreen() {
   const state = useSelector(state => state)
-  const [stage, setStage] = React.useState(0);
+  const [serviceState, setServiceState] = React.useState({stage: 0});
 
   React.useEffect(() => {
     let timerID = setInterval(()=>{
@@ -97,6 +97,9 @@ function ServiceScreen() {
         }
       })
     },5000)
+
+    
+
   }, []);
 
   switch (stage)
@@ -105,21 +108,21 @@ function ServiceScreen() {
       return (
         <View style={styles.container}>
           <Text>Инвентаризация</Text>
-          <Button onPress={()=>{setStage(1)}}>Дальше</Button>
+          <Button onPress={()=>{setServiceState({stage: 1})}}>Дальше</Button>
         </View>
       );
     case 1:
       return (
         <View style={styles.container}>
           <Text>Изъятие</Text>
-          <Button onPress={()=>{setStage(2)}}>Дальше</Button>
+          <Button onPress={()=>{setServiceState({stage: 2})}}>Дальше</Button>
         </View>
       );
     case 2:
       return (
         <View style={styles.container}>
           <Text>Пополнение</Text>
-          <Button onPress={()=>{setStage(3)}}>Дальше</Button>
+          <Button onPress={()=>{setServiceState({stage: 3})}}>Дальше</Button>
         </View>
       );
     case 3:

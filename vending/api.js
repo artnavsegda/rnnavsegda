@@ -6,4 +6,5 @@ export default api = {
   openlock: API_PATH + '/vending/openlock',
   status: API_PATH + '/vending/status',
   invoice: API_PATH + '/vending/invoice',
+  service: API_PATH + '/vending/service',
 }
