@@ -5,6 +5,7 @@ import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } fro
 import MapView from 'react-native-maps';
 import styles from '../styles';
 import api from '../api.js';
+import store from '../store.js';
 
 const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
@@ -36,7 +37,7 @@ const Item = ({ item, onPress }) => {
               if (status.Door)
               {
                 clearInterval(timerID);
-                Alert.alert('Автомат', "Дверь открыта");
+                store.dispatch({ type: 'MACHINE', machine: item.GUID })
               }
             })
           }, 5000);

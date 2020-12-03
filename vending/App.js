@@ -27,6 +27,58 @@ function StorageScreen() {
   );
 }
 
+function ServiceScreen() {
+  const state = useSelector(state => state)
+  const [stage, setStage] = React.useState(0);
+
+  React.useEffect(() => {
+    let timerID = setInterval(()=>{
+      console.log("service " + state.servicingMachineID + " heartbeat");
+      fetch(api.status + '?' + new URLSearchParams({ MachineGUID: state.servicingMachineID }), {headers: { token: state.userToken }})
+      .then(response => response.json())
+      .then(status => {
+        console.log("status: " + JSON.stringify(status))
+        if (status.Door == 0)
+        {
+          clearInterval(timerID);
+          store.dispatch({ type: 'MACHINE', machine: null })
+        }
+      })
+    },5000)
+  }, []);
+
+  switch (stage)
+  {
+    case 0:
+      return (
+        <View style={styles.container}>
+          <Text>Инвентаризация</Text>
+          <Button onPress={()=>{setStage(1)}}>Дальше</Button>
+        </View>
+      );
+    case 1:
+      return (
+        <View style={styles.container}>
+          <Text>Изъятие</Text>
+          <Button onPress={()=>{setStage(2)}}>Дальше</Button>
+        </View>
+      );
+    case 2:
+      return (
+        <View style={styles.container}>
+          <Text>Пополнение</Text>
+          <Button onPress={()=>{setStage(3)}}>Дальше</Button>
+        </View>
+      );
+    case 3:
+      return (
+        <View style={styles.container}>
+          <Text>Закройте дверь !</Text>
+        </View>
+      );
+  }
+}
+
 function ProfileScreen() {
     return (
       <View style={styles.container}>
@@ -81,8 +133,10 @@ function App({ navigation }) {
               animationTypeForReplace: state.isSignout ? 'pop' : 'push',
             }}
           />
-        ) : (
+        ) : state.servicingMachineID == null ? (
           <Stack.Screen name="Home" component={HomeScreen} options={{ title: state.userName }}/>
+        ) : (
+          <Stack.Screen name="Service" component={ServiceScreen} options={{ title: "Обслуживание" }}/>
         )}
       </Stack.Navigator>
     </NavigationContainer>
