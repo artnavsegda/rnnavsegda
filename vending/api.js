@@ -7,4 +7,5 @@ export default api = {
   status: API_PATH + '/vending/status',
   invoice: API_PATH + '/vending/invoice',
   service: API_PATH + '/vending/service',
+  products: API_PATH + '/vending/products'
 }
