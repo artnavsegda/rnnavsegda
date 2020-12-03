@@ -21,9 +21,8 @@ import VendingScreen from './screens/VendingScreen';
 function StorageScreen() {
   const token = useSelector(state => state.userToken)
   const [state, setState] = React.useState({modalOpen: false, content:[], type: null});
-  const [visible, setVisible] = React.useState(false);
   const hideModal = () => setVisible(false);
-  function receipt(){
+  function receipt() {
     fetch(api.invoice + '?' + new URLSearchParams({ Type: 0 }), {headers: { token }})
     .then(response => response.json())
     .then(invoice => {
@@ -34,10 +33,16 @@ function StorageScreen() {
         Alert.alert('Получение', "Список пуст.");
       }
       else
-        setVisible(true)
+      {
+        setState({
+          modalOpen: true,
+          content:invoice,
+          type: 0
+        })
+      }
     })
   }
-  function writeoff(){
+  function writeoff() {
     fetch(api.invoice + '?' + new URLSearchParams({ Type: 1 }), {headers: { token }})
     .then(response => response.json())
     .then(invoice => {
@@ -48,15 +53,24 @@ function StorageScreen() {
         Alert.alert('Сдача', "Список пуст.");
       }
       else
-        setVisible(true)
+        setState({
+          modalOpen: true,
+          content:invoice,
+          type: 0
+        })
     })
+  }
+
+  function invoiceconfirm() {
+    setState({modalOpen: false, content:[], type: null});
   }
 
   return (
     <View style={styles.container}>
       <Portal>
-        <Modal visible={visible} dismissable={false} onDismiss={hideModal} contentContainerStyle={{backgroundColor: 'white', padding: 20, margin: 20, marginTop: 40 ,flex: 1}}>
-          <Text>Example Modal.  Click outside this area to dismiss.</Text>
+        <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{backgroundColor: 'white', padding: 20, margin: 20, marginTop: 40 ,flex: 1}}>
+          <Text>{JSON.stringify(state.content)}</Text>
+          <Button onPress={invoiceconfirm}>{state.type ? "Принять" : "Сдать"}</Button>
         </Modal>
       </Portal>
       <Button onPress={receipt}>Получение</Button>
