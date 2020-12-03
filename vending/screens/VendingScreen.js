@@ -6,31 +6,45 @@ import MapView from 'react-native-maps';
 import styles from '../styles';
 import api from '../api.js';
 
-const Item = ({ item, onPress }) => (
-  <Card style={styles.item}>
-    <TouchableOpacity onPress={onPress}>
-      <Card.Title title={item.Name} subtitle={"Время работы: " + item.Start + " - " + item.Finish} />
-      <Card.Content>
-        <Paragraph />
-      </Card.Content>
-      <Card.Actions>
-        <Button onPress={() => {
-          Linking.openURL("geo:" + item.Latitude + "," + item.Longitude);
-          console.log('Pressed');
-        }}>Навигация</Button>
-        <Button disabled={true}>Открыть замок</Button>
-      </Card.Actions>
-{/*       <Text style={styles.title}>Название: {item.Name}</Text>
-      <Text style={styles.title}>Адрес: {item.Address}</Text>
-      <Text style={styles.title}>Расстояние: 0000000</Text>
-      <Text style={styles.title}>Комментарий: {item.Comment}</Text>
-      <Text style={styles.title}>Время работы: {item.Start}-{item.Finish}</Text>
-      <Text style={styles.title}>Дата обслуживания: {item.ServiceDate}</Text> */}
-      {/* <Button title="Go"/> */}
-      {/* <Button title="Открыть замок"/> */}
-    </TouchableOpacity>
-  </Card>
-);
+const Item = ({ item, onPress }) => {
+  const state = useSelector(state => state)
+
+  function openLock()
+  {
+    state.userToken ? fetch(api.openlock + '?' + new URLSearchParams({ MachineGUID: item.GUID }), {headers: { token: state.userToken }})
+        .then(response => response.text())
+        .then(text => console.log(text)) : null
+  }
+
+  return (
+    <Card style={styles.item}>
+      <TouchableOpacity onPress={onPress}>
+        <Card.Title title={item.Name} subtitle={"Время работы: " + item.Start + " - " + item.Finish} />
+        <Card.Content>
+          <Paragraph />
+        </Card.Content>
+        <Card.Actions>
+          <Button onPress={() => {
+            Linking.openURL("geo:" + item.Latitude + "," + item.Longitude);
+            console.log('Pressed');
+          }}>Навигация</Button>
+          <Button
+            disabled={false}
+            onPress={openLock}
+          >Открыть замок</Button>
+        </Card.Actions>
+        {/*<Text style={styles.title}>Название: {item.Name}</Text>
+        <Text style={styles.title}>Адрес: {item.Address}</Text>
+        <Text style={styles.title}>Расстояние: 0000000</Text>
+        <Text style={styles.title}>Комментарий: {item.Comment}</Text>
+        <Text style={styles.title}>Время работы: {item.Start}-{item.Finish}</Text>
+        <Text style={styles.title}>Дата обслуживания: {item.ServiceDate}</Text> */}
+        {/* <Button title="Go"/> */}
+        {/* <Button title="Открыть замок"/> */}
+      </TouchableOpacity>
+    </Card>
+  )
+};
 
 export default function VendingScreen() {
     const state = useSelector(state => state)
