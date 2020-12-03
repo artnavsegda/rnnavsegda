@@ -23,7 +23,7 @@ const actions = {
         store.dispatch({ type: 'USER_NAME', username: json.Name });
       })
       .catch((error) => {
-        Alert.alert('Error:', error);
+        Alert.alert('Ошибка', error);
         //console.error('Error:', error);
       });
     },

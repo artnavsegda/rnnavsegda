@@ -4,4 +4,5 @@ export default api = {
   auth: API_PATH + '/AuthenticateVending',
   machines: API_PATH + '/vending/machines',
   openlock: API_PATH + '/vending/openlock',
+  status: API_PATH + '/vending/status',
 }

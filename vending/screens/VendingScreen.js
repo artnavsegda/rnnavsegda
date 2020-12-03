@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert } from 'react-native';
 import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import styles from '../styles';
@@ -9,13 +9,38 @@ import api from '../api.js';
 const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
   const [loading, setLoading] = React.useState(false);
+  const [lock, setLock] = React.useState(false);
 
   function openLock()
   {
+    console.log("Open lock GUID " + item.GUID);
     setLoading(true);
     state.userToken ? fetch(api.openlock + '?' + new URLSearchParams({ MachineGUID: item.GUID }), {headers: { token: state.userToken }})
-        .then(response => response.text())
-        .then(text => console.log(text)) : null
+        .then(response => response.json())
+        .then(openlock => {
+          console.log("open door: " + JSON.stringify(openlock))
+          let timerID = setInterval(function(){
+            fetch(api.status + '?' + new URLSearchParams({ MachineGUID: item.GUID }), {headers: { token: state.userToken }})
+            .then(response => response.json())
+            .then(status => {
+              console.log("status: " + JSON.stringify(status))
+              if (status.Lock)
+              {
+                setLoading(false);
+                setLock(true);
+                item.lockOpen = true;
+              }
+              else
+                setLock(false);
+
+              if (status.Door)
+              {
+                clearInterval(timerID);
+                Alert.alert('Автомат', "Дверь открыта");
+              }
+            })
+          }, 5000);
+        }) : null
   }
 
   return (
@@ -23,7 +48,7 @@ const Item = ({ item, onPress }) => {
       <TouchableOpacity onPress={onPress}>
         <Card.Title title={item.Name} subtitle={"Время работы: " + item.Start + " - " + item.Finish} />
         <Card.Content>
-          <Paragraph />
+          {lock ? <Paragraph>Замок открыт, откройте дверь</Paragraph> : <Paragraph />}
         </Card.Content>
         <Card.Actions>
           <Button onPress={() => {
