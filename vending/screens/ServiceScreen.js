@@ -12,7 +12,7 @@ const Spinner = (props) => (
 
 export default function ServiceScreen() {
     const state = useSelector(state => state)
-    const [serviceState, setServiceState] = React.useState({stage: 0, list:[[],[],[]]});
+    const [serviceState, setServiceState] = React.useState({stage: 0, list:[[{ProductID: 0, Quantity: 0}],[{ProductID: 0, Quantity: 0}],[{ProductID: 0, Quantity: 0}]]});
     const [products, setProducts] = React.useState({loading: true});
   
     React.useEffect(() => {
@@ -21,8 +21,7 @@ export default function ServiceScreen() {
         .then(products => {
           setProducts({loading: false, list: products})
           let blankdata = products.map(element => {return {ProductID: element.ID, Quantity: 0}})
-          setServiceState({stage: 0, list: [blankdata,blankdata,blankdata]});
-          console.log(JSON.stringify(serviceState));
+          setServiceState({stage: 0, list: [[...blankdata],[...blankdata],[...blankdata]]});
         })
 
       let timerID = setInterval(()=>{
@@ -44,10 +43,10 @@ export default function ServiceScreen() {
       <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
         <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
         <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph>
-        {/* <Spinner value={serviceState.list[serviceState.stage][index].Quantity} /> */}
+        <Spinner value={serviceState.list[serviceState.stage][index] ? serviceState.list[serviceState.stage][index].Quantity : 0} />
       </View>
     );
-  
+
     if (products.loading)
       return (
         <View style={styles.container}>
