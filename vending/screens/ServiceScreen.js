@@ -23,7 +23,7 @@ export default function ServiceScreen() {
       },5000)
     }, []);
   
-    switch (stage)
+    switch (serviceState.stage)
     {
       case 0:
         return (
