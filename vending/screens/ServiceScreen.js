@@ -12,7 +12,45 @@ const Spinner = (props) => (
 
 export default function ServiceScreen() {
     const state = useSelector(state => state)
-    const [serviceState, setServiceState] = React.useState({stage: 0, list:[[{ProductID: 0, Quantity: 0}],[{ProductID: 0, Quantity: 0}],[{ProductID: 0, Quantity: 0}]]});
+    const [localstate, localDispatch] = React.useReducer(
+      (prevState, action) => {
+        switch (action.type) {
+          case 'STAGE':
+            return {
+              ...prevState,
+              stage: action.stage
+            };
+          break;
+          case 'LOAD':
+            let blankdata = action.payload.map(element => {return {ProductID: element.ID, Quantity: 0}})
+            return {
+              ...prevState,
+              list: [
+                [...blankdata],
+                [...blankdata],
+                [...blankdata]
+              ]
+            }
+          break;
+          case 'SET':
+            let newState = {...prevState};
+            if (action.value >= 0)
+              newState.list[newState.stage][action.item].Quantity = action.value;
+            return newState;
+          break;
+          default:
+            return prevState;
+        }
+      }, {
+        stage: 0,
+        list: [
+          [],
+          [],
+          []
+        ]
+      }
+    );
+
     const [products, setProducts] = React.useState({loading: true});
   
     React.useEffect(() => {
@@ -20,8 +58,7 @@ export default function ServiceScreen() {
         .then(response => response.json())
         .then(products => {
           setProducts({loading: false, list: products})
-          let blankdata = products.map(element => {return {ProductID: element.ID, Quantity: 0}})
-          setServiceState({stage: 0, list: [[...blankdata],[...blankdata],[...blankdata]]});
+          localDispatch({ type: 'LOAD', payload: products });
         })
 
       let timerID = setInterval(()=>{
@@ -33,7 +70,7 @@ export default function ServiceScreen() {
           if (status.Door == 0)
           {
             clearInterval(timerID);
-            store.dispatch({ type: 'MACHINE', machine: null })
+            store.dispatch({ type: 'MACHINE', stage: null })
           }
         })
       },5000)
@@ -43,7 +80,11 @@ export default function ServiceScreen() {
       <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
         <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
         <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph>
-        <Spinner value={serviceState.list[serviceState.stage][index] ? serviceState.list[serviceState.stage][index].Quantity : 0} />
+        <Spinner 
+          value={localstate.list[localstate.stage][index] ? localstate.list[localstate.stage][index].Quantity : 0} 
+          onPlus={()=> localDispatch({ type: 'SET', item: index, value: localstate.list[localstate.stage][index].Quantity+1 })}
+          onMinus={()=> localDispatch({ type: 'SET', item: index, value: localstate.list[localstate.stage][index].Quantity-1 })}
+        />
       </View>
     );
 
@@ -54,28 +95,30 @@ export default function ServiceScreen() {
         </View>
       );
 
-    switch (serviceState.stage)
+    switch (localstate.stage)
     {
       case 0:
         return (
           <View style={{flex: 1}}>
             <Text>Инвентаризация</Text>
             <FlatList data={products.list} renderItem={renderItem} keyExtractor={item => item.ID}/>
-            <Button onPress={()=>{setServiceState({stage: 1})}}>Дальше</Button>
+            <Button onPress={()=>localDispatch({ type: 'STAGE', stage: 1 })}>Дальше</Button>
           </View>
         );
       case 1:
         return (
           <View style={styles.container}>
             <Text>Изъятие</Text>
-            <Button onPress={()=>{setServiceState({stage: 2})}}>Дальше</Button>
+            <FlatList data={products.list} renderItem={renderItem} keyExtractor={item => item.ID}/>
+            <Button onPress={()=>localDispatch({ type: 'STAGE', stage: 2 })}>Дальше</Button>
           </View>
         );
       case 2:
         return (
           <View style={styles.container}>
             <Text>Пополнение</Text>
-            <Button onPress={()=>{setServiceState({stage: 3})}}>Дальше</Button>
+            <FlatList data={products.list} renderItem={renderItem} keyExtractor={item => item.ID}/>
+            <Button onPress={()=>localDispatch({ type: 'STAGE', stage: 3 })}>Дальше</Button>
           </View>
         );
       case 3:
