@@ -10,7 +10,72 @@ const Spinner = (props) => (
   </View>
 )
 
+const Productlist = (props) => {
+  const [state, setState] = React.useState(props.data.map(element => {return {ProductID: element.ID, Quantity: 0}}));
+
+  const renderItem = ({ item, index }) => (
+  <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+    <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
+    <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph>
+    <Spinner value={state[index].Quantity} onPlus={()=>{
+      let newState = [...state];
+      newState[index].Quantity++;
+      setState(newState);
+    }} onMinus={()=>{
+      if (state[index].Quantity > 0)
+      {
+        let newState = [...state];
+        newState[index].Quantity--;
+        setState(newState);
+      }
+    }}/>
+  </View>
+  );
+
+  return (
+  <View style={styles.container}>
+    <FlatList
+      data={props.data}
+      renderItem={renderItem}
+      keyExtractor={item => item.id}
+    />
+    <Button onPress={()=>{
+      props.onSend(state);
+    }}>Send</Button>
+  </View>
+  );
+}
+
 export default function ServiceScreen() {
+  const [products, setProducts] = React.useState({loading: true});
+
+  React.useEffect(() => {
+    fetch(api.products + '?' + new URLSearchParams({ MachineGUID: state.servicingMachineID }), {headers: { token: state.userToken }})
+    .then(response => response.json())
+    .then(products => {
+      setProducts({loading: false, list: products})
+    })
+
+    let timerID = setInterval(()=>{
+      console.log("service " + state.servicingMachineID + " heartbeat");
+      fetch(api.status + '?' + new URLSearchParams({ MachineGUID: state.servicingMachineID }), {headers: { token: state.userToken }})
+      .then(response => response.json())
+      .then(status => {
+        console.log("status: " + JSON.stringify(status))
+        if (status.Door == 0)
+        {
+          clearInterval(timerID);
+          store.dispatch({ type: 'MACHINE', machine: null })
+        }
+      })
+    },5000)
+  }, []);
+  return (
+    <View></View>
+  )
+}
+
+function ServiceScreen2() {
     const state = useSelector(state => state)
     const [localstate, localDispatch] = React.useReducer(
       (prevState, action) => {
@@ -70,7 +135,7 @@ export default function ServiceScreen() {
           if (status.Door == 0)
           {
             clearInterval(timerID);
-            store.dispatch({ type: 'MACHINE', stage: null })
+            store.dispatch({ type: 'MACHINE', machine: null })
           }
         })
       },5000)
