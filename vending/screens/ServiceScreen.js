@@ -41,14 +41,15 @@ const Productlist = (props) => {
     />
     <Button onPress={()=>{
       props.onSend(state)
-    }}>Send</Button>
+    }}>Далее</Button>
   </View>
   );
 }
 
-export default function ServiceScreen() {
+export default function ServiceScreen({navigation}) {
   const state = useSelector(state => state)
   const [products, setProducts] = React.useState({loading: true})
+  const [stage, setStage] = React.useState(0)
 
   React.useEffect(() => {
     fetch(api.products + '?' + new URLSearchParams({ MachineGUID: state.servicingMachineID }), {headers: { token: state.userToken }})
@@ -79,14 +80,49 @@ export default function ServiceScreen() {
       </View>
     )
 
-  return (
-    <View style={{flex: 1}}>
-      <Text>Инвентаризация</Text>
-      <Productlist data={products.list} onSend={(result)=>{
-        console.log(result);
-      }} />
-    </View>
-  )
+  switch(stage)
+  {
+    case 0:
+      navigation.setOptions({ title: 'Инвентаризация' })
+      return (
+        <View style={{flex: 1}}>
+          <Productlist data={products.list} onSend={(result)=>{
+            console.log(result);
+            setStage(1);
+          }} />
+        </View>
+      )
+    case 1:
+      case 0:
+        navigation.setOptions({ title: 'Изъятие' })
+        return (
+          <View style={{flex: 1}}>
+            <Productlist data={products.list} onSend={(result)=>{
+              console.log(result);
+              setStage(2);
+            }} />
+          </View>
+        )
+    case 2:
+      case 0:
+        navigation.setOptions({ title: 'Пополнение' })
+        return (
+          <View style={{flex: 1}}>
+            <Productlist data={products.list} onSend={(result)=>{
+              console.log(result);
+              setStage(3);
+            }} />
+          </View>
+        )
+    case 3:
+      case 0:
+        navigation.setOptions({ title: 'Обслуживание' })
+        return (
+          <View style={styles.container}>
+            <Text>Закройте дверь !</Text>
+          </View>
+        )
+  }
 }
 
 function ServiceScreen2() {
