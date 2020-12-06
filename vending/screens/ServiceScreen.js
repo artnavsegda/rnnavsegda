@@ -37,7 +37,7 @@ const Productlist = (props) => {
     <FlatList
       data={props.data}
       renderItem={renderItem}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.ID}
     />
     <Button onPress={()=>{
       props.onSend(state)
@@ -80,9 +80,9 @@ export default function ServiceScreen() {
     )
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <Text>Инвентаризация</Text>
-      <Productlist data={products} onSend={(result)=>{
+      <Productlist data={products.list} onSend={(result)=>{
         console.log(result);
       }} />
     </View>
