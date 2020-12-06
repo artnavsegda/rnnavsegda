@@ -70,8 +70,21 @@ export default function ServiceScreen() {
       })
     },5000)
   }, []);
+
+  if (products.loading)
+    return (
+      <View style={styles.container}>
+        <Text>Loading</Text>
+      </View>
+    )
+
   return (
-    <View></View>
+    <View>
+      <Text>Инвентаризация</Text>
+      <Productlist data={products} onSend={(result)=>{
+        console.log(result);
+      }} />
+    </View>
   )
 }
 
