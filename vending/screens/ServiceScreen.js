@@ -16,8 +16,7 @@ const Productlist = (props) => {
   const renderItem = ({ item, index }) => (
   <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
     <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
-{/*     <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph> */}
-    <Paragraph>{item.Name}</Paragraph>
+    <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph>
     <Spinner value={state[index].Quantity} onPlus={()=>{
       let newState = [...state]
       newState[index].Quantity++
@@ -34,7 +33,7 @@ const Productlist = (props) => {
   );
 
   return (
-  <View style={styles.container}>
+  <View style={{flex: 1}}>
     <FlatList
       data={props.data}
       renderItem={renderItem}
@@ -58,7 +57,7 @@ export default function ServiceScreen() {
       setProducts({loading: false, list: products})
     })
 
-    let timerID = setInterval(()=>{
+/*     let timerID = setInterval(()=>{
       console.log("service " + state.servicingMachineID + " heartbeat");
       fetch(api.status + '?' + new URLSearchParams({ MachineGUID: state.servicingMachineID }), {headers: { token: state.userToken }})
       .then(response => response.json())
@@ -70,7 +69,7 @@ export default function ServiceScreen() {
           store.dispatch({ type: 'MACHINE', machine: null })
         }
       })
-    },5000)
+    },5000) */
   }, [])
 
   if (products.loading)
