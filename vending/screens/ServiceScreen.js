@@ -89,7 +89,12 @@ export default function ServiceScreen({navigation}) {
         <View style={{flex: 1}}>
           <Productlist data={products.list} onSend={(result)=>{
             console.log(result);
-            setStage(1);
+            fetch(api.service, {headers: { token: state.userToken, Type: 0, Rows: result }})
+            .then(response => response.json())
+            .then(status => {
+              console.log(JSON.stringify(status));
+              setStage(1);
+            })
           }} />
         </View>
       )
@@ -100,7 +105,12 @@ export default function ServiceScreen({navigation}) {
           <View style={{flex: 1}}>
             <Productlist data={products.list} onSend={(result)=>{
               console.log(result);
-              setStage(2);
+              fetch(api.service, {headers: { token: state.userToken, Type: 1, Rows: result }})
+              .then(response => response.json())
+              .then(status => {
+                console.log(JSON.stringify(status));
+                setStage(2);
+              })
             }} />
           </View>
         )
@@ -111,7 +121,12 @@ export default function ServiceScreen({navigation}) {
           <View style={{flex: 1}}>
             <Productlist data={products.list} onSend={(result)=>{
               console.log(result);
-              setStage(3);
+              fetch(api.service, {headers: { token: state.userToken, Type: 2, Rows: result }})
+              .then(response => response.json())
+              .then(status => {
+                console.log(JSON.stringify(status));
+                setStage(3);
+              })
             }} />
           </View>
         )
