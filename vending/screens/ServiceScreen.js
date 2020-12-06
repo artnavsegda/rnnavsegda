@@ -18,15 +18,15 @@ const Productlist = (props) => {
     <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
     <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph>
     <Spinner value={state[index].Quantity} onPlus={()=>{
-      let newState = [...state];
-      newState[index].Quantity++;
-      setState(newState);
+      let newState = [...state]
+      newState[index].Quantity++
+      setState(newState)
     }} onMinus={()=>{
       if (state[index].Quantity > 0)
       {
-        let newState = [...state];
-        newState[index].Quantity--;
-        setState(newState);
+        let newState = [...state]
+        newState[index].Quantity--
+        setState(newState)
       }
     }}/>
   </View>
@@ -40,14 +40,15 @@ const Productlist = (props) => {
       keyExtractor={item => item.id}
     />
     <Button onPress={()=>{
-      props.onSend(state);
+      props.onSend(state)
     }}>Send</Button>
   </View>
   );
 }
 
 export default function ServiceScreen() {
-  const [products, setProducts] = React.useState({loading: true});
+  const state = useSelector(state => state)
+  const [products, setProducts] = React.useState({loading: true})
 
   React.useEffect(() => {
     fetch(api.products + '?' + new URLSearchParams({ MachineGUID: state.servicingMachineID }), {headers: { token: state.userToken }})
@@ -69,7 +70,7 @@ export default function ServiceScreen() {
         }
       })
     },5000)
-  }, []);
+  }, [])
 
   if (products.loading)
     return (
