@@ -9,6 +9,11 @@ let store = createStore((prevState = {
     beacons: []
   }, action) => {
     switch (action.type) {
+      case 'MACHINE':
+        return {
+          ...prevState,
+          servicingMachineID: action.machine,
+        };
       case 'BEACONS':
         return {
           ...prevState,

@@ -16,17 +16,10 @@ import styles from './styles';
 import SplashScreen from './screens/SplashScreen';
 import SignInScreen from './screens/SignInScreen';
 import VendingScreen from './screens/VendingScreen';
+import StorageScreen from './screens/StorageScreen';
+import ServiceScreen from './screens/ServiceScreen';
 
 const manager = new BleManager();
-
-function StorageScreen() {
-  return (
-    <View style={styles.container}>
-      <Button>Получение</Button>
-      <Button>Сдача</Button>
-    </View>
-  );
-}
 
 function ProfileScreen() {
   return (
@@ -126,8 +119,10 @@ function App({ navigation }) {
               animationTypeForReplace: state.isSignout ? 'pop' : 'push',
             }}
           />
-        ) : (
+        ) : state.servicingMachineID == null ? (
           <Stack.Screen name="Home" component={HomeScreen} options={{ title: state.userName }}/>
+        ) : (
+          <Stack.Screen name="Service" component={ServiceScreen} options={{ title: "Обслуживание" }}/>
         )}
       </Stack.Navigator>
     </NavigationContainer>
