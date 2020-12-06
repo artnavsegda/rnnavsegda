@@ -10,51 +10,50 @@ const Spinner = (props) => (
       </View>
 )
 
-const App = () => {
-  const [state, setState] = React.useState(products);
-
+const Productlist = (props) => {
+  const [state, setState] = React.useState(props.data.map(element => {return {ProductID: element.ID, Quantity: 0}}));
 
   const renderItem = ({ item, index }) => (
     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
       <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
       <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph>
-      <Spinner value={item.value ? item.value : 0} onPlus={()=>{
+      <Spinner value={state[index].Quantity} onPlus={()=>{
         let newState = [...state];
-        if (!newState[index].value)
-          newState[index].value = 0;
-        newState[index].value++        
+        newState[index].Quantity++;
         setState(newState);
-      }}
-      onMinus={()=>{
-        let newState = [...state];
-        if (!newState[index].value)
-          newState[index].value = 0;
-        if (newState[index].value > 0)
-          newState[index].value--        
-        setState(newState);
-      }}
-      
-      />
+      }} onMinus={()=>{
+        if (state[index].Quantity > 0)
+        {
+          let newState = [...state];
+          newState[index].Quantity--;
+          setState(newState);
+        }
+      }}/>
     </View>
   );
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={state}
+        data={props.data}
         renderItem={renderItem}
-        keyExtractor={item => item.ID}
+        keyExtractor={item => item.id}
       />
       <Button onPress={()=>{
-        console.log(JSON.stringify(
-          state.map((element)=>{
-            return { ProductID: element.ID, Quantity: element.value ? element.value : 0 }
-          })
-        ))
+        props.onSend(state);
       }}>Send</Button>
     </View>
   );
 }
+
+const App = () => {
+  return (
+    <View style={styles.container}>
+      <Productlist data={products} onSend={(result)=>{
+        console.log(result);
+      }} />
+    </View>
+)}
 
 const styles = StyleSheet.create({
   container: {
