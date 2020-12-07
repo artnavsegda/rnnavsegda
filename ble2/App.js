@@ -6,28 +6,32 @@ import {
   View,
   Text,
   StatusBar,
+  PermissionsAndroid,
+  DeviceEventEmitter
 } from 'react-native';
 
-import { DeviceEventEmitter } from 'react-native'
 import Beacons from 'react-native-beacons-manager'
 
-// Tells the library to detect iBeacons
-Beacons.detectIBeacons()
-
-// Start detecting all iBeacons in the nearby
-try {
-  await Beacons.startRangingBeaconsInRegion('REGION1')
-  console.log(`Beacons ranging started succesfully!`)
-} catch (err) {
-  console.log(`Beacons ranging not started, error: ${error}`)
-}
-
-// Print a log of the detected iBeacons (1 per second)
-DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
-  console.log('Found beacons!', data.beacons)
-})
-
 const App = () => {
+  React.useEffect(() => {
+    PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION, 
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+    ])
+    .then(permissions => {
+      console.log(JSON.stringify(permissions) + "granted");
+      Beacons.detectIBeacons();
+      Beacons.startRangingBeaconsInRegion('REGION1')
+      .then(()=>{
+        console.log(`Beacons ranging started succesfully!`);
+      })
+      .catch(error => console.error(error));
+      DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
+        console.log('Found beacons!', data.beacons)
+      })
+    })
+  }, []);
+
   return (
     <View>
       <Text>Hello !</Text>
