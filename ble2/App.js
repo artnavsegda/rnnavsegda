@@ -20,15 +20,23 @@ const App = () => {
     ])
     .then(permissions => {
       console.log(JSON.stringify(permissions) + "granted");
-      Beacons.detectIBeacons();
-      Beacons.startRangingBeaconsInRegion('REGION1')
-      .then(()=>{
-        console.log(`Beacons ranging started succesfully!`);
-      })
-      .catch(error => console.error(error));
-      DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
-        console.log('Found beacons!', data.beacons)
-      })
+      Beacons.addIBeaconsDetection()
+      .then(() => Beacons.addEddystoneUIDDetection())
+      .then(() => Beacons.addEddystoneURLDetection())
+      .then(() => Beacons.addEddystoneTLMDetection())
+      .then(() => Beacons.addAltBeaconsDetection())
+      .then(() => Beacons.addEstimotesDetection())
+      .catch(error =>
+        console.log(`something went wrong during initialization: ${error}`),
+      );
+
+      Beacons.BeaconsEventEmitter.addListener(
+        'beaconServiceConnected',
+        () => {
+          console.log('service connected');
+        },
+      );
+
     })
   }, []);
 
