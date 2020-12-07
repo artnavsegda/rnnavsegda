@@ -79,14 +79,14 @@ function App({ navigation }) {
 
       const subscription = manager.onStateChange((state) => {
         if (state === 'PoweredOn') {
-            console.log("BLE ok");
+            console.log("BLE ok, starting search");
             manager.startDeviceScan(null, null, (error, device) => {
               if (error) {
                   console.log("some kind of BLE error");
                   console.error(error);
                   return
               }
-              //console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
+              console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
               devices.set(device.id, {name: device.name, uuids: device.serviceUUIDs, lastSeen: Date.now()})
               uuids = [];
               for (let [key, value] of devices) {
