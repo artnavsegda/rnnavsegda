@@ -90,7 +90,7 @@ function App({ navigation }) {
               devices.set(device.id, Date.now());
               lastDevices = [];
               for (let [key, value] of devices) {
-                if ((Date.now() - value) < 5000)
+                if ((Date.now() - value) < 60000)
                   lastDevices.push(key);
               }
               store.dispatch({ type: 'BEACONS', beacons: lastDevices });
