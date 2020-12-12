@@ -87,15 +87,13 @@ function App({ navigation }) {
                   return
               }
               console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
-              devices.set(device.id, {name: device.name, uuids: device.serviceUUIDs, lastSeen: Date.now()})
-              uuids = [];
+              devices.set(device.id, Date.now());
+              lastDevices = [];
               for (let [key, value] of devices) {
-                if ((Date.now() - value.lastSeen) < 5000)
-                  if (value.uuids)
-                    value.uuids.forEach(uuid => uuids.push(uuid))
+                if ((Date.now() - value) < 5000)
+                  lastDevices.push(key);
               }
-              //console.log(uuids);
-              store.dispatch({ type: 'BEACONS', beacons: uuids });
+              store.dispatch({ type: 'BEACONS', beacons: lastDevices });
             });
             subscription.remove();
         }

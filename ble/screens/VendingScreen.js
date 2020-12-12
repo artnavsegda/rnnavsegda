@@ -57,7 +57,7 @@ const Item = ({ item, onPress }) => {
             console.log('Pressed');
           }}>Навигация</Button>
           <Button
-            disabled={!state.beacons.includes(item.IBeaconUDID)}
+            disabled={!state.beacons.includes(item.MACAddress)}
             onPress={openLock}
           >Открыть замок</Button>
           <ActivityIndicator animating={loading} />
