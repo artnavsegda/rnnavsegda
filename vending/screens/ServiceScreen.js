@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { Text, View, FlatList, Image } from 'react-native';
-import { Button, Paragraph } from 'react-native-paper';
+import { Button, Paragraph, ActivityIndicator } from 'react-native-paper';
 import store from '../store';
 
 const Spinner = (props) => (
@@ -77,7 +77,7 @@ export default function ServiceScreen({navigation}) {
   if (products.loading)
     return (
       <View style={styles.container}>
-        <Text>Loading</Text>
+        <ActivityIndicator animating={true} />
       </View>
     )
 
@@ -88,11 +88,13 @@ export default function ServiceScreen({navigation}) {
       return (
         <View style={{flex: 1}}>
           <Productlist data={products.list} onSend={(result)=>{
+            setProducts({...products, loading: true})
             console.log(result);
             fetch(api.service, {headers: { token: state.userToken, Type: 0, Rows: result }})
             .then(response => response.json())
             .then(status => {
               console.log(JSON.stringify(status));
+              setProducts({...products, loading: false})
               setStage(1);
             })
           }} />
@@ -104,11 +106,13 @@ export default function ServiceScreen({navigation}) {
         return (
           <View style={{flex: 1}}>
             <Productlist data={products.list} onSend={(result)=>{
+              setProducts({...products, loading: true})
               console.log(result);
               fetch(api.service, {headers: { token: state.userToken, Type: 1, Rows: result }})
               .then(response => response.json())
               .then(status => {
                 console.log(JSON.stringify(status));
+                setProducts({...products, loading: false})
                 setStage(2);
               })
             }} />
@@ -120,11 +124,13 @@ export default function ServiceScreen({navigation}) {
         return (
           <View style={{flex: 1}}>
             <Productlist data={products.list} onSend={(result)=>{
+              setProducts({...products, loading: true})
               console.log(result);
               fetch(api.service, {headers: { token: state.userToken, Type: 2, Rows: result }})
               .then(response => response.json())
               .then(status => {
                 console.log(JSON.stringify(status));
+                setProducts({...products, loading: false})
                 setStage(3);
               })
             }} />
