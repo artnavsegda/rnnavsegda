@@ -52,10 +52,11 @@ function App({ navigation }) {
 
       try {
         userToken = await AsyncStorage.getItem('userToken');
+        userName = await AsyncStorage.getItem('userName');
       } catch (e) {
         // Restoring token failed
       }
-      store.dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+      store.dispatch({ type: 'RESTORE_TOKEN', token: userToken, username: userName });
     };
 
     bootstrapAsync();

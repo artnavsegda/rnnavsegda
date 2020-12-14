@@ -33,6 +33,7 @@ let store = createStore((prevState = {
         return {
           ...prevState,
           userToken: action.token,
+          userName: action.username,
           isLoading: false,
         };
       case 'SIGN_IN':

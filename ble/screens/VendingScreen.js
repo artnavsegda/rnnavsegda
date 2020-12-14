@@ -48,7 +48,7 @@ const Item = ({ item, onPress }) => {
 
   function findMachine()
   {
-    console.log("Searching for machine GUID " + item.GUID);
+    console.log("Searching for machine GUID " + item.GUID + " mac " + item.MACAddress);
     setLoading(true);
 
     manager.startDeviceScan(null, null, (error, device) => {
@@ -59,14 +59,19 @@ const Item = ({ item, onPress }) => {
       }
 
       if (device.id == item.MACAddress) {
+        console.log("Device found");
         this.manager.stopDeviceScan();
+        setLoading(false);
         setFound(true);
+        setTimeout(()=>{
+          setFound(false);
+        },60000);
       }
 
       console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
     });
 
-    setInterval(()=>{
+    setTimeout(()=>{
       manager.stopDeviceScan();
       setLoading(false);
     },10000);

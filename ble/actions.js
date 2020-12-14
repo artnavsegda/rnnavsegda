@@ -1,4 +1,5 @@
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import store from './store.js';
 import api from './api.js';
 
@@ -15,19 +16,26 @@ const actions = {
       })
       .then(response => {
         if (!response.ok)
-          throw "Login incorrect";
-        store.dispatch({ type: 'SIGN_IN', token: response.headers.get('token') });
-        return response.json();
+          throw "Неверный логин или пароль";
+        var userToken = response.headers.get('token')
+        store.dispatch({ type: 'SIGN_IN', token: userToken })
+        AsyncStorage.setItem('userToken', userToken)
+        return response.json()
       })
       .then(json => {
-        store.dispatch({ type: 'USER_NAME', username: json.Name });
+        store.dispatch({ type: 'USER_NAME', username: json.Name })
+        AsyncStorage.setItem('userName', json.Name)
       })
       .catch((error) => {
-        Alert.alert('Error:', error);
+        Alert.alert('Ошибка', error.message);
         //console.error('Error:', error);
       });
     },
-    signOut: () => store.dispatch({ type: 'SIGN_OUT' })
+    signOut: () => {
+      store.dispatch({ type: 'SIGN_OUT' })
+      AsyncStorage.removeItem('userToken');
+      AsyncStorage.removeItem('userName');
+    }
 }
 
 export default actions;
