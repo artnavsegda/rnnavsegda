@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, ActivityIndicator } from 'react-native-paper';
 import styles from '../styles';
 import actions from '../actions';
 import Logo from '../logo';
@@ -8,6 +8,7 @@ import Logo from '../logo';
 export default function SignInScreen() {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
   
     return (
       <View style={styles.container}>
@@ -25,7 +26,12 @@ export default function SignInScreen() {
           onChangeText={setPassword}
           secureTextEntry
         />
-        <Button onPress={() => actions.signIn({ username, password })}>Вход</Button>
+        <Button onPress={() => {
+            actions.signIn({ username, password })
+            setLoading(true)
+            setTimeout(()=>{setLoading(false)},10000)
+          }}>Вход</Button>
+        <ActivityIndicator animating={loading} />
       </View>
     );
   }

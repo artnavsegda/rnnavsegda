@@ -33,8 +33,8 @@ const actions = {
     },
     signOut: () => {
       store.dispatch({ type: 'SIGN_OUT' })
-      removeItem(userToken);
-      removeItem(userName);
+      AsyncStorage.removeItem('userToken');
+      AsyncStorage.removeItem('userName');
     }
 }
 
