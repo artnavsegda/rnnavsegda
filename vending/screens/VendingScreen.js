@@ -104,11 +104,12 @@ export default function VendingScreen() {
         <View style={{flex: 1}}>
           <MapView style={{flex: 2}}
             ref={map}
-            initialRegion={{
+            initialRegion={state.location ?
+              {
               ...state.location.coords,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
-            }}
+            } : undefined}
             showsUserLocation={true}
             followsUserLocation={true}
           >

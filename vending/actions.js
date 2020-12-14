@@ -1,4 +1,5 @@
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import store from './store.js';
 import api from './api.js';
 
@@ -26,7 +27,7 @@ const actions = {
         AsyncStorage.setItem('userName', json.Name)
       })
       .catch((error) => {
-        Alert.alert('Ошибка', error);
+        Alert.alert('Ошибка', error.message);
         //console.error('Error:', error);
       });
     },
