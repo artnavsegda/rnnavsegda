@@ -6,11 +6,13 @@ import MapView from 'react-native-maps';
 import styles from '../styles';
 import api from '../api.js';
 import store from '../store.js';
+import manager from "../ble"
 
 const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
   const [loading, setLoading] = React.useState(false);
   const [lock, setLock] = React.useState(false);
+  const [found, setFound] = React.useState(false);
 
   function openLock()
   {
@@ -44,6 +46,32 @@ const Item = ({ item, onPress }) => {
         }) : null
   }
 
+  function findMachine()
+  {
+    console.log("Searching for machine GUID " + item.GUID);
+    setLoading(true);
+
+    manager.startDeviceScan(null, null, (error, device) => {
+      if (error) {
+        console.log("some kind of BLE error");
+        console.error(error);
+        return
+      }
+
+      if (device.id == item.MACAddress) {
+        this.manager.stopDeviceScan();
+        setFound(true);
+      }
+
+      console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
+    });
+
+    setInterval(()=>{
+      manager.stopDeviceScan();
+      setLoading(false);
+    },10000);
+  }
+
   return (
     <Card style={styles.item}>
       <TouchableOpacity onPress={onPress}>
@@ -57,9 +85,9 @@ const Item = ({ item, onPress }) => {
             console.log('Pressed');
           }}>Навигация</Button>
           <Button
-            disabled={!state.beacons.includes(item.MACAddress)}
-            onPress={openLock}
-          >Открыть замок</Button>
+            disabled={loading}
+            onPress={found ? openLock : findMachine}
+          >{found ? "Открыть замок" : "Найти автомат"}</Button>
           <ActivityIndicator animating={loading} />
         </Card.Actions>
         {/*<Text style={styles.title}>Название: {item.Name}</Text>

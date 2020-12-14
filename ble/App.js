@@ -19,7 +19,7 @@ import VendingScreen from './screens/VendingScreen';
 import StorageScreen from './screens/StorageScreen';
 import ServiceScreen from './screens/ServiceScreen';
 
-const manager = new BleManager();
+import manager from "./ble"
 
 function ProfileScreen() {
   return (
@@ -42,9 +42,6 @@ function HomeScreen() {
 }
 
 const Stack = createStackNavigator();
-
-let devices = new Map();
-let uuids = [];
 
 function App({ navigation }) {
   const state = useSelector(state => state)
@@ -79,22 +76,7 @@ function App({ navigation }) {
 
       const subscription = manager.onStateChange((state) => {
         if (state === 'PoweredOn') {
-            console.log("BLE ok, starting search");
-            manager.startDeviceScan(null, null, (error, device) => {
-              if (error) {
-                  console.log("some kind of BLE error");
-                  console.error(error);
-                  return
-              }
-              console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
-              devices.set(device.id, Date.now());
-              lastDevices = [];
-              for (let [key, value] of devices) {
-                if ((Date.now() - value) < 60000)
-                  lastDevices.push(key);
-              }
-              store.dispatch({ type: 'BEACONS', beacons: lastDevices });
-            });
+            console.log("BLE ok");
             subscription.remove();
         }
         else
