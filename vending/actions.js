@@ -16,18 +16,25 @@ const actions = {
       .then(response => {
         if (!response.ok)
           throw "Неверный логин или пароль";
-        store.dispatch({ type: 'SIGN_IN', token: response.headers.get('token') });
-        return response.json();
+        var userToken = response.headers.get('token')
+        store.dispatch({ type: 'SIGN_IN', token: userToken })
+        AsyncStorage.setItem('userToken', userToken)
+        return response.json()
       })
       .then(json => {
-        store.dispatch({ type: 'USER_NAME', username: json.Name });
+        store.dispatch({ type: 'USER_NAME', username: json.Name })
+        AsyncStorage.setItem('userName', json.Name)
       })
       .catch((error) => {
         Alert.alert('Ошибка', error);
         //console.error('Error:', error);
       });
     },
-    signOut: () => store.dispatch({ type: 'SIGN_OUT' })
+    signOut: () => {
+      store.dispatch({ type: 'SIGN_OUT' })
+      removeItem(userToken);
+      removeItem(userName);
+    }
 }
 
 export default actions;
