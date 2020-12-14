@@ -44,15 +44,7 @@ function HomeScreen() {
 const Stack = createStackNavigator();
 
 let devices = new Map();
-
-setInterval(()=>{
-  let lastDevices = [];
-  for (let [key, value] of devices) {
-    if ((Date.now() - value) < 60000)
-      lastDevices.push(key)
-  }
-  store.dispatch({ type: 'BEACONS', beacons: lastDevices })
-},1000)
+let uuids = [];
 
 function App({ navigation }) {
   const state = useSelector(state => state)
@@ -96,6 +88,12 @@ function App({ navigation }) {
               }
               console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
               devices.set(device.id, Date.now());
+              lastDevices = [];
+              for (let [key, value] of devices) {
+                if ((Date.now() - value) < 60000)
+                  lastDevices.push(key);
+              }
+              store.dispatch({ type: 'BEACONS', beacons: lastDevices });
             });
             subscription.remove();
         }
