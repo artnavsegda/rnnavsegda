@@ -41,13 +41,21 @@ export default function StorageScreen() {
           setState({
             modalOpen: true,
             content:invoice,
-            type: 0
+            type: 1
           })
       })
     }
   
     function invoiceconfirm() {
-      setState({modalOpen: false, content:[], type: null});
+      fetch(api.invoiceconfirm, {method: 'POST', headers: { token, 'Content-Type': 'text/json' }, body: JSON.stringify({ Type: state.type })})
+      .then(response => response.json())
+      .then(result => {
+        console.log(result)
+        setState({modalOpen: false, content:[], type: null})
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     }
   
     const renderItem = ({ item, index }) => (
@@ -62,13 +70,15 @@ export default function StorageScreen() {
       <View style={styles.container}>
         <Portal>
           <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
-{/*             <Text>{JSON.stringify(state.content)}</Text> */}
             <FlatList
               data={state.content}
               keyExtractor={item => item.ID}
               renderItem={renderItem}
             />
-            <Button onPress={invoiceconfirm}>{state.type ? "Принять" : "Сдать"}</Button>
+            <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
+              <Button onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
+              <Button onPress={invoiceconfirm}>{state.type ? "Принять" : "Сдать"}</Button>
+            </View>
           </Modal>
         </Portal>
         <Button onPress={receipt}>Получение</Button>

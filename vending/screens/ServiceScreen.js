@@ -90,7 +90,7 @@ export default function ServiceScreen({navigation}) {
           <Productlist data={products.list} onSend={(result)=>{
             setProducts({...products, loading: true})
             console.log(result);
-            fetch(api.service, {headers: { token: state.userToken, Type: 0, Rows: result }})
+            fetch(api.service, {method: 'POST', headers: { token: state.userToken }, body: {Type: 0, Rows: result }})
             .then(response => response.json())
             .then(status => {
               console.log(JSON.stringify(status));
@@ -108,7 +108,7 @@ export default function ServiceScreen({navigation}) {
             <Productlist data={products.list} onSend={(result)=>{
               setProducts({...products, loading: true})
               console.log(result);
-              fetch(api.service, {headers: { token: state.userToken, Type: 1, Rows: result }})
+              fetch(api.service, {method: 'POST', headers: { token: state.userToken }, body: {Type: 1, Rows: result }})
               .then(response => response.json())
               .then(status => {
                 console.log(JSON.stringify(status));
@@ -126,7 +126,7 @@ export default function ServiceScreen({navigation}) {
             <Productlist data={products.list} onSend={(result)=>{
               setProducts({...products, loading: true})
               console.log(result);
-              fetch(api.service, {headers: { token: state.userToken, Type: 2, Rows: result }})
+              fetch(api.service, {method: 'POST', headers: { token: state.userToken }, body: {Type: 2, Rows: result }})
               .then(response => response.json())
               .then(status => {
                 console.log(JSON.stringify(status));
