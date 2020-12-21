@@ -89,20 +89,9 @@ const Item = ({ item, onPress }) => {
             Linking.openURL("geo:" + item.Latitude + "," + item.Longitude);
             console.log('Pressed');
           }}>Навигация</Button>
-          <Button
-            disabled={loading}
-            onPress={found ? openLock : findMachine}
-          >{found ? "Открыть замок" : "Найти автомат"}</Button>
+          <Button disabled={loading} onPress={openLock}>Открыть замок</Button>
           <ActivityIndicator animating={loading} />
         </Card.Actions>
-        {/*<Text style={styles.title}>Название: {item.Name}</Text>
-        <Text style={styles.title}>Адрес: {item.Address}</Text>
-        <Text style={styles.title}>Расстояние: 0000000</Text>
-        <Text style={styles.title}>Комментарий: {item.Comment}</Text>
-        <Text style={styles.title}>Время работы: {item.Start}-{item.Finish}</Text>
-        <Text style={styles.title}>Дата обслуживания: {item.ServiceDate}</Text> */}
-        {/* <Button title="Go"/> */}
-        {/* <Button title="Открыть замок"/> */}
       </TouchableOpacity>
     </Card>
   )

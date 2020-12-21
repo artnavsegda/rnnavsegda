@@ -89,13 +89,17 @@ export default function ServiceScreen({navigation}) {
         <View style={{flex: 1}}>
           <Productlist data={products.list} onSend={(result)=>{
             setProducts({...products, loading: true})
-            console.log(result);
-            fetch(api.service, {method: 'POST', headers: { token: state.userToken }, body: {Type: 0, Rows: result }})
-            .then(response => response.json())
+            let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 0, Rows: result });
+            console.log(req);
+            fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
+            .then(response => response.text())
             .then(status => {
-              console.log(JSON.stringify(status));
+              console.log(status);
               setProducts({...products, loading: false})
               setStage(1);
+            })
+            .catch((error) => {
+              console.log(error)
             })
           }} />
         </View>
@@ -107,13 +111,17 @@ export default function ServiceScreen({navigation}) {
           <View style={{flex: 1}}>
             <Productlist data={products.list} onSend={(result)=>{
               setProducts({...products, loading: true})
-              console.log(result);
-              fetch(api.service, {method: 'POST', headers: { token: state.userToken }, body: {Type: 1, Rows: result }})
-              .then(response => response.json())
+              let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 1, Rows: result });
+              console.log(req);
+              fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
+              .then(response => response.text())
               .then(status => {
-                console.log(JSON.stringify(status));
+                console.log(status);
                 setProducts({...products, loading: false})
                 setStage(2);
+              })
+              .catch((error) => {
+                console.error('Error:', error)
               })
             }} />
           </View>
@@ -125,13 +133,17 @@ export default function ServiceScreen({navigation}) {
           <View style={{flex: 1}}>
             <Productlist data={products.list} onSend={(result)=>{
               setProducts({...products, loading: true})
-              console.log(result);
-              fetch(api.service, {method: 'POST', headers: { token: state.userToken }, body: {Type: 2, Rows: result }})
-              .then(response => response.json())
+              let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 2, Rows: result });
+              console.log(req);
+              fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
+              .then(response => response.text())
               .then(status => {
-                console.log(JSON.stringify(status));
+                console.log(status);
                 setProducts({...products, loading: false})
                 setStage(3);
+              })
+              .catch((error) => {
+                console.error('Error:', error)
               })
             }} />
           </View>
