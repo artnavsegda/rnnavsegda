@@ -1,7 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import {
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider 
+} from 'react-native-paper';
+import { 
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
 
 function App() {
   return (
@@ -15,7 +27,11 @@ function App() {
 export default function Main() {
   return (
     <PaperProvider>
-      <App />
+      <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="App" component={App} />
+      </Stack.Navigator>
+      </NavigationContainer>
     </PaperProvider>
   );
 }
