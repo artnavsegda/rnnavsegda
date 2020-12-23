@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
-  Provider as PaperProvider 
+  Provider as PaperProvider,
+  Text
 } from 'react-native-paper';
 import { 
   NavigationContainer,
@@ -12,6 +13,23 @@ import {
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+const CombinedDefaultTheme = {
+  ...PaperDefaultTheme,
+  ...NavigationDefaultTheme,
+  colors: {
+    ...PaperDefaultTheme.colors,
+    ...NavigationDefaultTheme.colors,
+  },
+};
+const CombinedDarkTheme = {
+  ...PaperDarkTheme,
+  ...NavigationDarkTheme,
+  colors: {
+    ...PaperDarkTheme.colors,
+    ...NavigationDarkTheme.colors,
+  },
+};
 
 const Stack = createStackNavigator();
 
@@ -39,7 +57,7 @@ export default function Main() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+/*     backgroundColor: '#fff', */
     alignItems: 'center',
     justifyContent: 'center',
   },
