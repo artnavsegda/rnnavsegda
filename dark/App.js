@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
@@ -43,9 +44,10 @@ function App() {
 }
 
 export default function Main() {
+  const scheme = useColorScheme()
   return (
     <PaperProvider>
-      <NavigationContainer>
+      <NavigationContainer theme={scheme === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme}>
       <Stack.Navigator>
         <Stack.Screen name="App" component={App} />
       </Stack.Navigator>
