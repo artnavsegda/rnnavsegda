@@ -34,7 +34,7 @@ const CombinedDarkTheme = {
 
 const Stack = createStackNavigator()
 
-function CustomNavigationBar() {
+function CustomNavigationBar({ navigation, previous }) {
   const [visible, setVisible] = React.useState(false)
   const openMenu = () => setVisible(true)
   const closeMenu = () => setVisible(false)
