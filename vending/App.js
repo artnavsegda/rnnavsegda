@@ -29,15 +29,22 @@ import VendingScreen from './screens/VendingScreen'
 import StorageScreen from './screens/StorageScreen'
 import ServiceScreen from './screens/ServiceScreen'
 
-function CustomNavigationBar() {
+function CustomNavigationBar({ scene, navigation, previous }) {
+  const { options } = scene.descriptor;
+  const title = options.headerTitle !== undefined
+    ? options.headerTitle
+    : options.title !== undefined
+    ? options.title
+    : scene.route.name;
+
   const [visible, setVisible] = React.useState(false)
   const openMenu = () => setVisible(true)
   const closeMenu = () => setVisible(false)
   
   return (
     <Appbar.Header>
-      <Appbar.Content title="My awesome app" />
-      <Menu
+      <Appbar.Content title={title} />
+{/*       <Menu
         visible={visible}
         onDismiss={closeMenu}
         anchor={
@@ -46,7 +53,7 @@ function CustomNavigationBar() {
         <Menu.Item onPress={() => {console.log('Option 1 was pressed')}} title="Option 1" />
         <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
         <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled />
-      </Menu>
+      </Menu> */}
     </Appbar.Header>
   )
 }
@@ -96,7 +103,7 @@ function App({ navigation }) {
 
   return (
     <NavigationContainer theme={scheme === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme}>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ header: (props) => <CustomNavigationBar {...props} /> }}>
         {state.isLoading ? (
           <Stack.Screen name="Splash" component={SplashScreen} />
         ) : state.userToken == null ? (
