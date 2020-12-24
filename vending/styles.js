@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 export default styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+//      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -12,7 +12,7 @@ export default styles = StyleSheet.create({
       height: 40,
 //      borderColor: 'gray',
 //      borderWidth: 1,
-      backgroundColor: '#fff',
+//      backgroundColor: '#fff',
       margin: 5,
 //      padding: 5
     },
