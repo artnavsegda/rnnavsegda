@@ -65,13 +65,21 @@ function CustomNavigationBar({ scene, navigation, previous }) {
 
 function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Button icon="camera">Press me</Button>
+    <View>
       <List.Item
-        title="First Item"
+        title="Получение"
         description="Item description"
-        left={props => <List.Icon {...props} icon="folder" />}
+        left={props => <List.Icon {...props} icon="camera" />}
+      />
+      <List.Item
+        title="Сдача"
+        description="Item description"
+        left={props => <List.Icon {...props} icon="camera" />}
+      />
+      <List.Item
+        title="Сумка"
+        description="Item description"
+        left={props => <List.Icon {...props} icon="camera" />}
       />
       <StatusBar style="auto" />
     </View>
