@@ -29,6 +29,28 @@ import VendingScreen from './screens/VendingScreen'
 import StorageScreen from './screens/StorageScreen'
 import ServiceScreen from './screens/ServiceScreen'
 
+function CustomNavigationBar() {
+  const [visible, setVisible] = React.useState(false)
+  const openMenu = () => setVisible(true)
+  const closeMenu = () => setVisible(false)
+  
+  return (
+    <Appbar.Header>
+      <Appbar.Content title="My awesome app" />
+      <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={
+          <Appbar.Action icon="menu" color="white" onPress={openMenu} />
+        }>
+        <Menu.Item onPress={() => {console.log('Option 1 was pressed')}} title="Option 1" />
+        <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
+        <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled />
+      </Menu>
+    </Appbar.Header>
+  )
+}
+
 function ProfileScreen() {
     return (
       <View style={styles.container}>
