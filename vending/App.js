@@ -30,6 +30,7 @@ import StorageScreen from './screens/StorageScreen'
 import ServiceScreen from './screens/ServiceScreen'
 
 function CustomNavigationBar({ scene, navigation, previous }) {
+  const userToken = useSelector(state => state.userToken)
   const { options } = scene.descriptor;
   const title = options.headerTitle !== undefined
     ? options.headerTitle
@@ -44,27 +45,19 @@ function CustomNavigationBar({ scene, navigation, previous }) {
   return (
     <Appbar.Header>
       <Appbar.Content title={title} />
-{/*       <Menu
+      { userToken ? <Menu
         visible={visible}
         onDismiss={closeMenu}
         anchor={
           <Appbar.Action icon="menu" color="white" onPress={openMenu} />
         }>
-        <Menu.Item onPress={() => {console.log('Option 1 was pressed')}} title="Option 1" />
-        <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
-        <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled />
-      </Menu> */}
+        <Menu.Item onPress={actions.signOut} title="Выход" />
+{/*         <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
+        <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled /> */}
+      </Menu> : null }
     </Appbar.Header>
   )
 }
-
-function ProfileScreen() {
-    return (
-      <View style={styles.container}>
-        <Button onPress={actions.signOut}>Выход</Button>
-      </View>
-    );
-  }
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -73,7 +66,6 @@ function HomeScreen() {
     <Tab.Navigator>
       <Tab.Screen name="Аппараты" component={VendingScreen} />
       <Tab.Screen name="Склад" component={StorageScreen} />
-      <Tab.Screen name="Профиль" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
