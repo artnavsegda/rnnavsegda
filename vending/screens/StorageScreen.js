@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { View, Alert, Image, FlatList } from 'react-native';
-import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading } from 'react-native-paper';
+import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper';
 
 export default function StorageScreen() {
     const token = useSelector(state => state.userToken)
@@ -67,7 +67,7 @@ export default function StorageScreen() {
     );
 
     return (
-      <View style={styles.container}>
+      <View>
         <Portal>
           <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
             <FlatList
@@ -81,8 +81,24 @@ export default function StorageScreen() {
             </View>
           </Modal>
         </Portal>
-        <Button onPress={receipt}>Получение</Button>
-        <Button onPress={writeoff}>Сдача</Button>
+        <List.Item
+          title="Получение"
+          description="Получение товара по накладной"
+          left={props => <List.Icon {...props} icon="cart-arrow-down" />}
+          onPress={receipt}
+        />
+        <List.Item
+          title="Сдача"
+          description="Сдача старого товара на склад"
+          left={props => <List.Icon {...props} icon="cart-arrow-up" />}
+          onPress={writeoff}
+        />
+        <List.Item
+          title="Сумка"
+          description="Cписок товаров по аппаратам для загрузки"
+          left={props => <List.Icon {...props} icon="bag-personal-outline" />}
+          onPress={()=>{console.log("click3")}}
+        />
       </View>
     );
   }

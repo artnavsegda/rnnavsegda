@@ -98,7 +98,7 @@ export default function VendingScreen() {
     return (
       data.isLoading ? (
         <View style={styles.container}>
-          <Text>Loading...</Text>
+          <ActivityIndicator animating={true} />
         </View>
       ) : (
         <View style={{flex: 1}}>

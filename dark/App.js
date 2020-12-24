@@ -69,17 +69,20 @@ function App() {
       <List.Item
         title="Получение"
         description="Получение товара по накладной"
-        left={props => <List.Icon {...props} icon="camera" />}
+        left={props => <List.Icon {...props} icon="cart-arrow-down" />}
+        onPress={()=>{console.log("click1")}}
       />
       <List.Item
         title="Сдача"
         description="Сдача старого товара на склад"
-        left={props => <List.Icon {...props} icon="camera" />}
+        left={props => <List.Icon {...props} icon="cart-arrow-up" />}
+        onPress={()=>{console.log("click2")}}
       />
       <List.Item
         title="Сумка"
-        description="Item description"
-        left={props => <List.Icon {...props} icon="camera" />}
+        description="Cписок товаров по аппаратам для загрузки"
+        left={props => <List.Icon {...props} icon="bag-personal-outline" />}
+        onPress={()=>{console.log("click3")}}
       />
       <StatusBar style="auto" />
     </View>

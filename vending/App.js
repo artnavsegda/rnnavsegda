@@ -97,7 +97,7 @@ function App({ navigation }) {
     <NavigationContainer theme={scheme === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme}>
       <Stack.Navigator screenOptions={{ header: (props) => <CustomNavigationBar {...props} /> }}>
         {state.isLoading ? (
-          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="Загрузка..." component={SplashScreen} />
         ) : state.userToken == null ? (
           <Stack.Screen
             name="SignIn"
