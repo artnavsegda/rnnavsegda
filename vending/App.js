@@ -1,29 +1,29 @@
-import * as React from 'react';
+import * as React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import { TextInput, View, Alert } from 'react-native';
-import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+import { TextInput, View, Alert } from 'react-native'
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
 import { 
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
   Button, Text, Appbar, Menu
-} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+} from 'react-native-paper'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 import * as Permissions from 'expo-permissions'
-import * as Location from 'expo-location';
+import * as Location from 'expo-location'
 
-import store from './store';
-import actions from './actions';
-import styles from './styles';
+import store from './store'
+import actions from './actions'
+import styles from './styles'
 
-import SplashScreen from './screens/SplashScreen';
-import SignInScreen from './screens/SignInScreen';
-import VendingScreen from './screens/VendingScreen';
-import StorageScreen from './screens/StorageScreen';
-import ServiceScreen from './screens/ServiceScreen';
+import SplashScreen from './screens/SplashScreen'
+import SignInScreen from './screens/SignInScreen'
+import VendingScreen from './screens/VendingScreen'
+import StorageScreen from './screens/StorageScreen'
+import ServiceScreen from './screens/ServiceScreen'
 
 function ProfileScreen() {
     return (
@@ -48,6 +48,7 @@ function HomeScreen() {
 const Stack = createStackNavigator();
 
 function App({ navigation }) {
+  const scheme = useColorScheme()
   const state = useSelector(state => state)
 
   React.useEffect(() => {
@@ -55,13 +56,13 @@ function App({ navigation }) {
       let userToken, userName;
 
       try {
-        userToken = await AsyncStorage.getItem('userToken');
-        userName = await AsyncStorage.getItem('userName');
+        userToken = await AsyncStorage.getItem('userToken')
+        userName = await AsyncStorage.getItem('userName')
       } catch (e) {
         // Restoring token failed
       }
 
-      store.dispatch({ type: 'RESTORE_TOKEN', token: userToken, username: userName });
+      store.dispatch({ type: 'RESTORE_TOKEN', token: userToken, username: userName })
     };
 
     bootstrapAsync();
@@ -95,8 +96,8 @@ export default function ConnectedApp() {
   const [permission, askForPermission] = Permissions.usePermissions(Permissions.LOCATION, { ask: true });
 
   Location.watchPositionAsync({}, (location) => {
-    store.dispatch({ type: 'LOCATION', location: location });
-    console.log(JSON.stringify(location));
+    store.dispatch({ type: 'LOCATION', location: location })
+    console.log(JSON.stringify(location))
   })
 
   return(
