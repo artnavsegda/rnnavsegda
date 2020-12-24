@@ -34,14 +34,21 @@ const CombinedDarkTheme = {
 
 const Stack = createStackNavigator()
 
-function CustomNavigationBar({ navigation, previous }) {
+function CustomNavigationBar({ scene, navigation, previous }) {
+  const { options } = scene.descriptor;
+  const title = options.headerTitle !== undefined
+    ? options.headerTitle
+    : options.title !== undefined
+    ? options.title
+    : scene.route.name;
+
   const [visible, setVisible] = React.useState(false)
   const openMenu = () => setVisible(true)
   const closeMenu = () => setVisible(false)
   
   return (
     <Appbar.Header>
-      <Appbar.Content title="My awesome app" />
+      <Appbar.Content title={title} />
       <Menu
         visible={visible}
         onDismiss={closeMenu}
