@@ -6,7 +6,7 @@ import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
   Provider as PaperProvider,
-  Text
+  Text, Appbar
 } from 'react-native-paper';
 import { 
   NavigationContainer,
@@ -34,6 +34,14 @@ const CombinedDarkTheme = {
 
 const Stack = createStackNavigator();
 
+function CustomNavigationBar() {
+  return (
+    <Appbar.Header>
+      <Appbar.Content title="My awesome app" />
+    </Appbar.Header>
+  );
+}
+
 function App() {
   return (
     <View style={styles.container}>
@@ -48,9 +56,9 @@ export default function Main() {
   return (
     <PaperProvider>
       <NavigationContainer theme={scheme === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme}>
-      <Stack.Navigator>
-        <Stack.Screen name="App" component={App} />
-      </Stack.Navigator>
+        <Stack.Navigator screenOptions={{ header: (props) => <CustomNavigationBar {...props} /> }}>
+          <Stack.Screen name="App" component={App} />
+        </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );
