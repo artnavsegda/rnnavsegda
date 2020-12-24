@@ -153,7 +153,7 @@ export default function ServiceScreen({navigation}) {
         navigation.setOptions({ title: 'Обслуживание' })
         return (
           <View style={styles.container}>
-            <Image source={require('../resources/img-vending.png'} />
+            <Image source={require('../resources/img-vending.png')} />
             <Text>Закройте дверь !</Text>
           </View>
         )
