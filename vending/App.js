@@ -73,7 +73,7 @@ function App({ navigation }) {
   }, []);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={scheme === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme}>
       <Stack.Navigator>
         {state.isLoading ? (
           <Stack.Screen name="Splash" component={SplashScreen} />
