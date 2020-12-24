@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { Provider, useSelector } from 'react-redux'
-import { Text, TextInput, View, Alert } from 'react-native';
-import { Provider as PaperProvider, Button } from 'react-native-paper';
+import { TextInput, View, Alert } from 'react-native';
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+import { 
+  Provider as PaperProvider,
+  DefaultTheme as PaperDefaultTheme,
+  Button, Text, Appbar, Menu
+} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
