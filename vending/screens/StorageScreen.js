@@ -81,24 +81,26 @@ export default function StorageScreen() {
             </View>
           </Modal>
         </Portal>
-        <List.Item
-          title="Получение"
-          description="Получение товара по накладной"
-          left={props => <List.Icon {...props} icon="cart-arrow-down" />}
-          onPress={receipt}
-        />
-        <List.Item
-          title="Сдача"
-          description="Сдача старого товара на склад"
-          left={props => <List.Icon {...props} icon="cart-arrow-up" />}
-          onPress={writeoff}
-        />
-        <List.Item
-          title="Сумка"
-          description="Cписок товаров по аппаратам для загрузки"
-          left={props => <List.Icon {...props} icon="bag-personal-outline" />}
-          onPress={()=>{console.log("click3")}}
-        />
+        <List.Section>
+          <List.Item
+            title="Получение"
+            description="Получение товара по накладной"
+            left={props => <List.Icon {...props} icon="cart-arrow-down" />}
+            onPress={receipt}
+          />
+          <List.Item
+            title="Сдача"
+            description="Сдача старого товара на склад"
+            left={props => <List.Icon {...props} icon="cart-arrow-up" />}
+            onPress={writeoff}
+          />
+          <List.Item
+            title="Сумка"
+            description="Cписок товаров по аппаратам для загрузки"
+            left={props => <List.Icon {...props} icon="bag-personal-outline" />}
+            onPress={()=>{console.log("click3")}}
+          />
+        </List.Section>
       </View>
     );
   }
