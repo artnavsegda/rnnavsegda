@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import { TextInput, View, Alert } from 'react-native'
-import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
+import { TextInput, View, Alert, useColorScheme } from 'react-native'
 import { 
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
