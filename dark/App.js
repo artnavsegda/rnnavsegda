@@ -1,19 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+import { StatusBar } from 'expo-status-bar'
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
 import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
   Provider as PaperProvider,
   Text, Appbar, Menu
-} from 'react-native-paper';
+} from 'react-native-paper'
 import { 
   NavigationContainer,
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
-} from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+} from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
 const CombinedDefaultTheme = {
   ...PaperDefaultTheme,
@@ -22,7 +22,7 @@ const CombinedDefaultTheme = {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
   },
-};
+}
 const CombinedDarkTheme = {
   ...PaperDarkTheme,
   ...NavigationDarkTheme,
@@ -30,14 +30,14 @@ const CombinedDarkTheme = {
     ...PaperDarkTheme.colors,
     ...NavigationDarkTheme.colors,
   },
-};
+}
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
 
 function CustomNavigationBar() {
-  const [visible, setVisible] = React.useState(false);
-  const openMenu = () => setVisible(true);
-  const closeMenu = () => setVisible(false);
+  const [visible, setVisible] = React.useState(false)
+  const openMenu = () => setVisible(true)
+  const closeMenu = () => setVisible(false)
   
   return (
     <Appbar.Header>
@@ -53,7 +53,7 @@ function CustomNavigationBar() {
         <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled />
       </Menu>
     </Appbar.Header>
-  );
+  )
 }
 
 function App() {
@@ -62,7 +62,7 @@ function App() {
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
     </View>
-  );
+  )
 }
 
 export default function Main() {
@@ -75,7 +75,7 @@ export default function Main() {
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -85,4 +85,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})
