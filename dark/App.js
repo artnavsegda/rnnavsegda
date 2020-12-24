@@ -68,12 +68,12 @@ function App() {
     <View>
       <List.Item
         title="Получение"
-        description="Item description"
+        description="Получение товара по накладной"
         left={props => <List.Icon {...props} icon="camera" />}
       />
       <List.Item
         title="Сдача"
-        description="Item description"
+        description="Сдача старого товара на склад"
         left={props => <List.Icon {...props} icon="camera" />}
       />
       <List.Item
