@@ -6,7 +6,7 @@ import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
   Provider as PaperProvider,
-  Text, Appbar, Menu, Button
+  Text, Appbar, Menu, Button, List
 } from 'react-native-paper'
 import { 
   NavigationContainer,
@@ -68,6 +68,11 @@ function App() {
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
       <Button icon="camera">Press me</Button>
+      <List.Item
+        title="First Item"
+        description="Item description"
+        left={props => <List.Icon {...props} icon="folder" />}
+      />
       <StatusBar style="auto" />
     </View>
   )
