@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useColorScheme } from 'react-native-appearance'
+import { useColorScheme } from 'react-native'
 import Svg, { SvgProps, G, Rect, Path } from "react-native-svg"
 
 function SvgComponent(props: SvgProps) {
