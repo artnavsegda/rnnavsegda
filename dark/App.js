@@ -6,7 +6,7 @@ import {
   DarkTheme as PaperDarkTheme,
   DefaultTheme as PaperDefaultTheme,
   Provider as PaperProvider,
-  Text, Appbar
+  Text, Appbar, Menu
 } from 'react-native-paper';
 import { 
   NavigationContainer,
@@ -35,9 +35,23 @@ const CombinedDarkTheme = {
 const Stack = createStackNavigator();
 
 function CustomNavigationBar() {
+  const [visible, setVisible] = React.useState(false);
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+  
   return (
     <Appbar.Header>
       <Appbar.Content title="My awesome app" />
+      <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={
+          <Appbar.Action icon="menu" color="white" onPress={openMenu} />
+        }>
+        <Menu.Item onPress={() => {console.log('Option 1 was pressed')}} title="Option 1" />
+        <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
+        <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled />
+      </Menu>
     </Appbar.Header>
   );
 }
