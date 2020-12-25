@@ -16,7 +16,7 @@ const actions = {
       })
       .then(response => {
         if (!response.ok)
-          throw "Неверный логин или пароль";
+          throw new Error("Неверный логин или пароль")
         var userToken = response.headers.get('token')
         store.dispatch({ type: 'SIGN_IN', token: userToken })
         AsyncStorage.setItem('userToken', userToken)
