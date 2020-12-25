@@ -2,6 +2,8 @@ import * as React from 'react'
 import { useSelector } from 'react-redux'
 import {  Appbar, Menu } from 'react-native-paper'
 
+import actions from '../actions'
+
 export default function CustomNavigationBar({ scene, navigation, previous }) {
     const state = useSelector(state => state)
     const { options } = scene.descriptor;
