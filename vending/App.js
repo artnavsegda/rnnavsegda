@@ -29,7 +29,7 @@ import StorageScreen from './screens/StorageScreen'
 import ServiceScreen from './screens/ServiceScreen'
 
 function CustomNavigationBar({ scene, navigation, previous }) {
-  const userToken = useSelector(state => state.userToken)
+  const state = useSelector(state => state)
   const { options } = scene.descriptor;
   const title = options.headerTitle !== undefined
     ? options.headerTitle
@@ -44,12 +44,13 @@ function CustomNavigationBar({ scene, navigation, previous }) {
   return (
     <Appbar.Header>
       <Appbar.Content title={title} />
-      { userToken ? <Menu
+      { state.userToken ? <Menu
         visible={visible}
         onDismiss={closeMenu}
         anchor={
           <Appbar.Action icon="menu" color="white" onPress={openMenu} />
         }>
+        <Menu.Item icon="logout" onPress={actions.debugToggle} title="Выход" />
         <Menu.Item icon="logout" onPress={actions.signOut} title="Выход" />
       </Menu> : null }
     </Appbar.Header>

@@ -35,6 +35,9 @@ const actions = {
       store.dispatch({ type: 'SIGN_OUT' })
       AsyncStorage.removeItem('userToken');
       AsyncStorage.removeItem('userName');
+    },
+    debugToggle: () => {
+      store.dispatch({ type: 'DEBUG_TOGGLE' })
     }
 }
 
