@@ -6,7 +6,8 @@ let store = createStore((prevState = {
     userToken: null,
     userName: "",
     location: null,
-    servicingMachineID: null
+    servicingMachineID: null,
+    debug: false
   }, action) => {
     switch (action.type) {
       case 'MACHINE':
@@ -42,6 +43,11 @@ let store = createStore((prevState = {
           ...prevState,
           isSignout: true,
           userToken: null,
+        };
+      case 'DEBUG_TOGGLE':
+        return {
+          ...prevState,
+          debug: !prevState.debug
         };
       default:
         return prevState;
