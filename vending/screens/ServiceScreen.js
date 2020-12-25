@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { View, FlatList, Image } from 'react-native';
-import { Button, Paragraph, ActivityIndicator, IconButton, Headline } from 'react-native-paper';
+import { Text, Button, Paragraph, ActivityIndicator, IconButton, Headline } from 'react-native-paper';
 import store from '../store';
 
 const Spinner = (props) => (
