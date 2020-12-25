@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import { TextInput, View, Alert, useColorScheme } from 'react-native'
+import { useColorScheme, PermissionsAndroid } from 'react-native'
 import { 
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
@@ -14,9 +14,7 @@ import {
 } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-
-import * as Permissions from 'expo-permissions'
-import * as Location from 'expo-location'
+import Geolocation from '@react-native-community/geolocation';
 
 import store from './store'
 import actions from './actions'
@@ -88,6 +86,7 @@ function App({ navigation }) {
     };
 
     bootstrapAsync()
+    
     PermissionsAndroid.requestMultiple([
       PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION, 
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
