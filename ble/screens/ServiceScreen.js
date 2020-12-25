@@ -39,7 +39,7 @@ const Productlist = (props) => {
       renderItem={renderItem}
       keyExtractor={item => item.ID}
     />
-    <Button onPress={()=>{
+    <Button style={{padding: 10}} icon="page-next" onPress={()=>{
       props.onSend(state)
       setState(props.data.map(element => {return {ProductID: element.ID, Quantity: 0}}))
     }}>Далее</Button>

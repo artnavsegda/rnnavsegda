@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { Text, View, FlatList, Image } from 'react-native';
-import { Button, Paragraph, ActivityIndicator } from 'react-native-paper';
+import { Button, Paragraph, ActivityIndicator, IconButton } from 'react-native-paper';
 import store from '../store';
 
 const Spinner = (props) => (
   <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-    <Button onPress={props.onMinus}>-</Button><Text>{props.value}</Text><Button onPress={props.onPlus}>+</Button>
+    <IconButton icon="minus" onPress={props.onMinus}/><Text>{props.value}</Text><IconButton icon="plus" onPress={props.onPlus}/>
   </View>
 )
 
@@ -39,7 +39,7 @@ const Productlist = (props) => {
       renderItem={renderItem}
       keyExtractor={item => item.ID}
     />
-    <Button onPress={()=>{
+    <Button style={{padding: 10}} icon="page-next-outline" onPress={()=>{
       props.onSend(state)
       setState(props.data.map(element => {return {ProductID: element.ID, Quantity: 0}}))
     }}>Далее</Button>
