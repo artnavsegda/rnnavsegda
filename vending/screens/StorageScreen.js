@@ -15,7 +15,7 @@ export default function StorageScreen() {
         if (invoice.length < 1)
         {
           console.log("receipt empty")
-          Alert.alert('Получение', "Список пуст.");
+          Alert.alert('Получение', "Список пуст.")
         }
         else
         {
@@ -31,11 +31,11 @@ export default function StorageScreen() {
       fetch(api.invoice + '?' + new URLSearchParams({ Type: 1 }), {headers: { token }})
       .then(response => response.json())
       .then(invoice => {
-        console.log(JSON.stringify(invoice));
+        console.log(JSON.stringify(invoice))
         if (invoice.length < 1)
         {
           console.log("writeoff empty")
-          Alert.alert('Сдача', "Список пуст.");
+          Alert.alert('Сдача', "Список пуст.")
         }
         else
           setState({
@@ -54,7 +54,7 @@ export default function StorageScreen() {
         setState({modalOpen: false, content:[], type: null})
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error('Error:', error)
       });
     }
   
