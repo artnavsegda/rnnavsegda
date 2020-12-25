@@ -7,6 +7,7 @@ export default function StorageScreen() {
     const token = useSelector(state => state.userToken)
     const [state, setState] = React.useState({modalOpen: false, content:[], type: null});
     const hideModal = () => setVisible(false);
+
     function receipt() {
       fetch(api.invoice + '?' + new URLSearchParams({ Type: 0 }), {headers: { token }})
       .then(response => response.json())
@@ -27,6 +28,7 @@ export default function StorageScreen() {
         }
       })
     }
+
     function writeoff() {
       fetch(api.invoice + '?' + new URLSearchParams({ Type: 1 }), {headers: { token }})
       .then(response => response.json())
@@ -42,6 +44,25 @@ export default function StorageScreen() {
             modalOpen: true,
             content:invoice,
             type: 1
+          })
+      })
+    }
+
+    function bag() {
+      fetch(api.invoice + '?' + new URLSearchParams({ Type: 2 }), {headers: { token }})
+      .then(response => response.json())
+      .then(invoice => {
+        console.log(JSON.stringify(invoice))
+        if (invoice.length < 1)
+        {
+          console.log("writeoff empty")
+          Alert.alert('Сдача', "Список пуст.")
+        }
+        else
+          setState({
+            modalOpen: true,
+            content:invoice,
+            type: 2
           })
       })
     }
@@ -77,7 +98,7 @@ export default function StorageScreen() {
             />
             <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
               <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
-              <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button>
+              {state.type && state.type != 2 ? <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button> : null}
             </View>
           </Modal>
         </Portal>
@@ -98,7 +119,7 @@ export default function StorageScreen() {
             title="Сумка"
             description="Cписок товаров по аппаратам для загрузки"
             left={props => <List.Icon {...props} icon="bag-personal-outline" />}
-            onPress={()=>{console.log("click3")}}
+            onPress={bag}
           />
         </List.Section>
       </View>
