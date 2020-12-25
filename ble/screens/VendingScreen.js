@@ -14,6 +14,9 @@ const Item = ({ item, onPress }) => {
   const [lock, setLock] = React.useState(false)
   const [found, setFound] = React.useState(false)
 
+  if (state.debug)
+    found = true;
+
   function openLock()
   {
     console.log("Open lock GUID " + item.GUID);
