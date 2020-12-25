@@ -22,41 +22,13 @@ import store from './store'
 import actions from './actions'
 import styles from './styles'
 
+import CustomNavigationBar from './components/NavBar'
+
 import SplashScreen from './screens/SplashScreen'
 import SignInScreen from './screens/SignInScreen'
 import VendingScreen from './screens/VendingScreen'
 import StorageScreen from './screens/StorageScreen'
 import ServiceScreen from './screens/ServiceScreen'
-
-function CustomNavigationBar({ scene, navigation, previous }) {
-  const state = useSelector(state => state)
-  const { options } = scene.descriptor;
-  const title = options.headerTitle !== undefined
-    ? options.headerTitle
-    : options.title !== undefined
-    ? options.title
-    : scene.route.name;
-
-  const [visible, setVisible] = React.useState(false)
-  const openMenu = () => setVisible(true)
-  const closeMenu = () => setVisible(false)
-  
-  return (
-    <Appbar.Header>
-      <Appbar.Content title={title} />
-      { state.userToken ? <Menu
-        visible={visible}
-        onDismiss={closeMenu}
-        anchor={
-          <Appbar.Action icon="menu" color="white" onPress={openMenu} />
-        }>
-        <Menu.Item icon={state.debug ? "checkbox-marked-outline" : "checkbox-blank-outline" } onPress={actions.debugToggle} title="Debug" />
-        {state.debug ? <Menu.Item icon="radar" title="BLE Scanner" /> : null}
-        <Menu.Item icon="logout" onPress={actions.signOut} title="Выход" />
-      </Menu> : null }
-    </Appbar.Header>
-  )
-}
 
 const Tab = createMaterialTopTabNavigator();
 
