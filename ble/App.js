@@ -26,34 +26,7 @@ import VendingScreen from './screens/VendingScreen'
 import StorageScreen from './screens/StorageScreen'
 import ServiceScreen from './screens/ServiceScreen'
 
-function CustomNavigationBar({ scene, navigation, previous }) {
-  const userToken = useSelector(state => state.userToken)
-  const { options } = scene.descriptor;
-  const title = options.headerTitle !== undefined
-    ? options.headerTitle
-    : options.title !== undefined
-    ? options.title
-    : scene.route.name;
-
-  const [visible, setVisible] = React.useState(false)
-  const openMenu = () => setVisible(true)
-  const closeMenu = () => setVisible(false)
-  
-  return (
-    <Appbar.Header>
-      <Appbar.Content title={title} />
-      { userToken ?
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={
-            <Appbar.Action icon="menu" color="white" onPress={openMenu} />
-          }>
-        <Menu.Item icon="logout" onPress={actions.signOut} title="Выход" />
-      </Menu> : null }
-    </Appbar.Header>
-  )
-}
+import CustomNavigationBar from './components/NavBar'
 
 const Tab = createMaterialTopTabNavigator();
 

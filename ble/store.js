@@ -6,19 +6,14 @@ let store = createStore((prevState = {
     userToken: null,
     userName: "",
     location: null,
-    beacons: [],
-    servicingMachineID: undefined
+    servicingMachineID: null,
+    debug: false
   }, action) => {
     switch (action.type) {
       case 'MACHINE':
         return {
           ...prevState,
           servicingMachineID: action.machine,
-        };
-      case 'BEACONS':
-        return {
-          ...prevState,
-          beacons: action.beacons,
         };
       case 'LOCATION':
         return {
@@ -31,7 +26,6 @@ let store = createStore((prevState = {
           userName: action.username,
         };
       case 'RESTORE_TOKEN':
-        console.log("Token: " + action.token);
         return {
           ...prevState,
           userToken: action.token,
@@ -39,7 +33,6 @@ let store = createStore((prevState = {
           isLoading: false,
         };
       case 'SIGN_IN':
-        console.log("Token: " + action.token);
         return {
           ...prevState,
           isSignout: false,
@@ -50,6 +43,11 @@ let store = createStore((prevState = {
           ...prevState,
           isSignout: true,
           userToken: null,
+        };
+      case 'DEBUG_TOGGLE':
+        return {
+          ...prevState,
+          debug: !prevState.debug
         };
       default:
         return prevState;
