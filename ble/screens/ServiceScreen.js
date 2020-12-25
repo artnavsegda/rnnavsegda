@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { View, FlatList, Image } from 'react-native';
-import { Text, Button, Paragraph, ActivityIndicator, IconButton, Headline } from 'react-native-paper';
+import { Text, Button, Paragraph, ActivityIndicator, IconButton, Caption } from 'react-native-paper';
 import store from '../store';
 
 const Spinner = (props) => (
@@ -154,7 +154,7 @@ export default function ServiceScreen({navigation}) {
         return (
           <View style={styles.container}>
             <Image source={require('../resources/img-vending.png')} />
-            <Headline>Закройте дверь !</Headline>
+            <Caption style={{ fontSize: 15, padding: 20 }}>Закройте дверь!</Caption>
           </View>
         )
   }
