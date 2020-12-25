@@ -50,8 +50,8 @@ function CustomNavigationBar({ scene, navigation, previous }) {
         anchor={
           <Appbar.Action icon="menu" color="white" onPress={openMenu} />
         }>
+        <Menu.Item icon={state.debug ? "checkbox-marked-outline" : "checkbox-blank-outline" } onPress={actions.debugToggle} title="Debug" />
         <Menu.Item icon="logout" onPress={actions.debugToggle} title="Выход" />
-        <Menu.Item icon="logout" onPress={actions.signOut} title="Выход" />
       </Menu> : null }
     </Appbar.Header>
   )
