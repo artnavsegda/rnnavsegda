@@ -42,13 +42,14 @@ function CustomNavigationBar({ scene, navigation, previous }) {
   return (
     <Appbar.Header>
       <Appbar.Content title={title} />
-      { userToken ? <Menu
-        visible={visible}
-        onDismiss={closeMenu}
-        anchor={
-          <Appbar.Action icon="menu" color="white" onPress={openMenu} />
-        }>
-        <Menu.Item onPress={actions.signOut} title="Выход" />
+      { userToken ?
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={
+            <Appbar.Action icon="menu" color="white" onPress={openMenu} />
+          }>
+        <Menu.Item icon="logout" onPress={actions.signOut} title="Выход" />
       </Menu> : null }
     </Appbar.Header>
   )

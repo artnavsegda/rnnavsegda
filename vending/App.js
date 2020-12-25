@@ -50,9 +50,7 @@ function CustomNavigationBar({ scene, navigation, previous }) {
         anchor={
           <Appbar.Action icon="menu" color="white" onPress={openMenu} />
         }>
-        <Menu.Item onPress={actions.signOut} title="Выход" />
-{/*         <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
-        <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled /> */}
+        <Menu.Item icon="logout" onPress={actions.signOut} title="Выход" />
       </Menu> : null }
     </Appbar.Header>
   )
