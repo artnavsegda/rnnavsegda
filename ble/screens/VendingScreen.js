@@ -12,6 +12,7 @@ const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
   const [loading, setLoading] = React.useState(false)
   const [lock, setLock] = React.useState(false)
+  const [found, setFound] = React.useState(false)
 
   function openLock()
   {
