@@ -1,18 +1,17 @@
-import * as React from 'react';
+import * as React from 'react'
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert } from 'react-native';
-import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper';
-import MapView from 'react-native-maps';
-import styles from '../styles';
-import api from '../api.js';
-import store from '../store.js';
-import manager from "../ble"
+import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert } from 'react-native'
+import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper'
+import MapView from 'react-native-maps'
+import styles from '../styles'
+import api from '../api.js'
+import store from '../store.js'
+import manager from '../ble'
 
 const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
-  const [loading, setLoading] = React.useState(false);
-  const [lock, setLock] = React.useState(false);
-  const [found, setFound] = React.useState(false);
+  const [loading, setLoading] = React.useState(false)
+  const [lock, setLock] = React.useState(false)
 
   function openLock()
   {
@@ -29,52 +28,48 @@ const Item = ({ item, onPress }) => {
               console.log("status: " + JSON.stringify(status))
               if (status.Lock)
               {
-                setLoading(false);
-                setLock(true);
-                item.lockOpen = true;
+                setLoading(false)
+                setLock(true)
+                item.lockOpen = true
               }
               else
-                setLock(false);
+                setLock(false)
 
               if (status.Door)
               {
-                clearInterval(timerID);
+                clearInterval(timerID)
                 store.dispatch({ type: 'MACHINE', machine: item.GUID })
               }
             })
-          }, 5000);
+          }, 5000)
         }) : null
   }
 
   function findMachine()
   {
-    console.log("Searching for machine GUID " + item.GUID + " mac " + item.MACAddress);
-    setLoading(true);
+    console.log("Searching for machine GUID " + item.GUID + " mac " + item.MACAddress)
+    setLoading(true)
 
     manager.startDeviceScan(null, null, (error, device) => {
       if (error) {
-        console.log("some kind of BLE error");
-        console.error(error);
+        console.error(error)
         return
       }
 
       if (device.id == item.MACAddress) {
-        console.log("Device found");
-        this.manager.stopDeviceScan();
-        setLoading(false);
+        this.manager.stopDeviceScan()
+        setLoading(false)
         setFound(true);
         setTimeout(()=>{
-          setFound(false);
-        },60000);
+          setFound(false)
+        },60000)
       }
-
-      console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
     });
 
     setTimeout(()=>{
-      manager.stopDeviceScan();
-      setLoading(false);
-    },10000);
+      manager.stopDeviceScan()
+      setLoading(false)
+    },10000)
   }
 
   return (
@@ -86,10 +81,13 @@ const Item = ({ item, onPress }) => {
         </Card.Content>
         <Card.Actions>
           <Button onPress={() => {
-            Linking.openURL("geo:" + item.Latitude + "," + item.Longitude);
-            console.log('Pressed');
+            Linking.openURL("geo:" + item.Latitude + "," + item.Longitude)
+            console.log('Pressed')
           }}>Навигация</Button>
-          <Button disabled={loading} onPress={openLock}>Открыть замок</Button>
+          <Button
+            disabled={loading}
+            onPress={found ? openLock : findMachine}
+          >{found ? "Открыть замок" : "Найти автомат"}</Button>
           <ActivityIndicator animating={loading} />
         </Card.Actions>
       </TouchableOpacity>
@@ -99,9 +97,9 @@ const Item = ({ item, onPress }) => {
 
 export default function VendingScreen() {
     const state = useSelector(state => state)
-    const [data, setData] = React.useState({ isLoading: true, machines: [] });
-    const map = React.useRef(null);
-    const flatlist = React.useRef(null);
+    const [data, setData] = React.useState({ isLoading: true, machines: [] })
+    const map = React.useRef(null)
+    const flatlist = React.useRef(null)
   
     React.useEffect(() => {
       state.userToken ? fetch(api.machines, {headers: { token: state.userToken }})
@@ -112,25 +110,25 @@ export default function VendingScreen() {
     const renderItem = ({ item, index }) => (
       <Item item={item} onPress={()=>{
         console.log(item.Name)
-        map.current.animateCamera({center: {latitude: item.Latitude, longitude: item.Longitude }, zoom: 15 }, 5000 );
-        //flatlist.current.scrollToIndex({animated: true, index})
+        map.current.animateCamera({center: {latitude: item.Latitude, longitude: item.Longitude }, zoom: 15 }, 5000 )
       }}/>
     );
   
     return (
       data.isLoading ? (
         <View style={styles.container}>
-          <Text>Loading...</Text>
+          <ActivityIndicator animating={true} />
         </View>
       ) : (
         <View style={{flex: 1}}>
           <MapView style={{flex: 2}}
             ref={map}
-            initialRegion={{
+            initialRegion={state.location ?
+              {
               ...state.location.coords,
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
-            }}
+            } : undefined}
             showsUserLocation={true}
             followsUserLocation={true}
           >

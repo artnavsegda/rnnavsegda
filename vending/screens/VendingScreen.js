@@ -1,16 +1,16 @@
-import * as React from 'react';
+import * as React from 'react'
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert } from 'react-native';
-import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper';
-import MapView from 'react-native-maps';
-import styles from '../styles';
-import api from '../api.js';
-import store from '../store.js';
+import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert } from 'react-native'
+import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper'
+import MapView from 'react-native-maps'
+import styles from '../styles'
+import api from '../api.js'
+import store from '../store.js'
 
 const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
-  const [loading, setLoading] = React.useState(false);
-  const [lock, setLock] = React.useState(false);
+  const [loading, setLoading] = React.useState(false)
+  const [lock, setLock] = React.useState(false)
 
   function openLock()
   {
@@ -27,20 +27,20 @@ const Item = ({ item, onPress }) => {
               console.log("status: " + JSON.stringify(status))
               if (status.Lock)
               {
-                setLoading(false);
-                setLock(true);
-                item.lockOpen = true;
+                setLoading(false)
+                setLock(true)
+                item.lockOpen = true
               }
               else
-                setLock(false);
+                setLock(false)
 
               if (status.Door)
               {
-                clearInterval(timerID);
+                clearInterval(timerID)
                 store.dispatch({ type: 'MACHINE', machine: item.GUID })
               }
             })
-          }, 5000);
+          }, 5000)
         }) : null
   }
 
@@ -53,8 +53,8 @@ const Item = ({ item, onPress }) => {
         </Card.Content>
         <Card.Actions>
           <Button onPress={() => {
-            Linking.openURL("geo:" + item.Latitude + "," + item.Longitude);
-            console.log('Pressed');
+            Linking.openURL("geo:" + item.Latitude + "," + item.Longitude)
+            console.log('Pressed')
           }}>Навигация</Button>
           <Button
             disabled={false}
@@ -62,14 +62,6 @@ const Item = ({ item, onPress }) => {
           >Открыть замок</Button>
           <ActivityIndicator animating={loading} />
         </Card.Actions>
-        {/*<Text style={styles.title}>Название: {item.Name}</Text>
-        <Text style={styles.title}>Адрес: {item.Address}</Text>
-        <Text style={styles.title}>Расстояние: 0000000</Text>
-        <Text style={styles.title}>Комментарий: {item.Comment}</Text>
-        <Text style={styles.title}>Время работы: {item.Start}-{item.Finish}</Text>
-        <Text style={styles.title}>Дата обслуживания: {item.ServiceDate}</Text> */}
-        {/* <Button title="Go"/> */}
-        {/* <Button title="Открыть замок"/> */}
       </TouchableOpacity>
     </Card>
   )
@@ -77,9 +69,9 @@ const Item = ({ item, onPress }) => {
 
 export default function VendingScreen() {
     const state = useSelector(state => state)
-    const [data, setData] = React.useState({ isLoading: true, machines: [] });
-    const map = React.useRef(null);
-    const flatlist = React.useRef(null);
+    const [data, setData] = React.useState({ isLoading: true, machines: [] })
+    const map = React.useRef(null)
+    const flatlist = React.useRef(null)
   
     React.useEffect(() => {
       state.userToken ? fetch(api.machines, {headers: { token: state.userToken }})
@@ -90,8 +82,7 @@ export default function VendingScreen() {
     const renderItem = ({ item, index }) => (
       <Item item={item} onPress={()=>{
         console.log(item.Name)
-        map.current.animateCamera({center: {latitude: item.Latitude, longitude: item.Longitude }, zoom: 15 }, 5000 );
-        //flatlist.current.scrollToIndex({animated: true, index})
+        map.current.animateCamera({center: {latitude: item.Latitude, longitude: item.Longitude }, zoom: 15 }, 5000 )
       }}/>
     );
   
