@@ -4,32 +4,28 @@ import store from './store.js';
 import api from './api.js';
 
 const actions = {
-    signIn: data => {
+    signIn: async data => {
       let payload = {
         "Login": data.username,
         "Password": data.password,
       }
-      fetch(api.auth, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(response => {
+      try {
+        let response = await fetch(api.auth, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/json' },
+          body: JSON.stringify(payload)
+        })
         if (!response.ok)
-          throw new Error("Неверный логин или пароль")
-        var userToken = response.headers.get('token')
+          throw new Error("Неверный логин или пароль:" + await response.text())
+        let userToken = response.headers.get('token')
         store.dispatch({ type: 'SIGN_IN', token: userToken })
         AsyncStorage.setItem('userToken', userToken)
-        return response.json()
-      })
-      .then(json => {
+        let json = await response.json()
         store.dispatch({ type: 'USER_NAME', username: json.Name })
         AsyncStorage.setItem('userName', json.Name)
-      })
-      .catch((error) => {
+      } catch (error) {
         Alert.alert('Ошибка', error.message);
-        //console.error('Error:', error);
-      });
+      }
     },
     signOut: () => {
       store.dispatch({ type: 'SIGN_OUT' })
