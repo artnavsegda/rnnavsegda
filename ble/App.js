@@ -40,8 +40,18 @@ function HomeScreen() {
 }
 
 function BLEScanner() {
+  function scan_start()
+  {
+    console.log("Scan !")
+  }
+  function scan_stop()
+  {
+    console.log("Stop !")
+  }
   return (
     <View style={styles.container}>
+      <Button onPress={scan_start}>Start scan</Button>
+      <Button onPress={scan_stop}>Stop scan</Button>
       <Text>BLE!</Text>
     </View>
   );
