@@ -43,9 +43,14 @@ function HomeScreen() {
 function BLEScanner() {
   const [myMap, setMyMap] = React.useState(new Map());
 
+  function scan_stop()
+  {
+    manager.stopDeviceScan()
+  }
+
   function scan_start()
   {
-    console.log("Scan !")
+    scan_stop();
     manager.startDeviceScan(null, null, (error, device) => {
       if (error) {
         console.error(error)
@@ -56,18 +61,16 @@ function BLEScanner() {
     });
 
     setTimeout(()=>{
-      manager.stopDeviceScan()
+      scan_stop();
     },10000)
-  }
-  function scan_stop()
-  {
-    console.log("Stop !")
   }
   return (
     <View style={styles.container}>
       <Button onPress={scan_start}>Start scan</Button>
       <Button onPress={scan_stop}>Stop scan</Button>
-      <Text>BLE!</Text>
+      {[...myMap.keys()].map(k => (
+        <Text key={k}>{JSON.stringify(myMap.get(k))}</Text>
+      ))}
     </View>
   );
 }
