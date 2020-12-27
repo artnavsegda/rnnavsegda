@@ -41,6 +41,8 @@ function HomeScreen() {
 }
 
 function BLEScanner() {
+  const [myMap, setMyMap] = React.useState(new Map());
+
   function scan_start()
   {
     console.log("Scan !")
@@ -49,7 +51,8 @@ function BLEScanner() {
         console.error(error)
         return
       }
-      console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
+      console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs))
+      setMyMap(new Map(myMap.set(device.id, {name: device.name, uuids: device.serviceUUIDs, lastSeen: Date.now()})))
     });
 
     setTimeout(()=>{
