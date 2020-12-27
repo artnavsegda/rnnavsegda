@@ -19,6 +19,7 @@ import Geolocation from '@react-native-community/geolocation';
 import store from './store'
 import actions from './actions'
 import styles from './styles'
+import manager from './ble'
 
 import SplashScreen from './screens/SplashScreen'
 import SignInScreen from './screens/SignInScreen'
@@ -43,6 +44,17 @@ function BLEScanner() {
   function scan_start()
   {
     console.log("Scan !")
+    manager.startDeviceScan(null, null, (error, device) => {
+      if (error) {
+        console.error(error)
+        return
+      }
+      console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs));
+    });
+
+    setTimeout(()=>{
+      manager.stopDeviceScan()
+    },10000)
   }
   function scan_stop()
   {
