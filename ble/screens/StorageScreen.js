@@ -98,7 +98,7 @@ export default function StorageScreen() {
             />
             <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
               <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
-              {state.type && state.type != 2 ? <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button> : null}
+              {state.type != 2 ? <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button> : null}
             </View>
           </Modal>
         </Portal>
