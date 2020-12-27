@@ -42,7 +42,7 @@ function HomeScreen() {
 function BLEScanner() {
   return (
     <View style={styles.container}>
-        <Text>BLE!</Text>
+      <Text>BLE!</Text>
     </View>
   );
 }
