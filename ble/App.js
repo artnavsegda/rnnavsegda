@@ -4,7 +4,7 @@ import { View, FlatList, useColorScheme, PermissionsAndroid } from 'react-native
 import { 
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
-  Button, Text, Appbar, Menu
+  Button, Text, Appbar, Menu, DataTable, ActivityIndicator
 } from 'react-native-paper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { 
@@ -42,15 +42,18 @@ function HomeScreen() {
 
 function BLEScanner() {
   const [myMap, setMyMap] = React.useState(new Map());
+  const [scanning, setScanning] = React.useState(false);
 
   function scan_stop()
   {
+    setScanning(false);
     manager.stopDeviceScan()
   }
 
   function scan_start()
   {
     scan_stop();
+    setScanning(true);
     manager.startDeviceScan(null, null, (error, device) => {
       if (error) {
         console.error(error)
@@ -62,7 +65,7 @@ function BLEScanner() {
 
     setTimeout(()=>{
       scan_stop();
-    },10000)
+    },60000)
   }
 
   const renderItem = ({ item }) => (
@@ -70,17 +73,29 @@ function BLEScanner() {
   );
 
   return (
-    <View style={styles.container}>
+    <View>
+      <View style={{flexDirection: "row"}}>
       <Button onPress={scan_start}>Start scan</Button>
       <Button onPress={scan_stop}>Stop scan</Button>
-      <FlatList
-        data={[...myMap.keys()]}
-        renderItem={renderItem}
-        keyExtractor={item => item}
-      />
-{/*       {[...myMap.keys()].map(k => (
-        <Text key={k}>{JSON.stringify(myMap.get(k))}</Text>
-      ))} */}
+      <ActivityIndicator animating={scanning} />
+      </View>
+      <DataTable>
+      <DataTable.Header>
+        <DataTable.Title>MAC</DataTable.Title>
+        <DataTable.Title>Name</DataTable.Title>
+        <DataTable.Title>Date</DataTable.Title>
+      </DataTable.Header>
+      {[...myMap.keys()].map(k => {
+        let d = new Date(myMap.get(k).lastSeen);
+        return (
+          <DataTable.Row key={k}>
+            <DataTable.Cell>{k}</DataTable.Cell>
+            <DataTable.Cell>{myMap.get(k).name}</DataTable.Cell>
+            <DataTable.Cell>{d.getHours()}:{d.getMinutes()}:{d.getSeconds()}</DataTable.Cell>
+          </DataTable.Row>
+          )
+      })}
+      </DataTable>
     </View>
   );
 }
