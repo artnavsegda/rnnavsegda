@@ -19,8 +19,9 @@ export default function CustomNavigationBar({ scene, navigation, previous }) {
     
     return (
       <Appbar.Header>
+        {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
         <Appbar.Content title={title} />
-        { state.userToken ? <Menu
+        { state.userToken && !previous ? <Menu
           visible={visible}
           onDismiss={closeMenu}
           anchor={
