@@ -27,7 +27,7 @@ export default function CustomNavigationBar({ scene, navigation, previous }) {
             <Appbar.Action icon="menu" color="white" onPress={openMenu} />
           }>
           <Menu.Item icon={state.debug ? "checkbox-marked-outline" : "checkbox-blank-outline" } onPress={actions.debugToggle} title="Debug" />
-          {state.debug ? <Menu.Item icon="radar" title="BLE Scanner" /> : null}
+          {state.debug ? <Menu.Item onPress={() => navigation.navigate('BLE Scanner')} icon="radar" title="BLE Scanner" /> : null}
           <Menu.Item icon="logout" onPress={actions.signOut} title="Выход" />
         </Menu> : null }
       </Appbar.Header>
