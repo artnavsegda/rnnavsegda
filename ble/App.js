@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import { useColorScheme, PermissionsAndroid } from 'react-native'
+import { View, useColorScheme, PermissionsAndroid } from 'react-native'
 import { 
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
