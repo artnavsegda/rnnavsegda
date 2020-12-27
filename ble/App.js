@@ -111,8 +111,8 @@ function App({ navigation }) {
         ) : (
           <Stack.Screen name="Service" component={ServiceScreen} options={{ title: "Обслуживание" }}/>
         )}
+        <Stack.Screen name="BLE Scanner" component={BLEScanner} />
       </Stack.Navigator>
-      <Stack.Screen name="BLE Scanner" component={BLEScanner} />
     </NavigationContainer>
   );
 }
