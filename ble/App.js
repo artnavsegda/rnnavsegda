@@ -39,6 +39,14 @@ function HomeScreen() {
   );
 }
 
+function BLEScanner() {
+  return (
+    <View style={styles.container}>
+        <Text>BLE!</Text>
+      </View>
+  );
+}
+
 const Stack = createStackNavigator();
 
 function App({ navigation }) {
@@ -104,6 +112,7 @@ function App({ navigation }) {
           <Stack.Screen name="Service" component={ServiceScreen} options={{ title: "Обслуживание" }}/>
         )}
       </Stack.Navigator>
+      <Stack.Screen name="BLE Scanner" component={BLEScanner} />
     </NavigationContainer>
   );
 }

@@ -19,15 +19,19 @@ export default function CustomNavigationBar({ scene, navigation, previous }) {
     
     return (
       <Appbar.Header>
+        {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
         <Appbar.Content title={title} />
-        { state.userToken ? <Menu
+        { state.userToken && !previous ? <Menu
           visible={visible}
           onDismiss={closeMenu}
           anchor={
             <Appbar.Action icon="menu" color="white" onPress={openMenu} />
           }>
           <Menu.Item icon={state.debug ? "checkbox-marked-outline" : "checkbox-blank-outline" } onPress={actions.debugToggle} title="Debug" />
-          {state.debug ? <Menu.Item icon="radar" title="BLE Scanner" /> : null}
+          {state.debug ? <Menu.Item onPress={() => {
+            navigation.navigate('BLE Scanner')
+            closeMenu()
+          }} icon="radar" title="BLE Scanner" /> : null}
           <Menu.Item icon="logout" onPress={actions.signOut} title="Выход" />
         </Menu> : null }
       </Appbar.Header>
