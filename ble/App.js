@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import { View, useColorScheme, PermissionsAndroid } from 'react-native'
+import { View, FlatList, useColorScheme, PermissionsAndroid } from 'react-native'
 import { 
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
@@ -56,21 +56,31 @@ function BLEScanner() {
         console.error(error)
         return
       }
-      console.log("Found: " + device.name + "id: " +  device.id + " UUIDS: " + JSON.stringify(device.serviceUUIDs))
-      setMyMap(new Map(myMap.set(device.id, {name: device.name, uuids: device.serviceUUIDs, lastSeen: Date.now()})))
+      console.log("Found: " + device.name + "id: " +  device.id)
+      setMyMap(new Map(myMap.set(device.id, {name: device.name, lastSeen: Date.now()})))
     });
 
     setTimeout(()=>{
       scan_stop();
     },10000)
   }
+
+  const renderItem = ({ item }) => (
+    <Text>{item}:{JSON.stringify(myMap.get(item))}</Text>
+  );
+
   return (
     <View style={styles.container}>
       <Button onPress={scan_start}>Start scan</Button>
       <Button onPress={scan_stop}>Stop scan</Button>
-      {[...myMap.keys()].map(k => (
+      <FlatList
+        data={[...myMap.keys()]}
+        renderItem={renderItem}
+        keyExtractor={item => item}
+      />
+{/*       {[...myMap.keys()].map(k => (
         <Text key={k}>{JSON.stringify(myMap.get(k))}</Text>
-      ))}
+      ))} */}
     </View>
   );
 }
