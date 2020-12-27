@@ -43,7 +43,7 @@ function BLEScanner() {
   return (
     <View style={styles.container}>
         <Text>BLE!</Text>
-      </View>
+    </View>
   );
 }
 
