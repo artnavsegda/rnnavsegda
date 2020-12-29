@@ -8,6 +8,7 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.root}>
       <Text>Hello React Native Navigation 👋</Text>
+      <Button title='Open modal' />
       <Button
         title='Push Settings Screen'
         color='#710ce3'
@@ -43,9 +44,17 @@ const SettingsScreen = () => {
   );
 }
 
+const ModalScreen = () => {
+  return (
+    <View style={styles.root}>
+      <Text>Modal Screen</Text>
+    </View>
+  );
+}
+
 Navigation.registerComponent('Home', () => HomeScreen);
 Navigation.registerComponent('Settings', () => SettingsScreen);
-
+Navigation.registerComponent('Modal', () => ModalScreen);
 
 Navigation.setDefaultOptions({
   statusBar: {
