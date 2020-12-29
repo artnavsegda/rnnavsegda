@@ -8,7 +8,26 @@ const HomeScreen = (props) => {
   return (
     <View style={styles.root}>
       <Text>Hello React Native Navigation 👋</Text>
-      <Button title='Open modal' />
+      <Button
+        title='Open modal' 
+        onPress={() => Navigation.showModal({
+          stack: {
+            children: [
+              {
+                component: {
+                  name: 'Modal',
+                  options: {
+                    topBar: {
+                      title: {
+                        text: 'Modal',
+                      },
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        })}/>
       <Button
         title='Push Settings Screen'
         color='#710ce3'
