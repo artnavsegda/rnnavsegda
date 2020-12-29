@@ -30,10 +30,6 @@ HomeScreen.options = {
   topBar: {
     title: {
       text: 'Home',
-      color: 'white'
-    },
-    background: {
-      color: '#4d089a'
     }
   }
 };
@@ -50,6 +46,23 @@ const SettingsScreen = () => {
 Navigation.registerComponent('Home', () => HomeScreen);
 Navigation.registerComponent('Settings', () => SettingsScreen);
 
+
+Navigation.setDefaultOptions({
+  statusBar: {
+    backgroundColor: '#4d089a'
+  },
+  topBar: {
+    title: {
+      color: 'white'
+    },
+    backButton: {
+      color: 'white'
+    },
+    background: {
+      color: '#4d089a'
+    }
+  }
+});
 Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setRoot({
     root: {
