@@ -3,10 +3,26 @@ import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 
+// Home screen declaration
 const HomeScreen = (props) => {
   return (
     <View style={styles.root}>
       <Text>Hello React Native Navigation 👋</Text>
+      <Button
+        title='Push Settings Screen'
+        color='#710ce3'
+        onPress={() => Navigation.push(props.componentId, {
+          component: {
+            name: 'Settings',
+            options: {
+              topBar: {
+                title: {
+                  text: 'Settings'
+                }
+              }
+            }
+          }
+        })}/>
     </View>
   );
 };
@@ -20,9 +36,19 @@ HomeScreen.options = {
       color: '#4d089a'
     }
   }
+};
+
+// Settings screen declaration - this is the screen we'll be pushing into the stack
+const SettingsScreen = () => {
+  return (
+    <View style={styles.root}>
+      <Text>Settings Screen</Text>
+    </View>
+  );
 }
 
 Navigation.registerComponent('Home', () => HomeScreen);
+Navigation.registerComponent('Settings', () => SettingsScreen);
 
 Navigation.events().registerAppLaunchedListener(async () => {
   Navigation.setRoot({
