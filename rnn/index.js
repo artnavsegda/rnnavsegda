@@ -17,6 +17,7 @@ const HomeScreen = (props) => {
                 component: {
                   name: 'Modal',
                   options: {
+                    modalPresentationStyle: 'fullScreen',
                     topBar: {
                       title: {
                         text: 'Modal',
