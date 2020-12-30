@@ -64,10 +64,13 @@ const SettingsScreen = () => {
   );
 }
 
-const ModalScreen = () => {
+const ModalScreen = (props) => {
   return (
     <View style={styles.root}>
       <Text>Modal Screen</Text>
+      <Button title="Dismiss" onPress={()=>{
+        Navigation.dismissModal(props.componentId);
+      }}/>
     </View>
   );
 }
