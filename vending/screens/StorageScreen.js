@@ -99,7 +99,6 @@ export default function StorageScreen() {
               />
               <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
                 <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
-                <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button>
               </View>
             </Modal>
           : <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
@@ -110,7 +109,7 @@ export default function StorageScreen() {
               />
               <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
                 <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
-                {state.type != 2 ? <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button> : null}
+                <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button>
               </View>
             </Modal>
           }
