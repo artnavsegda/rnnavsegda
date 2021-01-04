@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { View, Alert, Image, FlatList } from 'react-native';
+import { View, Alert, Image, FlatList, SectionList } from 'react-native';
 import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper';
 
 export default function StorageScreen() {
@@ -92,7 +92,7 @@ export default function StorageScreen() {
         <Portal>
           {state.type == 2 ? 
             <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
-              <FlatList
+              <SectionList
                 data={state.content}
                 keyExtractor={item => item.ID}
                 renderItem={renderItem}
