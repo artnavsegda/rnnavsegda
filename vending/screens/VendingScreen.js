@@ -74,9 +74,11 @@ export default function VendingScreen() {
     const flatlist = React.useRef(null)
   
     React.useEffect(() => {
+      let isMounted = true;
       state.userToken ? fetch(api.machines, {headers: { token: state.userToken }})
         .then(response => response.json())
-        .then(json => setData({isLoading: false, machines: json})) : null
+        .then(json => isMounted && setData({isLoading: false, machines: json})) : null
+      return () => { isMounted = false };
     });
 
     const renderItem = ({ item, index }) => (
