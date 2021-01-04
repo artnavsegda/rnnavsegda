@@ -8,9 +8,7 @@ target 'ble' do
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'react-native-appearance', :path => '../node_modules/react-native-appearance'
 
   target 'bleTests' do
     inherit! :complete
