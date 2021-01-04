@@ -102,7 +102,7 @@ export default function StorageScreen() {
                 <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button>
               </View>
             </Modal>
-          : <Modal isible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
+          : <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
               
             </Modal>
           }
