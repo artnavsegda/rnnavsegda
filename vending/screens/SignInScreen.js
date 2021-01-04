@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import { TextInput, Button, ActivityIndicator } from 'react-native-paper';
 import styles from '../styles';
 import actions from '../actions';
@@ -11,7 +11,9 @@ export default function SignInScreen() {
     const [loading, setLoading] = React.useState(false);
   
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView 
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}>
         <Logo />
         <TextInput
           style={styles.login}
@@ -32,6 +34,6 @@ export default function SignInScreen() {
             setTimeout(()=>{setLoading(false)},10000)
           }}>Вход</Button>
         <ActivityIndicator animating={loading} />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
