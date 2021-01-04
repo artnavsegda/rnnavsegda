@@ -1,0 +1,12 @@
+{
+  "name": "bareble",
+  "displayName": "bareble",
+  "expo": {
+    "name": "bareble",
+    "slug": "bareble",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
