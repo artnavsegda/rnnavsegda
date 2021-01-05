@@ -68,10 +68,6 @@ function BLEScanner() {
     },60000)
   }
 
-  const renderItem = ({ item }) => (
-    <Text>{item}:{JSON.stringify(myMap.get(item))}</Text>
-  );
-
   return (
     <View>
       <View style={{flexDirection: "row"}}>
