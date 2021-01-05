@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useSelector } from 'react-redux'
-import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert } from 'react-native'
+import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert, Platform } from 'react-native'
 import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper'
 import MapView from 'react-native-maps'
 import styles from '../styles'
@@ -53,7 +53,7 @@ const Item = ({ item, onPress }) => {
         </Card.Content>
         <Card.Actions>
           <Button onPress={() => {
-            Linking.openURL("geo:" + item.Latitude + "," + item.Longitude)
+            Linking.openURL(Platform.select({ ios: 'maps:q=', android: 'geo:0,0?q=' }) + item.Latitude + "," + item.Longitude)
             console.log('Pressed')
           }}>Навигация</Button>
           <Button
@@ -74,9 +74,11 @@ export default function VendingScreen() {
     const flatlist = React.useRef(null)
   
     React.useEffect(() => {
+      let isMounted = true;
       state.userToken ? fetch(api.machines, {headers: { token: state.userToken }})
         .then(response => response.json())
-        .then(json => setData({isLoading: false, machines: json})) : null
+        .then(json => isMounted && setData({isLoading: false, machines: json})) : null
+      return () => { isMounted = false };
     });
 
     const renderItem = ({ item, index }) => (
