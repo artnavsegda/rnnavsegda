@@ -53,7 +53,7 @@ const Item = ({ item, onPress }) => {
         </Card.Content>
         <Card.Actions>
           <Button onPress={() => {
-            Linking.openURL(Platform.select({ ios: 'maps:q=', android: 'geo:' }) + item.Latitude + "," + item.Longitude)
+            Linking.openURL(Platform.select({ ios: 'maps:q=', android: 'geo:0,0?q=' }) + item.Latitude + "," + item.Longitude)
             console.log('Pressed')
           }}>Навигация</Button>
           <Button
