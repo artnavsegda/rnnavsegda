@@ -93,9 +93,14 @@ export default function StorageScreen() {
           {state.type == 2 ? 
             <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
               <SectionList
-                data={state.content}
-                keyExtractor={item => item.ID}
+                sections={Object.values(state.content.reduce((total, num) => {
+                    total[num.MachineGUID] || (total[num.MachineGUID] = { title: num.MachineGUID, data: []})
+                    total[num.MachineGUID].data.push(num)
+                    return total
+                }, {}))}
+                keyExtractor={(item, index) => item + index }
                 renderItem={renderItem}
+                renderSectionHeader={({ section: { title } }) => ( <Title style={{textAlign: 'center'}}>{title}</Title> )}
               />
               <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
                 <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
