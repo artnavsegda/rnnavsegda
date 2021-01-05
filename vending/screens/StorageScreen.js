@@ -109,7 +109,7 @@ export default function StorageScreen() {
           : <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
               <FlatList
                 data={state.content}
-                keyExtractor={item => item.ID}
+                keyExtractor={(item, index) => item + index }
                 renderItem={renderItem}
               />
               <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>

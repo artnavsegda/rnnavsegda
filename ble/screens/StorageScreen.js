@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { View, Alert, Image, FlatList } from 'react-native';
+import { View, Alert, Image, FlatList, SectionList } from 'react-native';
 import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper';
 
 export default function StorageScreen() {
@@ -90,17 +90,34 @@ export default function StorageScreen() {
     return (
       <View>
         <Portal>
-          <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
-            <FlatList
-              data={state.content}
-              keyExtractor={item => item.ID}
-              renderItem={renderItem}
-            />
-            <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
-              <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
-              {state.type != 2 ? <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button> : null}
-            </View>
-          </Modal>
+          {state.type == 2 ? 
+            <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
+              <SectionList
+                sections={Object.values(state.content.reduce((total, num) => {
+                    total[num.MachineGUID] || (total[num.MachineGUID] = { title: num.MachineGUID, data: []})
+                    total[num.MachineGUID].data.push(num)
+                    return total
+                }, {}))}
+                keyExtractor={(item, index) => item + index }
+                renderItem={renderItem}
+                renderSectionHeader={({ section: { title } }) => ( <Title style={{textAlign: 'center'}}>{title}</Title> )}
+              />
+              <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
+                <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
+              </View>
+            </Modal>
+          : <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
+              <FlatList
+                data={state.content}
+                keyExtractor={(item, index) => item + index }
+                renderItem={renderItem}
+              />
+              <View style={{justifyContent: 'space-around', flexDirection: 'row', padding: 5}}>
+                <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
+                <Button icon="check" onPress={invoiceconfirm}>{state.type ? "Сдать" : "Принять"}</Button>
+              </View>
+            </Modal>
+          }
         </Portal>
         <List.Section>
           <List.Item
