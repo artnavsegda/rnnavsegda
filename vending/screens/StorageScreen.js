@@ -82,8 +82,8 @@ export default function StorageScreen() {
     const renderItem = ({ item, index }) => (
       <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
         <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
-        <Paragraph style={{ flex: 4, textAlignVertical: 'center' }}>{item.Name}</Paragraph>
-        <Paragraph style={{textAlignVertical: 'center', margin: 20 }}>{item.Quantity}</Paragraph>
+        <Paragraph style={{ flex: 4, alignSelf: 'center' }}>{item.Name}</Paragraph>
+        <Paragraph style={{ alignSelf: 'center', margin: 20 }}>{item.Quantity}</Paragraph>
       </View>
     );
 
