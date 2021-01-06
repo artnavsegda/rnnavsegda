@@ -119,14 +119,6 @@ function App({ navigation }) {
     };
 
     bootstrapAsync();
-
-    const subscription = manager.onStateChange((state) => {
-      if (state === 'PoweredOn') {
-          subscription.remove()
-      }
-      else
-        console.log("BLE: " + JSON.stringify(state))
-    }, true)
   }, []);
 
   return (
