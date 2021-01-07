@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View, ScrollView } from 'react-native'
-import { Button, ActivityIndicator, DataTable } from 'react-native-paper'
+import { Button, ActivityIndicator, DataTable, List, Chip } from 'react-native-paper'
 import manager from '../ble'
 
 export default function BLEScanner() {
@@ -38,7 +38,19 @@ export default function BLEScanner() {
         <Button onPress={scan_stop}>Stop scan</Button>
         <ActivityIndicator animating={scanning} />
         </View>
-        <DataTable>
+        <ScrollView>
+        {[...myMap.keys()].map(k => {
+          let d = new Date(myMap.get(k).lastSeen);
+          return (
+            <List.Item key={k}
+              title={k}
+              description={myMap.get(k).name}
+              left={props => <Chip mode="outlined">{d.toLocaleTimeString()}</Chip>}
+            />
+            )
+        })}
+        </ScrollView>
+  {/*       <DataTable>
         <DataTable.Header>
           <DataTable.Title style={{flex: 4}}>Address</DataTable.Title>
           <DataTable.Title style={{flex: 2}}>Name</DataTable.Title>
@@ -56,7 +68,7 @@ export default function BLEScanner() {
             )
         })}
         </ScrollView>
-        </DataTable>
+        </DataTable> */}
       </View>
     );
   }
