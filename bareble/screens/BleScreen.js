@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View, ScrollView } from 'react-native'
-import { Button, ActivityIndicator, DataTable, List, Chip } from 'react-native-paper'
+import { Button, ActivityIndicator, DataTable, List, Chip, Text } from 'react-native-paper'
 import manager from '../ble'
 
 export default function BLEScanner() {
@@ -22,8 +22,8 @@ export default function BLEScanner() {
           console.error(error)
           return
         }
-        console.log("Found: " + device.name + "id: " +  device.id)
-        setMyMap(new Map(myMap.set(device.id, {name: device.name, lastSeen: Date.now()})))
+        console.log("Found: " + device.name + "id: " +  device.id + " uuids: " + JSON.stringify(device.serviceUUIDs))
+        setMyMap(new Map(myMap.set(device.id, {name: device.name, lastSeen: Date.now(), uuids: device.serviceUUIDs})))
       });
   
       setTimeout(()=>{
@@ -32,7 +32,7 @@ export default function BLEScanner() {
     }
   
     return (
-      <View>
+      <View style={{flex:1}}>
         <View style={{flexDirection: "row"}}>
         <Button onPress={scan_start}>Start scan</Button>
         <Button onPress={scan_stop}>Stop scan</Button>
@@ -42,11 +42,16 @@ export default function BLEScanner() {
         {[...myMap.keys()].map(k => {
           let d = new Date(myMap.get(k).lastSeen);
           return (
-            <List.Item key={k}
-              title={k}
-              description={myMap.get(k).name}
+            <List.Accordion key={k}
+              title={myMap.get(k).name || "🤷🏼‍♀️"}
+              description={k}
               left={props => <Chip mode="outlined">{d.toLocaleTimeString()}</Chip>}
-            />
+            >
+              {myMap.get(k).uuids && myMap.get(k).uuids.map(uuid => 
+                // <List.Item key={uuid} title={uuid} />
+                <List.Subheader key={uuid}>{uuid}</List.Subheader>
+              )}
+            </List.Accordion>
             )
         })}
         </ScrollView>
