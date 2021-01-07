@@ -41,7 +41,7 @@ export default function BLEScanner() {
         <DataTable>
         <DataTable.Header>
           <DataTable.Title style={{flex: 4}}>Address</DataTable.Title>
-          <DataTable.Title>Name</DataTable.Title>
+          <DataTable.Title style={{flex: 2}}>Name</DataTable.Title>
           <DataTable.Title>Date</DataTable.Title>
         </DataTable.Header>
         <ScrollView>
@@ -50,7 +50,7 @@ export default function BLEScanner() {
           return (
             <DataTable.Row key={k}>
               <DataTable.Cell style={{flex: 4}}>{k}</DataTable.Cell>
-              <DataTable.Cell>{myMap.get(k).name}</DataTable.Cell>
+              <DataTable.Cell style={{flex: 2}}>{myMap.get(k).name}</DataTable.Cell>
               <DataTable.Cell>{d.getHours()}:{d.getMinutes()}:{d.getSeconds()}</DataTable.Cell>
             </DataTable.Row>
             )
