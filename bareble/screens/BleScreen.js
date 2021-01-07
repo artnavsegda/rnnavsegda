@@ -51,7 +51,7 @@ export default function BLEScanner() {
             <DataTable.Row key={k}>
               <DataTable.Cell style={{flex: 4}}>{k}</DataTable.Cell>
               <DataTable.Cell style={{flex: 2}}>{myMap.get(k).name}</DataTable.Cell>
-              <DataTable.Cell>{d.getHours()}:{d.getMinutes()}:{d.getSeconds()}</DataTable.Cell>
+              <DataTable.Cell>{d.toLocaleTimeString()}</DataTable.Cell>
             </DataTable.Row>
             )
         })}
