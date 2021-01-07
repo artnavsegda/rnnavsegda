@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Button, ActivityIndicator, DataTable } from 'react-native-paper'
 import manager from '../ble'
 
@@ -40,20 +40,22 @@ export default function BLEScanner() {
         </View>
         <DataTable>
         <DataTable.Header>
-          <DataTable.Title>MAC</DataTable.Title>
+          <DataTable.Title style={{flex: 4}}>Address</DataTable.Title>
           <DataTable.Title>Name</DataTable.Title>
           <DataTable.Title>Date</DataTable.Title>
         </DataTable.Header>
+        <ScrollView>
         {[...myMap.keys()].map(k => {
           let d = new Date(myMap.get(k).lastSeen);
           return (
             <DataTable.Row key={k}>
-              <DataTable.Cell>{k}</DataTable.Cell>
+              <DataTable.Cell style={{flex: 4}}>{k}</DataTable.Cell>
               <DataTable.Cell>{myMap.get(k).name}</DataTable.Cell>
               <DataTable.Cell>{d.getHours()}:{d.getMinutes()}:{d.getSeconds()}</DataTable.Cell>
             </DataTable.Row>
             )
         })}
+        </ScrollView>
         </DataTable>
       </View>
     );
