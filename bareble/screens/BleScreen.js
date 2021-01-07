@@ -48,32 +48,12 @@ export default function BLEScanner() {
               left={props => <Chip mode="outlined">{d.toLocaleTimeString()}</Chip>}
             >
               {myMap.get(k).uuids && myMap.get(k).uuids.map(uuid => 
-                // <List.Item key={uuid} title={uuid} />
                 <List.Subheader key={uuid}>{uuid}</List.Subheader>
               )}
             </List.Accordion>
             )
         })}
         </ScrollView>
-  {/*       <DataTable>
-        <DataTable.Header>
-          <DataTable.Title style={{flex: 4}}>Address</DataTable.Title>
-          <DataTable.Title style={{flex: 2}}>Name</DataTable.Title>
-          <DataTable.Title>Date</DataTable.Title>
-        </DataTable.Header>
-        <ScrollView>
-        {[...myMap.keys()].map(k => {
-          let d = new Date(myMap.get(k).lastSeen);
-          return (
-            <DataTable.Row key={k}>
-              <DataTable.Cell style={{flex: 4}}>{k}</DataTable.Cell>
-              <DataTable.Cell style={{flex: 2}}>{myMap.get(k).name}</DataTable.Cell>
-              <DataTable.Cell>{d.toLocaleTimeString()}</DataTable.Cell>
-            </DataTable.Row>
-            )
-        })}
-        </ScrollView>
-        </DataTable> */}
       </View>
     );
   }
