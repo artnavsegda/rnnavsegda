@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <React/RCTLog.h>
 #import "RCTBeaconModule.h"
 
 @implementation RCTBeaconModule
@@ -15,6 +16,7 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(doSomething:(NSString *)name location:(NSString *)location)
 {
+  RCTLogInfo(@"Pretending %@ at %@", name, location);
 }
 
 @end
