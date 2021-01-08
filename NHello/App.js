@@ -7,6 +7,7 @@ const App = () => {
   const onPress = () => {
     console.log('We will invoke the native module here!');
     BeaconModule.doSomething('testName', 'testLocation');
+    console.log("return: " + BeaconModule.getName());
   };
 
   return (
