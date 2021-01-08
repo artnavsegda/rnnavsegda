@@ -1,9 +1,12 @@
 import React from 'react';
 import { NativeModules, Button, View } from 'react-native';
 
+const { BeaconModule } = NativeModules;
+
 const App = () => {
   const onPress = () => {
     console.log('We will invoke the native module here!');
+    BeaconModule.doSomething('testName', 'testLocation');
   };
 
   return (
