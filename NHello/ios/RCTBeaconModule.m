@@ -14,9 +14,11 @@
 // To export a module named RCTCalendarModule
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(doSomething:(NSString *)name location:(NSString *)location)
+RCT_EXPORT_METHOD(doSomething:(NSString *)title
+                location:(NSString *)location
+                myCallback:(RCTResponseSenderBlock)callback)
 {
-  RCTLogInfo(@"Pretending %@ at %@", name, location);
+  RCTLogInfo(@"Pretending %@ at %@", title, location);
 }
 
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
