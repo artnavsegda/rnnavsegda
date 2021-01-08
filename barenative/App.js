@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { NativeModules, StyleSheet, Text, View } from 'react-native';
+import { NativeModules, StyleSheet, Text, View, Button } from 'react-native';
 
 const { BeaconModule } = NativeModules;
 
