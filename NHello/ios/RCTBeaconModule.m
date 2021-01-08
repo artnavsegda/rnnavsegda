@@ -11,6 +11,6 @@
 @implementation RCTBeaconModule
 
 // To export a module named RCTCalendarModule
-RCT_EXPORT_MODULE(BeaconModule);
+RCT_EXPORT_MODULE();
 
 @end
