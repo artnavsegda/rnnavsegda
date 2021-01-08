@@ -1,6 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { NativeModules, StyleSheet, Text, View, Button } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import * as Permissions from 'expo-permissions'
 
 const { BeaconModule } = NativeModules;
 
@@ -27,6 +28,8 @@ const MyNativeComp = () => {
 };
 
 export default function App() {
+  const [permission, askForPermission] = Permissions.usePermissions(Permissions.LOCATION, { ask: true });
+
   return (
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
