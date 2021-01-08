@@ -13,4 +13,8 @@
 // To export a module named RCTCalendarModule
 RCT_EXPORT_MODULE();
 
+RCT_EXPORT_METHOD(doSomething:(NSString *)name location:(NSString *)location)
+{
+}
+
 @end
