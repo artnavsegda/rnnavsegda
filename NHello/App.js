@@ -6,7 +6,13 @@ const { BeaconModule } = NativeModules;
 const App = () => {
   const onPress = () => {
     console.log('We will invoke the native module here!');
-    BeaconModule.doSomething('testName', 'testLocation');
+    BeaconModule.doSomething(
+      'testName',
+      'testLocation',
+      (eventId) => {
+        console.log(`eventid is ${eventId}`);
+      }
+    );
     console.log("return: " + BeaconModule.getName());
   };
 
