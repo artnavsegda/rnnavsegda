@@ -19,4 +19,9 @@ RCT_EXPORT_METHOD(doSomething:(NSString *)name location:(NSString *)location)
   RCTLogInfo(@"Pretending %@ at %@", name, location);
 }
 
+RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
+{
+  return [[UIDevice currentDevice] name];
+}
+
 @end
