@@ -18,7 +18,7 @@ RCT_EXPORT_METHOD(doSomething:(NSString *)title
                 location:(NSString *)location
                 myCallback:(RCTResponseSenderBlock)callback)
 {
-  NSInteger eventId = 123;
+  NSNumber *eventId = [NSNumber numberWithInt:123];
   callback(@[@(eventId)]);
   RCTLogInfo(@"Pretending %@ at %@", title, location);
 }
