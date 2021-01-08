@@ -1,0 +1,12 @@
+{
+  "name": "barenative",
+  "displayName": "barenative",
+  "expo": {
+    "name": "barenative",
+    "slug": "barenative",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
