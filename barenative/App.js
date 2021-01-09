@@ -1,5 +1,5 @@
 import React from 'react';
-import { NativeModules, StyleSheet, Text, View, Button } from 'react-native';
+import { NativeEventEmitter, NativeModules, StyleSheet, Text, View, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import * as Permissions from 'expo-permissions'
 
