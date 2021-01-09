@@ -5,6 +5,14 @@ import * as Permissions from 'expo-permissions'
 
 const { BeaconModule } = NativeModules;
 
+const eventEmitter = new NativeEventEmitter(BeaconModule);
+
+const EventBeacon = (event) => {
+  console.log(event);
+}
+
+const subscription = eventEmitter.addListener('EventBeacon', EventBeacon);
+
 const MyNativeComp = () => {
   const onPress = () => {
     console.log('We will invoke the native module here!');
