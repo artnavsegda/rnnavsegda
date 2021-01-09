@@ -9,7 +9,8 @@
 #define RCTBeaconModule_h
 
 #import <React/RCTBridgeModule.h>
-@interface RCTBeaconModule : NSObject <RCTBridgeModule>
+#import <React/RCTEventEmitter.h>
+@interface RCTBeaconModule : RCTEventEmitter <RCTBridgeModule>
 @end
 
 #endif /* RCTBeaconModule_h */
