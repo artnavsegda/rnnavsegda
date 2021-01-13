@@ -56,6 +56,18 @@ RCT_EXPORT_MODULE();
   return self;
 }
 
++ (BOOL)requiresMainQueueSetup
+{
+    return YES;
+}
+
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[
+             @"EventBeacon"
+             ];
+}
+
 RCT_EXPORT_METHOD(doSomething:(NSString *)title
                 location:(NSString *)location
                 myCallback:(RCTResponseSenderBlock)callback)
