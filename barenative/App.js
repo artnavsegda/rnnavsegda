@@ -16,13 +16,14 @@ const subscription = eventEmitter.addListener('EventBeacon', EventBeacon);
 const MyNativeComp = () => {
   const onPress = () => {
     console.log('We will invoke the native module here!');
-    BeaconModule.doSomething(
+/*     BeaconModule.doSomething(
       'testName',
       'testLocation',
       (eventId) => {
         console.log(`eventid is ${eventId}`);
       }
-    );
+    ); */
+    BeaconModule.startMonitoringForRegion("c7c1a1bf-bb00-4cad-8704-9f2d2917ded2");
     console.log("return: " + BeaconModule.getName());
   };
 
