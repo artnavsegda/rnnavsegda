@@ -12,6 +12,7 @@
 
 @interface RCTBeaconModule() <CLLocationManagerDelegate>
 
+@property (strong, nonatomic) CLBeaconRegion *myBeaconRegion;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
@@ -43,6 +44,16 @@
 
 // To export a module named RCTCalendarModule
 RCT_EXPORT_MODULE();
+
+- (instancetype)init
+{
+  if (self = [super init]) {
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+  }
+
+  return self;
+}
 
 RCT_EXPORT_METHOD(doSomething:(NSString *)title
                 location:(NSString *)location
