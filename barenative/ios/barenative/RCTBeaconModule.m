@@ -91,7 +91,11 @@ RCT_EXPORT_METHOD(startMonitoringForRegion:(NSString *)uuidString)
 {
   CLBeacon *foundBeacon = [beacons firstObject];
   NSString *uuid = foundBeacon.proximityUUID.UUIDString;
-  NSLog(@"UUID: %@", uuid);
+  //NSLog(@"UUID: %@", uuid);
+  
+  if (hasListeners) { // Only send events if anyone is listening
+    [self sendEventWithName:@"EventBeacon" body:@{@"name": uuid}];
+  }
 }
 
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
