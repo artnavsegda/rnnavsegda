@@ -50,6 +50,7 @@ RCT_EXPORT_MODULE();
   if (self = [super init]) {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
+    [self.locationManager requestWhenInUseAuthorization];
   }
 
   return self;
@@ -64,9 +65,12 @@ RCT_EXPORT_METHOD(doSomething:(NSString *)title
   RCTLogInfo(@"Pretending %@ at %@", title, location);
 }
 
-RCT_EXPORT_METHOD(startMonitoringForRegion:(NSString *)uuid)
+RCT_EXPORT_METHOD(startMonitoringForRegion:(NSString *)uuidString)
 {
-  //[self.locationManager startMonitoringForRegion:[self convertDictToBeaconRegion:dict]];
+  NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:uuidString];
+  self.myBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"art.navsegda.testregion"];
+  [self.locationManager startRangingBeaconsInRegion:self.myBeaconRegion];
+//  [self.locationManager startMonitoringForRegion:[self.myBeaconRegion]];
 }
 
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
