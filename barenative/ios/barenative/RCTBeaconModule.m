@@ -46,6 +46,11 @@ RCT_EXPORT_METHOD(doSomething:(NSString *)title
   RCTLogInfo(@"Pretending %@ at %@", title, location);
 }
 
+RCT_EXPORT_METHOD(startMonitoringForRegion:(NSString *)uuid)
+{
+  //[self.locationManager startMonitoringForRegion:[self convertDictToBeaconRegion:dict]];
+}
+
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
 {
   return [[UIDevice currentDevice] name];

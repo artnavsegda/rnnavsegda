@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0005B49025AEF63B00356AD5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0005B48F25AEF63B00356AD5 /* CoreLocation.framework */; };
 		002A5C8D25A8064800F84DD3 /* RCTBeaconModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 002A5C8C25A8064800F84DD3 /* RCTBeaconModule.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0005B48F25AEF63B00356AD5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		002A5C8B25A8061700F84DD3 /* RCTBeaconModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCTBeaconModule.h; path = barenative/RCTBeaconModule.h; sourceTree = "<group>"; };
 		002A5C8C25A8064800F84DD3 /* RCTBeaconModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCTBeaconModule.m; path = barenative/RCTBeaconModule.m; sourceTree = "<group>"; };
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0005B49025AEF63B00356AD5 /* CoreLocation.framework in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-barenative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +73,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0005B48F25AEF63B00356AD5 /* CoreLocation.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				58EEBF8E8E6FB1BC6CAF49B5 /* libPods-barenative.a */,
