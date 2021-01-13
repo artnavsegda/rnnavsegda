@@ -73,6 +73,13 @@ RCT_EXPORT_METHOD(startMonitoringForRegion:(NSString *)uuidString)
 //  [self.locationManager startMonitoringForRegion:[self.myBeaconRegion]];
 }
 
+-(void)locationManager:(CLLocationManager*)manager
+       didRangeBeacons:(NSArray*)beacons
+              inRegion:(CLBeaconRegion*)region
+{
+    NSLog (@"Beacon found !!!");
+}
+
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
 {
   return [[UIDevice currentDevice] name];
