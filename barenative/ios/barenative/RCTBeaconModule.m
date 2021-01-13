@@ -7,7 +7,14 @@
 
 #import <Foundation/Foundation.h>
 #import <React/RCTLog.h>
+#import <CoreLocation/CoreLocation.h>
 #import "RCTBeaconModule.h"
+
+@interface RCTBeaconModule() <CLLocationManagerDelegate>
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+
+@end
 
 @implementation RCTBeaconModule
 {
