@@ -89,7 +89,9 @@ RCT_EXPORT_METHOD(startMonitoringForRegion:(NSString *)uuidString)
        didRangeBeacons:(NSArray*)beacons
               inRegion:(CLBeaconRegion*)region
 {
-    NSLog (@"Beacon found !!!");
+  CLBeacon *foundBeacon = [beacons firstObject];
+  NSString *uuid = foundBeacon.proximityUUID.UUIDString;
+  NSLog(@"UUID: %@", uuid);
 }
 
 RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
