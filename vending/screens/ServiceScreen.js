@@ -74,6 +74,24 @@ export default function ServiceScreen({navigation}) {
     },5000)
   }, [])
 
+  React.useEffect(()=>{
+    switch(stage)
+    {
+      case 0:
+        navigation.setOptions({ title: 'Инвентаризация' })
+        break;
+      case 1:
+        navigation.setOptions({ title: 'Изъятие' })
+        break;
+      case 2:
+        navigation.setOptions({ title: 'Пополнение' })
+        break;
+      case 3:
+        navigation.setOptions({ title: 'Обслуживание' })
+        break;
+    }
+  })
+
   if (products.loading)
     return (
       <View style={styles.container}>
@@ -84,7 +102,6 @@ export default function ServiceScreen({navigation}) {
   switch(stage)
   {
     case 0:
-      navigation.setOptions({ title: 'Инвентаризация' })
       return (
         <View style={{flex: 1}}>
           <Productlist data={products.list} onSend={(result)=>{
@@ -109,65 +126,59 @@ export default function ServiceScreen({navigation}) {
         </View>
       )
     case 1:
-      case 0:
-        navigation.setOptions({ title: 'Изъятие' })
-        return (
-          <View style={{flex: 1}}>
-            <Productlist data={products.list} onSend={(result)=>{
-              setProducts({...products, loading: true})
-              let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 1, Rows: result });
-              console.log(req);
-              fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
-              .then(response => response.json())
-              .then(status => {
-                if (status.Result)
-                  Alert.alert("Ошибка", status.ErrorMessage)
-                else
-                {
-                  setProducts({...products, loading: false})
-                  setStage(2)
-                }
-              })
-              .catch((error) => {
-                console.error('Error:', error)
-              })
-            }} />
-          </View>
-        )
+      return (
+        <View style={{flex: 1}}>
+          <Productlist data={products.list} onSend={(result)=>{
+            setProducts({...products, loading: true})
+            let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 1, Rows: result });
+            console.log(req);
+            fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
+            .then(response => response.json())
+            .then(status => {
+              if (status.Result)
+                Alert.alert("Ошибка", status.ErrorMessage)
+              else
+              {
+                setProducts({...products, loading: false})
+                setStage(2)
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error)
+            })
+          }} />
+        </View>
+      )
     case 2:
-      case 0:
-        navigation.setOptions({ title: 'Пополнение' })
-        return (
-          <View style={{flex: 1}}>
-            <Productlist data={products.list} onSend={(result)=>{
-              setProducts({...products, loading: true})
-              let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 2, Rows: result });
-              console.log(req);
-              fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
-              .then(response => response.json())
-              .then(status => {
-                if (status.Result)
-                  Alert.alert("Ошибка", status.ErrorMessage)
-                else
-                {
-                  setProducts({...products, loading: false})
-                  setStage(3)
-                }
-              })
-              .catch((error) => {
-                console.error('Error:', error)
-              })
-            }} />
-          </View>
-        )
+      return (
+        <View style={{flex: 1}}>
+          <Productlist data={products.list} onSend={(result)=>{
+            setProducts({...products, loading: true})
+            let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 2, Rows: result });
+            console.log(req);
+            fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
+            .then(response => response.json())
+            .then(status => {
+              if (status.Result)
+                Alert.alert("Ошибка", status.ErrorMessage)
+              else
+              {
+                setProducts({...products, loading: false})
+                setStage(3)
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error)
+            })
+          }} />
+        </View>
+      )
     case 3:
-      case 0:
-        navigation.setOptions({ title: 'Обслуживание' })
-        return (
-          <View style={styles.container}>
-            <Image source={require('../resources/img-vending.png')} />
-            <Caption style={{ fontSize: 15, padding: 20 }}>Закройте дверь!</Caption>
-          </View>
-        )
+      return (
+        <View style={styles.container}>
+          <Image source={require('../resources/img-vending.png')} />
+          <Caption style={{ fontSize: 15, padding: 20 }}>Закройте дверь!</Caption>
+        </View>
+      )
   }
 }
