@@ -111,13 +111,11 @@ export default function ServiceScreen({navigation}) {
             fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
             .then(response => response.json())
             .then(status => {
+              setProducts({...products, loading: false})
               if (status.Result)
                 Alert.alert("Ошибка", status.ErrorMessage)
               else
-              {
-                setProducts({...products, loading: false})
                 setStage(1)
-              }
             })
             .catch((error) => {
               console.log(error)
@@ -135,13 +133,11 @@ export default function ServiceScreen({navigation}) {
             fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
             .then(response => response.json())
             .then(status => {
+              setProducts({...products, loading: false})
               if (status.Result)
                 Alert.alert("Ошибка", status.ErrorMessage)
               else
-              {
-                setProducts({...products, loading: false})
                 setStage(2)
-              }
             })
             .catch((error) => {
               console.error('Error:', error)
@@ -159,13 +155,11 @@ export default function ServiceScreen({navigation}) {
             fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
             .then(response => response.json())
             .then(status => {
+              setStage(3)
               if (status.Result)
                 Alert.alert("Ошибка", status.ErrorMessage)
               else
-              {
                 setProducts({...products, loading: false})
-                setStage(3)
-              }
             })
             .catch((error) => {
               console.error('Error:', error)
