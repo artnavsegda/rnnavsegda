@@ -37,7 +37,7 @@ const Productlist = (props) => {
     <FlatList
       data={props.data}
       renderItem={renderItem}
-      keyExtractor={item => item.ID}
+      keyExtractor={item => item.ID.toString()}
     />
     <Button style={{padding: 10}} icon="page-next-outline" onPress={()=>{
       props.onSend(state)
