@@ -6,6 +6,12 @@ import actions from '../actions';
 import Logo from '../logo';
 
 export default function SignInScreen() {
+    let isMounted = false;
+    React.useEffect(() => {
+      isMounted = true;
+      return () => { isMounted = false };
+    });
+
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);
@@ -31,7 +37,7 @@ export default function SignInScreen() {
         <Button onPress={() => {
             actions.signIn({ username, password })
             setLoading(true)
-            setTimeout(()=>{setLoading(false)},10000)
+            setTimeout(()=>{isMounted && setLoading(false)},10000)
           }}>Вход</Button>
         <ActivityIndicator animating={loading} />
       </KeyboardAvoidingView>
