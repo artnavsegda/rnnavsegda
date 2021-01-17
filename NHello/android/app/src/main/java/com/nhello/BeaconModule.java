@@ -33,10 +33,13 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
 
     @Override
     public void initialize() {
+        Log.i(TAG, "Start!");
         this.mApplicationContext = this.mReactContext.getApplicationContext();
         this.beaconManager = BeaconManager.getInstanceForApplication(mApplicationContext);
         // need to bind at instantiation so that service loads (to test more)
+        beaconManager.getBeaconParsers().clear();
         beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        beaconManager.setDebug(true);
         beaconManager.bind(this);
     }
 
@@ -53,6 +56,7 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
 
     @Override
     public void onBeaconServiceConnect() {
+        Log.i(TAG, "onBeaconServiceConnect");
         beaconManager.removeAllMonitorNotifiers();
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
@@ -74,7 +78,7 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
         Identifier identifier = Identifier.parse("C7C1A1BF-BB00-4CAD-8704-9F2D2917DED2"); //beacon 1
 
         try {
-            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", identifier, null, null));
+            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
         } catch (RemoteException e) {    }
     }
 
