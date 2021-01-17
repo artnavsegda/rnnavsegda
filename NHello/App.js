@@ -1,11 +1,11 @@
 import React from 'react';
 import { NativeModules, Button, View } from 'react-native';
 
-const { BeaconModule } = NativeModules;
+// const { BeaconModule } = NativeModules;
 
 const App = () => {
   const onPress = () => {
-    console.log('We will invoke the native module here!');
+/*     console.log('We will invoke the native module here!');
     BeaconModule.doSomething(
       'testName',
       'testLocation',
@@ -13,7 +13,7 @@ const App = () => {
         console.log(`eventid is ${eventId}`);
       }
     );
-    console.log("return: " + BeaconModule.getName());
+    console.log("return: " + BeaconModule.getName()); */
   };
 
   return (
