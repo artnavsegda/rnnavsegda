@@ -24,7 +24,7 @@ const MyNativeComp = () => {
       }
     ); */
     BeaconModule.startMonitoringForRegion("c7c1a1bf-bb00-4cad-8704-9f2d2917ded2");
-    console.log("return: " + BeaconModule.getName());
+    //console.log("return: " + BeaconModule.getName());
   };
 
   return (

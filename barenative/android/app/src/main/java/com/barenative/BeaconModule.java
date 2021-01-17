@@ -49,9 +49,8 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
     }
 
     @ReactMethod
-    public void createCalendarEvent(String name, String location) {
-        Log.d("CalendarModule", "Create event called with name: " + name
-                + " and location: " + location);
+    public void startMonitoringForRegion(String location) {
+        Log.d("CalendarModule", "startMonitoringForRegion for location " + location);
     }
 
     @Override
