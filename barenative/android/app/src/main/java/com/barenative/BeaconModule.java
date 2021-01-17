@@ -50,7 +50,7 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
 
     @ReactMethod
     public void startMonitoringForRegion(String location) {
-        Log.d("CalendarModule", "startMonitoringForRegion for location " + location);
+        Log.d("BeaconModule", "startMonitoringForRegion for location " + location);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
         Identifier identifier = Identifier.parse("C7C1A1BF-BB00-4CAD-8704-9F2D2917DED2"); //beacon 1
 
         try {
-            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", null, null, null));
+            beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", identifier, null, null));
         } catch (RemoteException e) {    }
     }
 

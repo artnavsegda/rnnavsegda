@@ -23,7 +23,7 @@ const MyNativeComp = () => {
         console.log(`eventid is ${eventId}`);
       }
     ); */
-    BeaconModule.startMonitoringForRegion("c7c1a1bf-bb00-4cad-8704-9f2d2917ded2");
+    BeaconModule.startMonitoringForRegion("C7C1A1BF-BB00-4CAD-8704-9F2D2917DED2");
     //console.log("return: " + BeaconModule.getName());
   };
 
