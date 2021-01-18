@@ -49,7 +49,7 @@ let subscription;
 
 function BLEScanner() {
   const [udid, setUdid] = React.useState('')
-  const [searchig, setSearching] = React.useState(false)
+  const [searching, setSearching] = React.useState(false)
   const [searchResult, setSearchResult] = React.useState('Push start search')
 
   const EventBeacon = (event) => {
