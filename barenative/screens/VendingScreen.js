@@ -21,6 +21,7 @@ const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
   const [loading, setLoading] = React.useState(false)
   const [lock, setLock] = React.useState(false)
+  let [found, setFound] = React.useState(false)
 
   function openLock()
   {
@@ -54,6 +55,16 @@ const Item = ({ item, onPress }) => {
         }) : null
   }
 
+  function findMachine()
+  {
+    console.log("Searching for machine GUID " + item.GUID + " mac " + item.MACAddress)
+    setLoading(true)
+
+    setTimeout(()=>{
+      setLoading(false)
+    },10000)
+  }
+
   return (
     <Card style={styles.item}>
       <TouchableOpacity onPress={onPress}>
@@ -67,9 +78,9 @@ const Item = ({ item, onPress }) => {
             console.log('Pressed')
           }}>Навигация</Button>
           <Button
-            disabled={false}
-            onPress={openLock}
-          >Открыть замок</Button>
+            disabled={loading}
+            onPress={found ? openLock : findMachine}
+          >{found ? "Открыть замок" : "Найти автомат"}</Button>
           <ActivityIndicator animating={loading} />
         </Card.Actions>
       </TouchableOpacity>
