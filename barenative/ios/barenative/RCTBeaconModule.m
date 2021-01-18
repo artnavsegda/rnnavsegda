@@ -34,14 +34,6 @@
     // Remove upstream listeners, stop unnecessary background tasks
 }
 
-- (void)beaconEventReminderReceived:(NSNotification *)notification
-{
-  NSString *eventName = notification.userInfo[@"name"];
-  if (hasListeners) { // Only send events if anyone is listening
-    [self sendEventWithName:@"EventBeacon" body:@{@"name": eventName}];
-  }
-}
-
 // To export a module named RCTCalendarModule
 RCT_EXPORT_MODULE();
 
@@ -68,21 +60,16 @@ RCT_EXPORT_MODULE();
              ];
 }
 
-RCT_EXPORT_METHOD(doSomething:(NSString *)title
-                location:(NSString *)location
-                myCallback:(RCTResponseSenderBlock)callback)
-{
-  NSInteger eventId = 123;
-  callback(@[@(eventId)]);
-  RCTLogInfo(@"Pretending %@ at %@", title, location);
-}
-
-RCT_EXPORT_METHOD(startMonitoringForRegion:(NSString *)uuidString)
+RCT_EXPORT_METHOD(startRangingBeaconsInRegion:(NSString *)uuidString)
 {
   NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:uuidString];
   self.myBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"art.navsegda.testregion"];
   [self.locationManager startRangingBeaconsInRegion:self.myBeaconRegion];
-//  [self.locationManager startMonitoringForRegion:[self.myBeaconRegion]];
+}
+
+RCT_EXPORT_METHOD(stopRangingBeaconsInRegion)
+{
+  [self.locationManager startRangingBeaconsInRegion:self.myBeaconRegion];
 }
 
 -(void)locationManager:(CLLocationManager*)manager
@@ -93,14 +80,9 @@ RCT_EXPORT_METHOD(startMonitoringForRegion:(NSString *)uuidString)
   NSString *uuid = foundBeacon.proximityUUID.UUIDString;
   //NSLog(@"UUID: %@", uuid);
   
-  if (hasListeners) { // Only send events if anyone is listening
+  if (uuid && hasListeners) { // Only send events if anyone is listening
     [self sendEventWithName:@"EventBeacon" body:@{@"name": uuid}];
   }
-}
-
-RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(getName)
-{
-  return [[UIDevice currentDevice] name];
 }
 
 @end
