@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.barenative"
+        applicationId "ru.tseh85.vending"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
