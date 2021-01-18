@@ -15,7 +15,7 @@ const Item = ({ item, onPress }) => {
   let [found, setFound] = React.useState(false)
 
   if (state.debug)
-    found = true;
+    found = true
 
   function openLock()
   {
