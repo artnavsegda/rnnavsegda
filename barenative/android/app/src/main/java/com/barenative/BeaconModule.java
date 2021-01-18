@@ -9,6 +9,9 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Arguments;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -21,6 +24,8 @@ import org.altbeacon.beacon.Identifier;
 import android.os.RemoteException;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 public class BeaconModule extends ReactContextBaseJavaModule implements BeaconConsumer {
     private static final String TAG = "BeaconModule";
     private BeaconManager beaconManager;
@@ -29,6 +34,14 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
     BeaconModule(ReactApplicationContext context) {
         super(context);
         this.mReactContext = context;
+    }
+
+    private void sendEvent(ReactContext reactContext,
+                           String eventName,
+                           @Nullable WritableMap params) {
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
     }
 
     @Override
@@ -49,18 +62,16 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
     }
 
     @ReactMethod
-    public void startMonitoringForRegion(String location) {
+    public void startRangingBeaconsInRegion(String location) {
         Log.d("BeaconModule", "startMonitoringForRegion for location " + location);
-    }
-
-    @Override
-    public void onBeaconServiceConnect() {
-        Log.i(TAG, "onBeaconServiceConnect");
         beaconManager.removeAllMonitorNotifiers();
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
                 Log.i(TAG, "I just saw an beacon for the first time!");
+                WritableMap params = Arguments.createMap();
+                params.putString("name", location);
+                sendEvent(mReactContext, "EventBeacon", params);
             }
 
             @Override
@@ -71,14 +82,31 @@ public class BeaconModule extends ReactContextBaseJavaModule implements BeaconCo
             @Override
             public void didDetermineStateForRegion(int state, Region region) {
                 Log.i(TAG, "I have just switched from seeing/not seeing beacons: "+state);
+                if (state == 1)
+                {
+                    WritableMap params = Arguments.createMap();
+                    params.putString("name", location);
+                    sendEvent(mReactContext, "EventBeacon", params);
+                }
             }
         });
 
-        Identifier identifier = Identifier.parse("C7C1A1BF-BB00-4CAD-8704-9F2D2917DED2"); //beacon 1
+        Identifier identifier = Identifier.parse(location); //beacon 1
 
         try {
             beaconManager.startMonitoringBeaconsInRegion(new Region("myMonitoringUniqueId", identifier, null, null));
         } catch (RemoteException e) {    }
+    }
+
+    @ReactMethod
+    public void stopRangingBeaconsInRegion() {
+        Log.d("BeaconModule", "stopMonitoringForRegion");
+        beaconManager.removeAllMonitorNotifiers();
+    }
+
+    @Override
+    public void onBeaconServiceConnect() {
+        Log.i(TAG, "onBeaconServiceConnect");
     }
 
     @Override
