@@ -1,58 +1,115 @@
-import React from 'react';
-import { NativeEventEmitter, NativeModules, StyleSheet, Text, View, Button } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import * as React from 'react'
+import { Provider, useSelector } from 'react-redux'
+import { TextInput, View, Alert, useColorScheme } from 'react-native'
+import { 
+  Provider as PaperProvider,
+  DefaultTheme as PaperDefaultTheme,
+  Button, Text, Appbar, Menu
+} from 'react-native-paper'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { 
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme
+} from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+
 import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location'
 
-const { BeaconModule } = NativeModules;
+import store from './store'
+import actions from './actions'
+import styles from './styles'
 
-const eventEmitter = new NativeEventEmitter(BeaconModule);
+import CustomNavigationBar from './components/NavBar'
 
-const EventBeacon = (event) => {
-  console.log(event);
+import SplashScreen from './screens/SplashScreen'
+import SignInScreen from './screens/SignInScreen'
+import VendingScreen from './screens/VendingScreen'
+import StorageScreen from './screens/StorageScreen'
+import ServiceScreen from './screens/ServiceScreen'
+
+const Tab = createMaterialTopTabNavigator();
+
+function HomeScreen() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Аппараты" component={VendingScreen} />
+      <Tab.Screen name="Склад" component={StorageScreen} />
+    </Tab.Navigator>
+  );
 }
 
-const subscription = eventEmitter.addListener('EventBeacon', EventBeacon);
-
-const MyNativeComp = () => {
-  const onPress = () => {
-    console.log('We will invoke the native module here!');
-/*     BeaconModule.doSomething(
-      'testName',
-      'testLocation',
-      (eventId) => {
-        console.log(`eventid is ${eventId}`);
-      }
-    ); */
-    BeaconModule.startMonitoringForRegion("C7C1A1BF-BB00-4CAD-8704-9F2D2917DED2");
-    //console.log("return: " + BeaconModule.getName());
-  };
-
-  return (
-    <Button
-      title="Click to invoke your native module!"
-      color="#841584"
-      onPress={onPress}
-    />
-  );
-};
-
-export default function App() {
-  const [permission, askForPermission] = Permissions.usePermissions(Permissions.LOCATION, { ask: true });
-
+function BLEScanner() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <MyNativeComp />
-      <StatusBar style="auto" />
-    </View>
+        <Text>BLE!</Text>
+      </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Stack = createStackNavigator();
+
+function App({ navigation }) {
+  const scheme = useColorScheme()
+  const state = useSelector(state => state)
+
+  React.useEffect(() => {
+    const bootstrapAsync = async () => {
+      let userToken, userName;
+
+      try {
+        userToken = await AsyncStorage.getItem('userToken')
+        userName = await AsyncStorage.getItem('userName')
+      } catch (e) {
+        // Restoring token failed
+      }
+
+      store.dispatch({ type: 'RESTORE_TOKEN', token: userToken, username: userName })
+    };
+
+    bootstrapAsync();
+  }, []);
+
+  return (
+    <NavigationContainer theme={scheme === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme}>
+      <Stack.Navigator screenOptions={{ header: (props) => <CustomNavigationBar {...props} /> }}>
+        {state.isLoading ? (
+          <Stack.Screen name="Загрузка..." component={SplashScreen} />
+        ) : state.userToken == null ? (
+          <Stack.Screen
+            name="SignIn"
+            component={SignInScreen}
+            options={{
+              title: 'Холодильник МиниЦЕХ',
+              animationTypeForReplace: state.isSignout ? 'pop' : 'push',
+            }}
+          />
+        ) : state.servicingMachineID == null ? (
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: state.userName }}/>
+        ) : (
+          <Stack.Screen name="Service" component={ServiceScreen} options={{ title: "Обслуживание" }}/>
+        )}
+      <Stack.Screen name="BLE Scanner" component={BLEScanner} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default function ConnectedApp() {
+  const [permission, askForPermission] = Permissions.usePermissions(Permissions.LOCATION, { ask: true });
+
+  Location.watchPositionAsync({}, (location) => {
+    store.dispatch({ type: 'LOCATION', location: location })
+    console.log(JSON.stringify(location))
+  })
+
+  return(
+    <Provider store={store}>
+      <PaperProvider>
+        <App />
+      </PaperProvider>
+    </Provider>
+  )
+}
