@@ -51,14 +51,14 @@ const Item = ({ item, onPress }) => {
 
   function findMachine()
   {
-    console.log("Searching for machine GUID " + item.GUID + " mac " + item.MACAddress)
+    console.log("Searching for machine GUID " + item.GUID + " iBeaconUDID " + item.IBeaconUDID)
     setLoading(true)
 
-    BeaconModule.startRangingBeaconsInRegion(item.iBeaconUDID);
+    BeaconModule.startRangingBeaconsInRegion(item.IBeaconUDID);
 
     const EventBeacon = (event) => {
-      console.log("EventBeacon" + JSON.stringify(event) + item.iBeaconUDID);
-      if (event.name == item.iBeaconUDID)
+      console.log("EventBeacon" + JSON.stringify(event) + item.IBeaconUDID);
+      if (event.name == item.IBeaconUDID)
       {
         BeaconModule.stopRangingBeaconsInRegion();
         setLoading(false)
