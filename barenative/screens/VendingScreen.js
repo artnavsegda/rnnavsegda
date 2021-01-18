@@ -11,12 +11,6 @@ const { BeaconModule } = NativeModules;
 
 const eventEmitter = new NativeEventEmitter(BeaconModule);
 
-const EventBeacon = (event) => {
-  console.log(event);
-}
-
-const subscription = eventEmitter.addListener('EventBeacon', EventBeacon);
-
 const Item = ({ item, onPress }) => {
   const state = useSelector(state => state)
   const [loading, setLoading] = React.useState(false)
@@ -60,8 +54,27 @@ const Item = ({ item, onPress }) => {
     console.log("Searching for machine GUID " + item.GUID + " mac " + item.MACAddress)
     setLoading(true)
 
+    BeaconModule.startRangingBeaconsInRegion(item.iBeaconUDID);
+
+    const EventBeacon = (event) => {
+      console.log("EventBeacon" + JSON.stringify(event) + item.iBeaconUDID);
+      if (event.name == item.iBeaconUDID)
+      {
+        BeaconModule.stopRangingBeaconsInRegion();
+        setLoading(false)
+        setFound(true);
+        setTimeout(()=>{
+          setFound(false)
+        },60000)
+      }
+    }
+    
+    const subscription = eventEmitter.addListener('EventBeacon', EventBeacon);
+
     setTimeout(()=>{
       setLoading(false)
+      subscription.remove();
+      BeaconModule.stopRangingBeaconsInRegion();
     },10000)
   }
 
