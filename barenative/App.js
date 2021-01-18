@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import { TextInput, View, Alert, useColorScheme } from 'react-native'
+import { View, Alert, useColorScheme, NativeModules, NativeEventEmitter } from 'react-native'
 import { 
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
-  Button, Text, Appbar, Menu
+  Button, Text, Appbar, Menu, TextInput
 } from 'react-native-paper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { 
@@ -30,6 +30,10 @@ import VendingScreen from './screens/VendingScreen'
 import StorageScreen from './screens/StorageScreen'
 import ServiceScreen from './screens/ServiceScreen'
 
+const { BeaconModule } = NativeModules;
+
+const eventEmitter = new NativeEventEmitter(BeaconModule);
+
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen() {
@@ -41,11 +45,42 @@ function HomeScreen() {
   );
 }
 
+let subscription;
+
 function BLEScanner() {
+  const [udid, setUdid] = React.useState('')
+  const [searchig, setSearching] = React.useState(false)
+  const [searchResult, setSearchResult] = React.useState('Push start search')
+
+  const EventBeacon = (event) => {
+    console.log("EventBeacon" + JSON.stringify(event) + udid)
+    setSearchResult("Found: " + event.name)
+  }
+
   return (
     <View style={styles.container}>
-        <Text>BLE!</Text>
-      </View>
+        <Text>{searchResult}</Text>
+        <TextInput style={styles.login}
+          value={udid}
+          onChangeText={setUdid}
+        />
+        <Button onPress={() => {
+          if (searching)
+          {
+            setSearching(false);
+            BeaconModule.stopRangingBeaconsInRegion()
+            subscription.remove()
+            setSearchResult('Push start search')
+          }
+          else
+          {
+            setSearching(true);
+            setSearchResult("Searching")
+            BeaconModule.startRangingBeaconsInRegion(udid)
+            subscription = eventEmitter.addListener('EventBeacon', EventBeacon)
+          }
+        }}>{searching ? "Stop search" : "Start search"}</Button>
+    </View>
   );
 }
 
