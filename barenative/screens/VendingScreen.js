@@ -49,7 +49,11 @@ const Item = ({ item, onPress }) => {
               }
             })
           }, 5000)
-        }) : null
+        })
+        .catch((error) => {
+          Alert.alert('Холодильник занят', error.message);
+        });
+        : null
   }
 
   function findMachine()
