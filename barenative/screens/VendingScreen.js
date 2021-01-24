@@ -28,19 +28,15 @@ const Item = ({ item, onPress }) => {
         .then(response => response.json())
         .then(openlock => {
           console.log("open door: " + JSON.stringify(openlock))
+          setLoading(false)
+          setLock(true)
+          item.lockOpen = true
+
           let timerID = setInterval(function(){
             fetch(api.status + '?' + new URLSearchParams({ MachineGUID: item.GUID }), {headers: { token: state.userToken }})
             .then(response => response.json())
             .then(status => {
               console.log("status: " + JSON.stringify(status))
-              if (status.Lock)
-              {
-                setLoading(false)
-                setLock(true)
-                item.lockOpen = true
-              }
-              else
-                setLock(false)
 
               if (status.Door)
               {
@@ -50,10 +46,7 @@ const Item = ({ item, onPress }) => {
             })
           }, 5000)
         })
-        .catch((error) => {
-          Alert.alert('Холодильник занят', error.message);
-        });
-        : null
+        .catch((error) => Alert.alert('Холодильник занят', error.message)) : null
   }
 
   function findMachine()
@@ -99,7 +92,7 @@ const Item = ({ item, onPress }) => {
             console.log('Pressed')
           }}>Навигация</Button>
           <Button
-            disabled={loading}
+            disabled={loading || lock}
             onPress={found ? openLock : findMachine}
           >{found ? "Открыть замок" : "Найти автомат"}</Button>
           <ActivityIndicator animating={loading} />
