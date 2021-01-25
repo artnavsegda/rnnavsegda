@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import { View, Alert, useColorScheme, NativeModules, NativeEventEmitter } from 'react-native'
+import { View, Alert, useColorScheme, NativeModules, NativeEventEmitter, Dimensions, KeyboardAvoidingView } from 'react-native'
 import { 
   Provider as PaperProvider,
   DefaultTheme as PaperDefaultTheme,
@@ -30,6 +30,8 @@ import VendingScreen from './screens/VendingScreen'
 import StorageScreen from './screens/StorageScreen'
 import ServiceScreen from './screens/ServiceScreen'
 
+const width = Dimensions.get('window').width;
+
 const { BeaconModule } = NativeModules;
 
 const eventEmitter = new NativeEventEmitter(BeaconModule);
@@ -50,7 +52,7 @@ let subscription;
 function BLEScanner() {
   const [udid, setUdid] = React.useState('')
   const [searching, setSearching] = React.useState(false)
-  const [searchResult, setSearchResult] = React.useState('Push start search')
+  const [searchResult, setSearchResult] = React.useState('Enter UUID')
 
   const EventBeacon = (event) => {
     console.log("EventBeacon" + JSON.stringify(event) + udid)
@@ -58,19 +60,20 @@ function BLEScanner() {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
         <Text>{searchResult}</Text>
-        <TextInput style={styles.login}
+        <TextInput style={{width: width-50, height: 40, margin: 5}}
           value={udid}
           onChangeText={setUdid}
         />
-        <Button onPress={() => {
+        <Button disabled={!udid}
+          onPress={() => {
           if (searching)
           {
             setSearching(false);
             BeaconModule.stopRangingBeaconsInRegion()
             subscription.remove()
-            setSearchResult('Push start search')
+            setSearchResult('Enter UUID')
           }
           else
           {
@@ -80,7 +83,7 @@ function BLEScanner() {
             subscription = eventEmitter.addListener('EventBeacon', EventBeacon)
           }
         }}>{searching ? "Stop search" : "Start search"}</Button>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
