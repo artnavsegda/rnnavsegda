@@ -69,7 +69,7 @@ RCT_EXPORT_METHOD(startRangingBeaconsInRegion:(NSString *)uuidString)
 
 RCT_EXPORT_METHOD(stopRangingBeaconsInRegion)
 {
-  [self.locationManager startRangingBeaconsInRegion:self.myBeaconRegion];
+  [self.locationManager stopRangingBeaconsInRegion:self.myBeaconRegion];
 }
 
 -(void)locationManager:(CLLocationManager*)manager
