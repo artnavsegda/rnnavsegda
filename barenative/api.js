@@ -1,4 +1,4 @@
-const API_PATH = 'https://app.tseh85.com/DemoService/api';
+const API_PATH = 'https://app.tseh85.com/service/api';
 
 export default api = {
   auth: API_PATH + '/AuthenticateVending',
