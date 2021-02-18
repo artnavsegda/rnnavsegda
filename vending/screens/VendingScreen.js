@@ -22,7 +22,6 @@ const Item = ({ item, onPress }) => {
           console.log("open door: " + JSON.stringify(openlock))
           setLoading(false)
           setLock(true)
-          item.lockOpen = true
 
           let timerID = setInterval(function(){
             fetch(api.status + '?' + new URLSearchParams({ MachineGUID: item.GUID }), {headers: { token: state.userToken }})
@@ -34,6 +33,11 @@ const Item = ({ item, onPress }) => {
               {
                 clearInterval(timerID)
                 store.dispatch({ type: 'MACHINE', machine: item.GUID })
+              }
+              else if (!status.Lock)
+              {
+                clearInterval(timerID)
+                setLock(false)
               }
             })
           }, 5000)
