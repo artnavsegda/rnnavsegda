@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { View, FlatList, Image, Alert } from 'react-native';
-import { Text, Button, Paragraph, ActivityIndicator, IconButton, Caption } from 'react-native-paper';
+import { Text, Button, Paragraph, ActivityIndicator, IconButton, Caption, Portal, Dialog } from 'react-native-paper';
 import store from '../store';
 
 const Spinner = (props) => (
@@ -12,10 +12,11 @@ const Spinner = (props) => (
 
 const Productlist = (props) => {
   const [state, setState] = React.useState(props.data.map(element => {return {ProductID: element.ID, Quantity: 0}}));
+  const [visible, setVisible] = React.useState(false);
 
   const renderItem = ({ item, index }) => (
   <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-    <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/service/api/image?PictureId='+item.PictureID}}/>
+    <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
     <Paragraph style={{ flex: 4, alignSelf: 'center' }}>{item.Name}</Paragraph>
     <Spinner value={state[index].Quantity} onPlus={()=>{
       let newState = [...state]
@@ -39,10 +40,19 @@ const Productlist = (props) => {
       renderItem={renderItem}
       keyExtractor={item => item.ID.toString()}
     />
-    <Button style={{padding: 10}} icon="page-next-outline" onPress={()=>{
-      props.onSend(state)
-      setState(props.data.map(element => {return {ProductID: element.ID, Quantity: 0}}))
-    }}>Далее</Button>
+    <Button style={{padding: 10}} icon="page-next-outline" onPress={()=>setVisible(true)}>Далее</Button>
+    <Portal>
+      <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+        <Dialog.Title>Уверены ?</Dialog.Title>
+        <Dialog.Actions>
+          <Button onPress={() => {
+            props.onSend(state)
+            setState(props.data.map(element => {return {ProductID: element.ID, Quantity: 0}}))
+          }}>Да</Button>
+          <Button onPress={() => setVisible(false)}>Нет</Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
   </View>
   );
 }
@@ -99,80 +109,33 @@ export default function ServiceScreen({navigation}) {
       </View>
     )
 
-  switch(stage)
-  {
-    case 0:
-      return (
-        <View style={{flex: 1}}>
-          <Productlist data={products.list} onSend={(result)=>{
-            setProducts({...products, loading: true})
-            let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 0, Rows: result });
-            console.log(req);
-            fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
-            .then(response => response.json())
-            .then(status => {
-              setProducts({...products, loading: false})
-              if (status.Result)
-                Alert.alert("Ошибка", status.ErrorMessage)
-              else
-                setStage(1)
-            })
-            .catch((error) => {
-              console.log(error)
-            })
-          }} />
-        </View>
-      )
-    case 1:
-      return (
-        <View style={{flex: 1}}>
-          <Productlist data={products.list} onSend={(result)=>{
-            setProducts({...products, loading: true})
-            let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 1, Rows: result });
-            console.log(req);
-            fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
-            .then(response => response.json())
-            .then(status => {
-              setProducts({...products, loading: false})
-              if (status.Result)
-                Alert.alert("Ошибка", status.ErrorMessage)
-              else
-                setStage(2)
-            })
-            .catch((error) => {
-              console.error('Error:', error)
-            })
-          }} />
-        </View>
-      )
-    case 2:
-      return (
-        <View style={{flex: 1}}>
-          <Productlist data={products.list} onSend={(result)=>{
-            setProducts({...products, loading: true})
-            let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: 2, Rows: result });
-            console.log(req);
-            fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
-            .then(response => response.json())
-            .then(status => {
-              setStage(3)
-              if (status.Result)
-                Alert.alert("Ошибка", status.ErrorMessage)
-              else
-                setProducts({...products, loading: false})
-            })
-            .catch((error) => {
-              console.error('Error:', error)
-            })
-          }} />
-        </View>
-      )
-    case 3:
-      return (
-        <View style={styles.container}>
-          <Image source={require('../resources/img-vending.png')} />
-          <Caption style={{ fontSize: 15, padding: 20 }}>Закройте дверь!</Caption>
-        </View>
-      )
-  }
+  if (stage == 3)
+    return (
+      <View style={styles.container}>
+        <Image source={require('../resources/img-vending.png')} />
+        <Caption style={{ fontSize: 15, padding: 20 }}>Закройте дверь!</Caption>
+      </View>
+    )
+
+  return (
+    <View style={{flex: 1}}>
+      <Productlist data={products.list} onSend={(result)=>{
+        setProducts({...products, loading: true})
+        let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: stage, Rows: result });
+        console.log(req);
+        fetch(api.service, {method: 'POST', headers: { token: state.userToken, 'Content-Type': 'text/json' }, body: req})
+        .then(response => response.json())
+        .then(status => {
+          setProducts({...products, loading: false})
+          if (status.Result)
+            Alert.alert("Ошибка", status.ErrorMessage)
+          else
+            setStage(stage+1)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }} />
+    </View>
+  )
 }
