@@ -56,7 +56,7 @@ export default function StorageScreen() {
         if (invoice.length < 1)
         {
           console.log("writeoff empty")
-          Alert.alert('Сдача', "Список пуст.")
+          Alert.alert('Сумка', "Список пуст.")
         }
         else
           setState({
