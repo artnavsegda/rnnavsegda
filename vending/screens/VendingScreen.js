@@ -77,8 +77,16 @@ export default function VendingScreen() {
     React.useEffect(() => {
       let isMounted = true;
       state.userToken ? fetch(api.machines, {headers: { token: state.userToken }})
-        .then(response => response.json())
+        .then(response => {
+          if (response.ok)
+            return response.text()
+          else
+            throw new Error('Network response was not ok');
+        })
         .then(json => isMounted && setData({isLoading: false, machines: json})) : null
+        .catch(error => {
+          actions.signOut()
+        })
       return () => { isMounted = false };
     });
 
