@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { useSelector } from 'react-redux';
-import { View, Alert, Image, FlatList, SectionList } from 'react-native';
-import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper';
+import * as React from 'react'
+import { useSelector } from 'react-redux'
+import { View, Alert, Image, FlatList, SectionList } from 'react-native'
+import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper'
 
 import api from '../api.js'
 
