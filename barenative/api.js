@@ -1,4 +1,5 @@
-const API_PATH = 'https://app.tseh85.com/DemoService/api';
+// const API_PATH = 'https://app.tseh85.com/DemoService/api'; // demo
+const API_PATH = 'https://app.tseh85.com/service/api'; // prod
 
 export default api = {
   image: API_PATH + '/image',
