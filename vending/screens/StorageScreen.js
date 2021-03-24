@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { View, Alert, Image, FlatList, SectionList } from 'react-native';
 import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper';
 
+import api from '../api.js'
+
 export default function StorageScreen() {
     const token = useSelector(state => state.userToken)
     const [state, setState] = React.useState({modalOpen: false, content:[], type: null});
