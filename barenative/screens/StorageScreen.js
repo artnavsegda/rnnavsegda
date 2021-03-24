@@ -91,7 +91,7 @@ export default function StorageScreen() {
       <View>
         <Portal>
           {state.type == 2 ? 
-            <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
+            <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
               <SectionList
                 sections={Object.values(state.content.reduce((total, num) => {
                     total[num.MachineGUID] || (total[num.MachineGUID] = { title: num.MachineGUID, data: []})
@@ -106,7 +106,7 @@ export default function StorageScreen() {
                 <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
               </View>
             </Modal>
-          : <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, backgroundColor: 'white', padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
+          : <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
               <FlatList
                 data={state.content}
                 keyExtractor={(item, index) => item + index }
