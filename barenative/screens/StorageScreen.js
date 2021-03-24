@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { useSelector } from 'react-redux'
 import { View, Alert, Image, FlatList, SectionList } from 'react-native'
-import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper'
+import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List, useTheme } from 'react-native-paper'
 
 import api from '../api.js'
 
-export default function StorageScreen() {
+export default function StorageScreen(props) {
+    const { colors } = useTheme();
     const token = useSelector(state => state.userToken)
     const [state, setState] = React.useState({modalOpen: false, content:[], type: null});
     const hideModal = () => setVisible(false);
@@ -93,7 +94,7 @@ export default function StorageScreen() {
       <View>
         <Portal>
           {state.type == 2 ? 
-            <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
+            <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{ backgroundColor: colors.surface, borderRadius: 15, padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
               <SectionList
                 sections={Object.values(state.content.reduce((total, num) => {
                     total[num.MachineGUID] || (total[num.MachineGUID] = { title: num.MachineGUID, data: []})
@@ -108,7 +109,7 @@ export default function StorageScreen() {
                 <Button icon="close" onPress={()=>setState({modalOpen: false, content:[], type: null})}>Закрыть</Button>
               </View>
             </Modal>
-          : <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{borderRadius: 15, padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
+          : <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{  backgroundColor: colors.surface, borderRadius: 15, padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>
               <FlatList
                 data={state.content}
                 keyExtractor={(item, index) => item + index }
