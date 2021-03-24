@@ -80,13 +80,14 @@ export default function VendingScreen() {
       state.userToken && fetch(api.machines, {headers: { token: state.userToken }})
         .then(response => {
           if (response.ok)
-            return response.text()
+            return response.json()
           else
             throw new Error('Network response was not ok');
         })
         .then(json => isMounted && setData({isLoading: false, machines: json}))
         .catch(error => {
           console.log("no correct response");
+          setData({ isLoading: true, machines: [] })
           actions.signOut()
         })
       return () => { isMounted = false };
