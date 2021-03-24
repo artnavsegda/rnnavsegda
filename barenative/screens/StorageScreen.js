@@ -1,7 +1,9 @@
-import * as React from 'react';
-import { useSelector } from 'react-redux';
-import { View, Alert, Image, FlatList, SectionList } from 'react-native';
-import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper';
+import * as React from 'react'
+import { useSelector } from 'react-redux'
+import { View, Alert, Image, FlatList, SectionList } from 'react-native'
+import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, List } from 'react-native-paper'
+
+import api from '../api.js'
 
 export default function StorageScreen() {
     const token = useSelector(state => state.userToken)
@@ -81,7 +83,7 @@ export default function StorageScreen() {
   
     const renderItem = ({ item, index }) => (
       <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: 'https://app.tseh85.com/DemoService/api/image?PictureId='+item.PictureID}}/>
+        <Image style={{width: 60, height: 60, margin: 10, borderRadius: 10}} source={{uri: api.image + '?PictureId=' + item.PictureID}}/>
         <Paragraph style={{ flex: 4, alignSelf: 'center' }}>{item.Name}</Paragraph>
         <Paragraph style={{ alignSelf: 'center', margin: 20 }}>{item.Quantity}</Paragraph>
       </View>
