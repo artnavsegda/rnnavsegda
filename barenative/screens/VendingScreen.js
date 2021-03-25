@@ -159,7 +159,7 @@ export default function VendingScreen() {
             {data.machines.map((marker, index) => (
               <MapView.Marker
                 key={marker.GUID}
-                coordinate={{latitude: marker.Latitude || state.location.coords.latitude, longitude: marker.Longitude || state.location.coords.longitude}}
+                coordinate={{latitude: marker.Latitude || 59.9311, longitude: marker.Longitude || 30.3609}}
                 title={marker.Name}
                 description={marker.Address}
                 showsMyLocationButton={true}
