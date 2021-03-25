@@ -119,14 +119,19 @@ export default function VendingScreen() {
         .then(response => {
           if (response.ok)
             return response.json()
+          else if (response.status == 401)
+            throw new Error('Auth fail')
           else
-            throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok')
         })
         .then(json => isMounted && setData({isLoading: false, machines: json}))
-        .catch(error => {
+        .catch(e => {
           console.log("no correct response");
-          setData({ isLoading: true, machines: [] })
-          actions.signOut()
+          if (e.message == 'Auth fail')
+          {
+            setData({ isLoading: true, machines: [] })
+            actions.signOut()
+          }
         })
       return () => { isMounted = false };
     });
