@@ -134,7 +134,7 @@ export default function VendingScreen() {
     const renderItem = ({ item, index }) => (
       <Item item={item} onPress={()=>{
         console.log(item.Name)
-        map.current.animateCamera({center: {latitude: item.Latitude, longitude: item.Longitude }, zoom: 15 }, 5000 )
+        map.current.animateCamera({center: {latitude: item.Latitude || 59.9311, longitude: item.Longitude || 30.3609}, zoom: 15 }, 5000 )
       }}/>
     );
   
