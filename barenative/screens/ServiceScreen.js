@@ -120,7 +120,7 @@ export default function ServiceScreen({navigation}) {
     )
 
   return (
-    <View style={{flex: 1, ackgroundColor: colors.surface}}>
+    <View style={{flex: 1, backgroundColor: colors.surface}}>
       <Productlist data={products.list} onSend={(result)=>{
         setProducts({...products, loading: true})
         let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: stage, Rows: result });
