@@ -6,10 +6,10 @@ import { Button, Portal, Modal, Paragraph, Text, Title, Headline, Subheading, Li
 import api from '../api.js'
 
 export default function StorageScreen(props) {
-    const { colors } = useTheme();
+    const { colors } = useTheme()
     const token = useSelector(state => state.userToken)
-    const [state, setState] = React.useState({modalOpen: false, content:[], type: null});
-    const hideModal = () => setVisible(false);
+    const [state, setState] = React.useState({modalOpen: false, content:[], type: null})
+    const hideModal = () => setVisible(false)
 
     function receipt() {
       fetch(api.invoice + '?' + new URLSearchParams({ Type: 0 }), {headers: { token }})
@@ -91,7 +91,7 @@ export default function StorageScreen(props) {
     );
 
     return (
-      <View>
+      <View style={{ backgroundColor: colors.surface }}>
         <Portal>
           {state.type == 2 ? 
             <Modal visible={state.modalOpen} dismissable={false} onDismiss={hideModal} contentContainerStyle={{ backgroundColor: colors.surface, borderRadius: 15, padding: 5, margin: 10, marginTop: 40 ,flex: 1}}>

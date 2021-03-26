@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { View, FlatList, Image, Alert } from 'react-native';
-import { Text, Button, Paragraph, ActivityIndicator, IconButton, Caption, Portal, Dialog } from 'react-native-paper';
+import { Text, Button, Paragraph, ActivityIndicator, IconButton, Caption, Portal, Dialog, useTheme } from 'react-native-paper';
 
 import api from '../api.js'
 import store from '../store';
@@ -120,7 +120,7 @@ export default function ServiceScreen({navigation}) {
     )
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, ackgroundColor: colors.surface}}>
       <Productlist data={products.list} onSend={(result)=>{
         setProducts({...products, loading: true})
         let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: stage, Rows: result });
