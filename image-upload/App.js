@@ -28,7 +28,7 @@ export default class Main extends Component {
           onLoad={(event) => console.log(event.nativeEvent)}
           source={{
               uri: "https://app.tseh85.com/DemoService/api/v21/support/image?SupportId=43251&IsPreview=false",
-              headers: {"Token": "B8ZSXfrbpk5Qc/9oTf+KZHx6hgf5MBL8edwyYvA2VFypvgntWlgmxS9NB7mfysJncp+JoScu0B3u+92ioqvfSQ=="}
+              headers: {Token: "B8ZSXfrbpk5Qc/9oTf+KZHx6hgf5MBL8edwyYvA2VFypvgntWlgmxS9NB7mfysJncp+JoScu0B3u+92ioqvfSQ=="}
           }}
         />
         <Image 
