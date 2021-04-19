@@ -28,12 +28,6 @@ export default class Main extends Component {
         >
           <ImageViewer
             imageUrls={images}
-            index={this.state.index}
-            onSwipeDown={() => {
-              console.log('onSwipeDown');
-            }}
-            onMove={data => console.log(data)}
-            enableSwipeDown={true}
           />
         </Modal>
       </View>
