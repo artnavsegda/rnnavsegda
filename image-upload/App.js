@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Modal, TouchableNativeFeedback, Text, Image, Dimensions } from 'react-native';
+import { View, Modal, TouchableNativeFeedback, Text, Image, Dimensions, Button } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 // import ImageViewer from 'react-native-image-zoom-viewer';
 import ImageZoom from 'react-native-image-pan-zoom';
 
@@ -31,7 +32,7 @@ export default class Main extends Component {
     });
     return (
       <View style={{ padding: 10 }} >
-        <Text>Test</Text>
+        
         <ImageZoom cropWidth={Dimensions.get('window').width}
                        cropHeight={Dimensions.get('window').height}
                        imageWidth={this.state.imageWidth}
@@ -50,6 +51,7 @@ export default class Main extends Component {
                   }}
                 />
         </ImageZoom>
+        <Ionicons style={{position: "absolute", top: 30, right: 30}} name="close-outline" size={50} color="black" backgroundColor="white" />
 {/*         <Image 
           style={{width:50, height:50}}
           onLoad={(event) => console.log(event.nativeEvent)}
