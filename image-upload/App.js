@@ -17,23 +17,31 @@ const images = [
 export default class Main extends Component {
   state = {
     index: 0,
-    modalVisible: true
+    modalVisible: true,
+    imageWidth: 100,
+    imageHeight: 100,
   };
 
   render() {
+    const imageUri = "https://app.tseh85.com/DemoService/api/v21/support/image?SupportId=43251&IsPreview=false";
+    const imageHeaders = {Token: "B8ZSXfrbpk5Qc/9oTf+KZHx6hgf5MBL8edwyYvA2VFypvgntWlgmxS9NB7mfysJncp+JoScu0B3u+92ioqvfSQ=="}
+    Image.getSizeWithHeaders(imageUri, imageHeaders, (imageWidth, imageHeight) => { 
+      console.log("w:" + imageWidth + ",h:" + imageHeight);
+      this.setState({ imageWidth, imageHeight }) 
+    });
     return (
       <View style={{ padding: 10 }} >
         <Text>Test</Text>
         <ImageZoom cropWidth={Dimensions.get('window').width}
                        cropHeight={Dimensions.get('window').height}
-                       imageWidth={1024}
-                       imageHeight={768}
+                       imageWidth={this.state.imageWidth}
+                       imageHeight={this.state.imageHeight}
                        enableCenterFocus={false}
                        >
                 <Image 
                   style={{
-                    width: 1024,
-                    height: 768,
+                    width: this.state.imageWidth,
+                    height: this.state.imageHeight,
                   }}
                   onLoad={(event) => console.log(event.nativeEvent)}
                   source={{
