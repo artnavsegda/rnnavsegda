@@ -1,49 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Image, View, Platform } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import React, { Component } from 'react';
+import { View, Modal, TouchableNativeFeedback, Text } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
-export default function ImagePickerExample() {
-  const [image, setImage] = useState(null);
+const images = [
+  {
+    url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460'
+  }
+];
 
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== 'web') {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
-        }
-      }
-    })();
-  }, []);
-
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-
-      const fd = new FormData();
-
-      
-
-      fd.append('image', file)
-      fetch("http://192.168.0.127:3000/upload", {method: 'POST', body: fd})
-      .then(res => res.json()) 
-      .then(res => console.log(res))
-    }
+export default class Main extends Component {
+  state = {
+    index: 0,
+    modalVisible: true
   };
 
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-    </View>
-  );
+  render() {
+    return (
+      <View
+        style={{
+          padding: 10
+        }}
+      >
+        <Modal
+          visible={this.state.modalVisible}
+          transparent={true}
+          onRequestClose={() => this.setState({ modalVisible: false })}
+        >
+          <ImageViewer
+            imageUrls={images}
+            index={this.state.index}
+            onSwipeDown={() => {
+              console.log('onSwipeDown');
+            }}
+            onMove={data => console.log(data)}
+            enableSwipeDown={true}
+          />
+        </Modal>
+      </View>
+    );
+  }
 }
