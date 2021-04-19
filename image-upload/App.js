@@ -4,7 +4,12 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 
 const images = [
   {
-    url: 'https://avatars2.githubusercontent.com/u/7970947?v=3&s=460'
+    url: 'https://app.tseh85.com/DemoService/api/v21/support/image?SupportId=43251&IsPreview=false',
+    props: {
+      headers: {
+        Token: "B8ZSXfrbpk5Qc/9oTf+KZHx6hgf5MBL8edwyYvA2VFypvgntWlgmxS9NB7mfysJncp+JoScu0B3u+92ioqvfSQ=="
+      }
+    }
   }
 ];
 
