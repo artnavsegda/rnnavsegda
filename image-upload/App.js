@@ -28,6 +28,15 @@ export default function ImagePickerExample() {
 
     if (!result.cancelled) {
       setImage(result.uri);
+
+      const fd = new FormData();
+
+      
+
+      fd.append('image', file)
+      fetch("http://192.168.0.127:3000/upload", {method: 'POST', body: fd})
+      .then(res => res.json()) 
+      .then(res => console.log(res))
     }
   };
 
