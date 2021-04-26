@@ -98,12 +98,20 @@ function App({ navigation }) {
 }
 
 export default function ConnectedApp() {
-  const [permission, askForPermission] = Permissions.usePermissions(Permissions.LOCATION, { ask: true });
+  React.useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
 
-  Location.watchPositionAsync({}, (location) => {
-    store.dispatch({ type: 'LOCATION', location: location })
-    console.log(JSON.stringify(location))
-  })
+      Location.watchPositionAsync({}, (location) => {
+        store.dispatch({ type: 'LOCATION', location: location })
+        console.log(JSON.stringify(location))
+      })
+    })();
+  }, []);
 
   return(
     <Provider store={store}>
