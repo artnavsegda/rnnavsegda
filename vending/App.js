@@ -15,7 +15,6 @@ import {
 import { createStackNavigator } from '@react-navigation/stack'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
-import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
 import store from './store'
