@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useKeepAwake } from 'expo-keep-awake';
 import { useSelector } from 'react-redux';
 import { View, FlatList, Image, Alert } from 'react-native';
 import { Text, Button, Paragraph, ActivityIndicator, IconButton, Caption, Portal, Dialog, useTheme } from 'react-native-paper';
@@ -60,6 +61,8 @@ const Productlist = (props) => {
 }
 
 export default function ServiceScreen({navigation}) {
+  useKeepAwake();
+
   const state = useSelector(state => state)
   const [products, setProducts] = React.useState({loading: true})
   const [stage, setStage] = React.useState(0)

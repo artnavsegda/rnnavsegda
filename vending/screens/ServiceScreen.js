@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useKeepAwake } from 'expo-keep-awake';
 import { useSelector } from 'react-redux';
 import { View, FlatList, Image, Alert } from 'react-native';
 import { Text, Button, Paragraph, ActivityIndicator, IconButton, Caption, Portal, Dialog, useTheme } from 'react-native-paper';
@@ -60,6 +61,8 @@ const Productlist = (props) => {
 }
 
 export default function ServiceScreen({navigation}) {
+  useKeepAwake();
+
   const state = useSelector(state => state)
   const [products, setProducts] = React.useState({loading: true})
   const [stage, setStage] = React.useState(0)
@@ -120,7 +123,7 @@ export default function ServiceScreen({navigation}) {
     )
 
   return (
-    <View style={{flex: 1, ackgroundColor: colors.surface}}>
+    <View style={{flex: 1, backgroundColor: colors.surface}}>
       <Productlist data={products.list} onSend={(result)=>{
         setProducts({...products, loading: true})
         let req = JSON.stringify({MachineGUID: state.servicingMachineID, Type: stage, Rows: result });
