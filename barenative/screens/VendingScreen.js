@@ -67,6 +67,7 @@ const Item = ({ item, onPress }) => {
       console.log("EventBeacon" + JSON.stringify(event) + item.IBeaconUDID);
       if (event.name == item.IBeaconUDID)
       {
+        clearTimeout(searchTimeout);
         setLoading(false)
         subscription.remove();
         BeaconModule.stopRangingBeaconsInRegion();
@@ -79,7 +80,7 @@ const Item = ({ item, onPress }) => {
     
     const subscription = eventEmitter.addListener('EventBeacon', EventBeacon);
 
-    setTimeout(()=>{
+    let searchTimeout = setTimeout(()=>{
       setLoading(false)
       subscription.remove();
       BeaconModule.stopRangingBeaconsInRegion();
