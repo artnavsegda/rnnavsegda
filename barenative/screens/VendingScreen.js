@@ -142,6 +142,17 @@ export default function VendingScreen() {
         map.current.animateCamera({center: {latitude: item.Latitude || 59.9311, longitude: item.Longitude || 30.3609}, zoom: 15 }, 5000 )
       }}/>
     );
+
+    state.location && data.machines && data.machines.sort((a,b) => 
+    (getDistance(state.location.coords, {latitude: a.Latitude, longitude: a.Longitude}) 
+      - getDistance(state.location.coords, {latitude: b.Latitude, longitude: b.Longitude})))
+
+    const renderItem = ({ item, index }) => (
+      <Item item={item} onPress={()=>{
+        console.log(item.Name)
+        map.current.animateCamera({center: {latitude: item.Latitude, longitude: item.Longitude }, zoom: 15 }, 5000 )
+      }}/>
+    );
   
     return (
       data.isLoading ? (
