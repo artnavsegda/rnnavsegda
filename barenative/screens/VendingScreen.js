@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import { NativeEventEmitter, NativeModules, Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert, Platform } from 'react-native'
 import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper'
 import MapView from 'react-native-maps'
+import { getDistance } from 'geolib';
+
 import styles from '../styles'
 import api from '../api.js'
 import store from '../store.js'
