@@ -96,7 +96,8 @@ export default function VendingScreen() {
     });
 
     state.location && data.machines && data.machines.sort((a,b) => 
-    (getDistance(state.location.coords, a) - getDistance(state.location.coords, b)))
+    (getDistance(state.location.coords, {latitude: a.Latitude, longitude: a.Longitude}) 
+      - getDistance(state.location.coords, {latitude: b.Latitude, longitude: b.Longitude})))
 
     const renderItem = ({ item, index }) => (
       <Item item={item} onPress={()=>{
