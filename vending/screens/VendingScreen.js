@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux'
 import { Text, View, FlatList, TouchableOpacity, Dimensions, Linking, Alert, Platform } from 'react-native'
 import { Avatar, Button, Card, Title, Paragraph, ActivityIndicator, Colors } from 'react-native-paper'
 import MapView from 'react-native-maps'
+import { getDistance } from 'geolib';
+
 import styles from '../styles'
 import api from '../api.js'
 import store from '../store.js'
@@ -92,6 +94,9 @@ export default function VendingScreen() {
         })
       return () => { isMounted = false };
     });
+
+    state.location && data.machines && data.machines.sort((a,b) => 
+    (getDistance(state.location.coords, a) - getDistance(state.location.coords, b)))
 
     const renderItem = ({ item, index }) => (
       <Item item={item} onPress={()=>{
