@@ -63,6 +63,8 @@ const Productlist = (props) => {
 export default function ServiceScreen({navigation}) {
   useKeepAwake();
 
+  const { colors } = useTheme()
+
   const state = useSelector(state => state)
   const [products, setProducts] = React.useState({loading: true})
   const [stage, setStage] = React.useState(0)
