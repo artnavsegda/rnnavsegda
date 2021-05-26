@@ -82,7 +82,7 @@ export default function ServiceScreen({navigation}) {
       .then(response => response.json())
       .then(status => {
         console.log("status: " + JSON.stringify(status))
-        if (status.Door == 0)
+        if (status.Door == 0 && stage == 3)
         {
           clearInterval(timerID);
           store.dispatch({ type: 'MACHINE', machine: null })
