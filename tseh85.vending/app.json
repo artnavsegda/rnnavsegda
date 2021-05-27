@@ -1,0 +1,12 @@
+{
+  "name": "tseh85.vending",
+  "displayName": "tseh85.vending",
+  "expo": {
+    "name": "tseh85.vending",
+    "slug": "tseh85.vending",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
