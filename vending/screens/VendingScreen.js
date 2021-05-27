@@ -23,6 +23,9 @@ const Item = ({ item, onPress }) => {
         .then(response => response.json())
         .then(openlock => {
           console.log("open door: " + JSON.stringify(openlock))
+          if (openlock.Result != 0) {
+            throw new Error(openlock.ErrorMessage);
+          }
           setLoading(false)
           setLock(true)
 
