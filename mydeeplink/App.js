@@ -20,6 +20,9 @@ const useInitialURL = () => {
     };
 
     getUrlAsync();
+    Linking.addEventListener('url', (event) => {
+      setUrl(event.url);
+    });
   });
 
   return { url, processing };
