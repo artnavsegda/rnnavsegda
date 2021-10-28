@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Linking, StyleSheet, Text, View } from "react-native";
+import DeepLinking from "react-native-deep-linking";
 
 const useMount = func => useEffect(() => func(), []);
 
