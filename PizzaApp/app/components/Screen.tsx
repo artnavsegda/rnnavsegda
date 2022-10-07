@@ -212,9 +212,7 @@ export function Screen(props: ScreenProps) {
   const insetPadding = useSafeAreaInsetPadding(safeAreaEdges)
 
   return (
-    <View
-      style={[$containerStyle, { backgroundColor }, insetPadding ]}
-    >
+    <View style={[$containerStyle, { backgroundColor }, insetPadding]}>
       <StatusBar style={statusBarStyle} {...StatusBarProps} />
 
       <KeyboardAvoidingView
