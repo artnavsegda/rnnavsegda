@@ -12,7 +12,7 @@ import {
 import YaMap from 'react-native-yamap';
 
 const App = () => {
-  YaMap.init('API_KEY');
+  YaMap.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
 
   return (
     <YaMap

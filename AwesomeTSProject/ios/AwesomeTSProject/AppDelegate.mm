@@ -60,7 +60,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [self.window makeKeyAndVisible];
   
   [YMKMapKit setLocale:@"ru_RU"];
-  [YMKMapKit setApiKey:@"API_KEY"];
+  [YMKMapKit setApiKey:@"0ea7608d-c007-4bf7-87ac-39877f4e108e"];
   
   return YES;
 }
