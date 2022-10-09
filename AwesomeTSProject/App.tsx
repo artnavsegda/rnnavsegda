@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren } from 'react';
+import React, { type PropsWithChildren, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,17 +9,20 @@ import {
   View,
 } from 'react-native';
 
-import YaMap from 'react-native-yamap';
+import YaMap, { Point } from 'react-native-yamap';
+
+YaMap.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
 
 const App = () => {
-  YaMap.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
-
+  const [point, setPoint] = useState<Point>({
+    lat: 59.9342802,
+    lon: 30.3350986,
+  });
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <YaMap
         onCameraPositionChangeEnd={(e) => {
-          console.log(e.nativeEvent.point.lat);
-          console.log(e.nativeEvent.point.lon);
+          setPoint(e.nativeEvent.point);
         }}
         initialRegion={{
           lat: 59.9342802,
@@ -27,6 +30,9 @@ const App = () => {
         }}
         style={{ flex: 1 }}
       />
+      <SafeAreaView style={{ position: "absolute" }}>
+        <Text>Hello {point.lat} {point.lon}</Text>
+      </SafeAreaView>
     </View>
   );
 };
