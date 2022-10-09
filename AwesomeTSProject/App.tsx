@@ -26,6 +26,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import YaMap from 'react-native-yamap';
 
 const Section: React.FC<
   PropsWithChildren<{
@@ -58,6 +59,7 @@ const Section: React.FC<
 };
 
 const App = () => {
+  YaMap.init('API_KEY');
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
