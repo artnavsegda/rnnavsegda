@@ -31,7 +31,8 @@ const App = () => {
         style={{ flex: 1 }}
       />
       <SafeAreaView style={{ position: "absolute" }}>
-        <Text>Hello {point.lat} {point.lon}</Text>
+        <Text>{point.lat}</Text>
+        <Text>{point.lon}</Text>
       </SafeAreaView>
     </View>
   );
