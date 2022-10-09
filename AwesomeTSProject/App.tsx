@@ -16,13 +16,13 @@ const App = () => {
 
   return (
     <YaMap
-      userLocationIcon={{ uri: 'https://www.clipartmax.com/png/middle/180-1801760_pin-png.png' }}
+      onCameraPositionChangeEnd={(e) => {
+        console.log(e.nativeEvent.point.lat);
+        console.log(e.nativeEvent.point.lon);
+      }}
       initialRegion={{
-        lat: 50,
-        lon: 50,
-        zoom: 10,
-        azimuth: 80,
-        tilt: 100
+        lat: 59.9342802,
+        lon: 30.3350986,
       }}
       style={{ flex: 1 }}
     />
