@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren, useState } from 'react';
+import React, { type PropsWithChildren, useState, useRef } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -14,6 +14,7 @@ import MapView, { Point } from 'react-native-yamap';
 MapView.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
 
 const App = () => {
+  const mapRef = useRef<MapView>(null);
   const [point, setPoint] = useState<Point>({
     lat: 59.9342802,
     lon: 30.3350986,
@@ -21,6 +22,7 @@ const App = () => {
   return (
     <View style={{ flex: 1 }}>
       <MapView
+        ref={mapRef}
         onCameraPositionChangeEnd={(e) => {
           setPoint(e.nativeEvent.point);
         }}
