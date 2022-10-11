@@ -9,9 +9,9 @@ import {
   View,
 } from 'react-native';
 
-import YaMap, { Point } from 'react-native-yamap';
+import MapView, { Point } from 'react-native-yamap';
 
-YaMap.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
+MapView.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
 
 const App = () => {
   const [point, setPoint] = useState<Point>({
@@ -20,7 +20,7 @@ const App = () => {
   });
   return (
     <View style={{ flex: 1 }}>
-      <YaMap
+      <MapView
         onCameraPositionChangeEnd={(e) => {
           setPoint(e.nativeEvent.point);
         }}
