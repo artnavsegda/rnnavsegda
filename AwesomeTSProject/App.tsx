@@ -20,6 +20,19 @@ const App = () => {
     lat: 59.9342802,
     lon: 30.3350986,
   });
+
+  const setMyPos = () => {
+    mapRef.current?.getCameraPosition((position) => {
+      mapRef.current?.setCenter(
+        {
+          lat: 59.9342802,
+          lon: 30.3350986,
+          zoom: position.zoom
+        }
+      );
+    });
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <MapView
@@ -34,17 +47,7 @@ const App = () => {
         style={{ flex: 1 }}
       />
       <SafeAreaView style={{ position: "absolute" }}>
-        <Button title='a' onPress={() => {
-          mapRef.current?.getCameraPosition((position) => {
-            mapRef.current?.setCenter(
-              {
-                lat: 59.9342802,
-                lon: 30.3350986,
-                zoom: position.zoom
-              }
-            );
-          });
-        }} />
+        <Button title='a' onPress={setMyPos} />
         <Text>{point.lat}</Text>
         <Text>{point.lon}</Text>
       </SafeAreaView>
