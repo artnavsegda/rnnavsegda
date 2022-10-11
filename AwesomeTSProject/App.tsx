@@ -35,12 +35,15 @@ const App = () => {
       />
       <SafeAreaView style={{ position: "absolute" }}>
         <Button title='a' onPress={() => {
-          mapRef.current?.setCenter(
-            {
-              lat: 59.9342802,
-              lon: 30.3350986,
-            }
-          );
+          mapRef.current?.getCameraPosition((position) => {
+            mapRef.current?.setCenter(
+              {
+                lat: 59.9342802,
+                lon: 30.3350986,
+                zoom: position.zoom
+              }
+            );
+          });
         }} />
         <Text>{point.lat}</Text>
         <Text>{point.lon}</Text>
