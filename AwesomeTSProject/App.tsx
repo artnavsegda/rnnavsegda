@@ -22,15 +22,11 @@ const App = () => {
   });
 
   const setMyPos = () => {
-    mapRef.current?.getCameraPosition((position) => {
-      mapRef.current?.setCenter(
-        {
-          lat: 59.9342802,
-          lon: 30.3350986,
-          zoom: position.zoom
-        }
-      );
-    });
+    mapRef.current?.getCameraPosition((pos) => mapRef.current?.setCenter({
+      lat: 59.9342802,
+      lon: 30.3350986,
+      zoom: pos.zoom
+    }));
   }
 
   return (
