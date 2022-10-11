@@ -9,8 +9,8 @@ import {
   View,
   Button,
 } from 'react-native';
-
 import MapView, { Point } from 'react-native-yamap';
+import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 MapView.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
 
