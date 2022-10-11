@@ -7,6 +7,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import MapView, { Point } from 'react-native-yamap';
@@ -33,6 +34,7 @@ const App = () => {
         style={{ flex: 1 }}
       />
       <SafeAreaView style={{ position: "absolute" }}>
+        <Button title='a' onPress={() => { console.log('push') }} />
         <Text>{point.lat}</Text>
         <Text>{point.lon}</Text>
       </SafeAreaView>
