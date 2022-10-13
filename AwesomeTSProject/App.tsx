@@ -13,6 +13,7 @@ import {
 import MapView, { Point } from 'react-native-yamap';
 import { check, requestMultiple, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 MapView.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
 
@@ -54,6 +55,7 @@ const App = () => {
         <Button title='a' onPress={setMyPos} />
         <Text>{point.lat}</Text>
         <Text>{point.lon}</Text>
+        <Icon name="gps-fixed" size={30} />
       </SafeAreaView>
     </View>
   );
