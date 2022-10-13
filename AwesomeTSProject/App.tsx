@@ -27,9 +27,6 @@ const App = () => {
       Platform.OS == 'ios' ? PERMISSIONS.IOS.LOCATION_ALWAYS : PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION,
       Platform.OS == 'ios' ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
     ])
-
-
-
     mapRef.current?.getCameraPosition((pos) => mapRef.current?.setCenter({
       lat: 59.9342802,
       lon: 30.3350986,
