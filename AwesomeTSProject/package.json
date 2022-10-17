@@ -13,6 +13,7 @@
     "@react-native-community/geolocation": "^3.0.1",
     "react": "18.1.0",
     "react-native": "0.70.2",
+    "react-native-navigation": "^7.29.1",
     "react-native-permissions": "^3.6.1",
     "react-native-vector-icons": "^9.2.0",
     "react-native-yamap": "^4.1.14"

@@ -1,8 +1,8 @@
 #import "AppDelegate.h"
+#import <ReactNativeNavigation/ReactNativeNavigation.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
-#import <React/RCTRootView.h>
 
 #import <React/RCTAppSetupUtils.h>
 #import <YandexMapsMobile/YMKMapKitFactory.h>
@@ -35,6 +35,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   RCTAppSetupPrepareApp(application);
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+[ReactNativeNavigation bootstrapWithBridge:bridge];
 
 #if RCT_NEW_ARCH_ENABLED
   _contextContainer = std::make_shared<facebook::react::ContextContainer const>();
@@ -44,21 +45,10 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
 #endif
 
-  NSDictionary *initProps = [self prepareInitialProps];
-  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"AwesomeTSProject", initProps);
-
-  if (@available(iOS 13.0, *)) {
-    rootView.backgroundColor = [UIColor systemBackgroundColor];
-  } else {
-    rootView.backgroundColor = [UIColor whiteColor];
-  }
-
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];
   
+
+  
+
   [YMKMapKit setLocale:@"ru_RU"];
   [YMKMapKit setApiKey:@"0ea7608d-c007-4bf7-87ac-39877f4e108e"];
   
@@ -85,6 +75,10 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 #endif
 
   return initProps;
+}
+
+- (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge {
+  return [ReactNativeNavigation extraModulesForBridge:bridge];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
