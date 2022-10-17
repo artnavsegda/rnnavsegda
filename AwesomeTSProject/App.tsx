@@ -14,10 +14,11 @@ import MapView, { Point } from 'react-native-yamap';
 import { check, requestMultiple, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { NavigationFunctionComponent } from 'react-native-navigation';
 
 MapView.init('0ea7608d-c007-4bf7-87ac-39877f4e108e');
 
-const App = () => {
+const App: NavigationFunctionComponent = () => {
   const mapRef = useRef<MapView>(null);
   const [point, setPoint] = useState<Point>({
     lat: 59.9342802,
@@ -60,5 +61,17 @@ const App = () => {
     </View>
   );
 };
+
+App.options = {
+  topBar: {
+    title: {
+      text: 'Home',
+      color: 'white'
+    },
+    background: {
+      color: '#4d089a'
+    }
+  }
+}
 
 export default App;
