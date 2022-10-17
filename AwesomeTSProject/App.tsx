@@ -34,7 +34,24 @@ const App: NavigationFunctionComponent = (props) => {
           });
         }} />
         <Button title='Modal' onPress={() => {
-
+          Navigation.showModal({
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: 'Modal',
+                    options: {
+                      topBar: {
+                        title: {
+                          text: 'Modal',
+                        },
+                      },
+                    },
+                  },
+                },
+              ],
+            },
+          });
         }} />
         <Text></Text>
         <Text></Text>
