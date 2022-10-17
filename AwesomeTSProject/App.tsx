@@ -22,11 +22,11 @@ const App: NavigationFunctionComponent = (props) => {
         <Button title='a' onPress={() => {
           Navigation.push(props.componentId, {
             component: {
-              name: 'Settings', // Push the screen registered with the 'Settings' key
+              name: 'Map', // Push the screen registered with the 'Settings' key
               options: { // Optional options object to configure the screen
                 topBar: {
                   title: {
-                    text: 'Settings' // Set the TopBar title of the new Screen
+                    text: 'Map' // Set the TopBar title of the new Screen
                   }
                 }
               }
