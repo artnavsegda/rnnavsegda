@@ -33,6 +33,9 @@ const App: NavigationFunctionComponent = (props) => {
             }
           });
         }} />
+        <Button title='Modal' onPress={() => {
+
+        }} />
         <Text></Text>
         <Text></Text>
         <Icon name="gps-fixed" size={30} />
