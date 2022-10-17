@@ -19,14 +19,14 @@ const App: NavigationFunctionComponent = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView style={{ position: "absolute" }}>
-        <Button title='a' onPress={() => {
+        <Button title='Map' onPress={() => {
           Navigation.push(props.componentId, {
             component: {
-              name: 'Map', // Push the screen registered with the 'Settings' key
-              options: { // Optional options object to configure the screen
+              name: 'Map',
+              options: {
                 topBar: {
                   title: {
-                    text: 'Map' // Set the TopBar title of the new Screen
+                    text: 'Map'
                   }
                 }
               }
