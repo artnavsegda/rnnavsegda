@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Navigation, NavigationFunctionComponent } from 'react-native-navigation';
+import { Navigation, NavigationFunctionComponent, OptionsModalPresentationStyle } from 'react-native-navigation';
 
 
 const App: NavigationFunctionComponent = (props) => {
@@ -41,6 +41,10 @@ const App: NavigationFunctionComponent = (props) => {
                   component: {
                     name: 'Modal',
                     options: {
+                      modalPresentationStyle: OptionsModalPresentationStyle.popover,
+                      layout: {
+                        backgroundColor: 'transparent'
+                      },
                       topBar: {
                         title: {
                           text: 'Modal',
