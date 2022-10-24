@@ -1,4 +1,4 @@
-package com.awesometsproject;
+package art.navsegda.myfirebase;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,7 +10,7 @@ import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import com.awesometsproject.newarchitecture.MainApplicationReactNativeHost;
+import art.navsegda.myfirebase.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -74,7 +74,7 @@ public class MainApplication extends NavigationApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.awesometsproject.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("art.navsegda.myfirebase.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

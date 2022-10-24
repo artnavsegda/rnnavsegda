@@ -1,4 +1,4 @@
-package com.awesometsproject;
+package art.navsegda.myfirebase;
 
 import com.reactnativenavigation.NavigationActivity;
 import com.facebook.react.ReactActivityDelegate;
