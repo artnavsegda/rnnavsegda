@@ -10,9 +10,20 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@notifee/react-native": "^7.0.4",
+    "@react-native-community/geolocation": "^3.0.3",
+    "@react-native-firebase/analytics": "^16.4.2",
+    "@react-native-firebase/app": "^16.4.2",
+    "@react-native-firebase/crashlytics": "^16.4.2",
+    "@react-native-firebase/messaging": "^16.4.2",
+    "@react-native-firebase/perf": "^16.4.2",
     "react": "18.1.0",
     "react-native": "0.70.4",
-    "react-native-navigation": "^7.30.0"
+    "react-native-navigation": "^7.30.0",
+    "react-native-permissions": "^3.6.1",
+    "react-native-vector-icons": "^9.2.0",
+    "react-native-webview": "^11.23.1",
+    "react-native-yamap": "^4.1.14"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
