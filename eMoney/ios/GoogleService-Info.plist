@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>520972051369-bg7cscce7imljhc7pcbjdsnqk4rl46o0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.520972051369-bg7cscce7imljhc7pcbjdsnqk4rl46o0</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCjbqE16VlvE4rBh91zwK_EcZ8xByh_uNg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>520972051369</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>kz.emoney.wallet</string>
+	<key>PROJECT_ID</key>
+	<string>emoney-4cb8a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>emoney-4cb8a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:520972051369:ios:ff2b8f6b4becebc1b1dab8</string>
+	<key>DATABASE_URL</key>
+	<string>https://emoney-4cb8a.firebaseio.com</string>
+</dict>
+</plist>

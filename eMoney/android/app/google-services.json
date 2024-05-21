@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "520972051369",
+    "firebase_url": "https://emoney-4cb8a.firebaseio.com",
+    "project_id": "emoney-4cb8a",
+    "storage_bucket": "emoney-4cb8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520972051369:android:3bac06e771f3482eb1dab8",
+        "android_client_info": {
+          "package_name": "kz.emoney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520972051369-1p03utu151mpi5np4r09iab4qquvbafn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaUG6FdQeMLnYVhkM63lmU3Iu4iJ8birk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520972051369-1p03utu151mpi5np4r09iab4qquvbafn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
