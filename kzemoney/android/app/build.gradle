@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.kzemoney"
+    namespace "kz.emoney"
     defaultConfig {
-        applicationId "com.kzemoney"
+        applicationId "kz.emoney"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
