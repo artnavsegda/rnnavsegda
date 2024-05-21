@@ -1,4 +1,4 @@
-package com.emoney;
+package kz.emoney;
 
 import com.reactnativenavigation.NavigationActivity;
 import com.facebook.react.ReactActivityDelegate;

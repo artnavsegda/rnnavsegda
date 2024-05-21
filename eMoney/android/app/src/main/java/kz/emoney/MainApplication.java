@@ -1,4 +1,4 @@
-package com.emoney;
+package kz.emoney;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
