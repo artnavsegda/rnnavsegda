@@ -349,14 +349,6 @@ PODS:
     - glog
   - react-native-biometrics (2.2.2):
     - React
-  - react-native-camera (3.20.0):
-    - React
-    - react-native-camera/RCT (= 3.20.0)
-    - react-native-camera/RN (= 3.20.0)
-  - react-native-camera/RCT (3.20.0):
-    - React
-  - react-native-camera/RN (3.20.0):
-    - React
   - react-native-contacts (5.2.8):
     - React-Core
   - react-native-geolocation (2.1.0):
@@ -544,7 +536,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-biometrics (from `../node_modules/react-native-biometrics`)
-  - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-contacts (from `../node_modules/react-native-contacts`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
@@ -648,8 +639,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-biometrics:
     :path: "../node_modules/react-native-biometrics"
-  react-native-camera:
-    :path: "../node_modules/react-native-camera"
   react-native-contacts:
     :path: "../node_modules/react-native-contacts"
   react-native-geolocation:
@@ -758,7 +747,6 @@ SPEC CHECKSUMS:
   React-jsinspector: e591d9ecb571456fc929ee10409d8847a442d6a7
   React-logger: 70ddbe0e07179c8adb94c4bffc36c6abc952d3d4
   react-native-biometrics: 4aec6978534944b5f830b9c3489b721c906ea70b
-  react-native-camera: 44202c8bde2c927560e80444740602ff746028c6
   react-native-contacts: 7b5e16196278636030c3fbbb9505543984b01697
   react-native-geolocation: 69f4fd37650b8e7fee91816d395e62dd16f5ab8d
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd

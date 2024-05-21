@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import { RNCamera } from 'react-native-camera';
+/* import { RNCamera } from 'react-native-camera'; */
 import { View, Dimensions, Text, ActivityIndicator } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import type { ReduxState } from '../../../reducers';
@@ -287,7 +287,7 @@ class CameraDetectClientScreen extends React.Component<InternalProps, State> {
                     </View>
                 ) : (
                     <>
-                        <RNCamera
+                        {/*                         <RNCamera
                             captureAudio={false}
                             style={styles.preview}
                             type={RNCamera.Constants.Type.back}
@@ -300,7 +300,7 @@ class CameraDetectClientScreen extends React.Component<InternalProps, State> {
                                 buttonPositive: 'Ok',
                             }}
                             onBarCodeRead={this.onBarCodeRead}
-                        />
+                        /> */}
                         {this.renderUICameraResponse()}
                     </>
                 )}

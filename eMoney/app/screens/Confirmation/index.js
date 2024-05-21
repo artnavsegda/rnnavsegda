@@ -1,17 +1,17 @@
 // @flow
 import React from 'react';
 import Moment from 'moment';
-import {connect} from 'react-redux';
-import {getMessage} from '../../utils';
-import type {Account} from '../../constants';
-import type {ReduxState} from '../../reducers';
-import {Navigation} from 'react-native-navigation';
+import { connect } from 'react-redux';
+import { getMessage } from '../../utils';
+import type { Account } from '../../constants';
+import type { ReduxState } from '../../reducers';
+import { Navigation } from 'react-native-navigation';
 //import {Button} from 'react-native-elements';
-import BlurOverlay from 'react-native-blur-overlay';
+//import BlurOverlay from 'react-native-blur-overlay';
 import * as Animatable from 'react-native-animatable';
 import * as R from 'ramda';
-import {Button, Containers, Timer, Typography} from '../../components';
-import {Platform, View, Image, Keyboard, TextInput, ActivityIndicator} from 'react-native';
+import { Button, Containers, Timer, Typography } from '../../components';
+import { Platform, View, Image, Keyboard, TextInput, ActivityIndicator } from 'react-native';
 
 import currency from '../../currency';
 import doing from '../../doing';
@@ -61,9 +61,9 @@ class ConfirmationScreen extends React.Component<Props, State> {
     };
 
     componentWillMount() {
-        const {pushNotifications} = this.props;
+        const { pushNotifications } = this.props;
         if (pushNotifications.status) {
-            this.setState({codeFromPush: true});
+            this.setState({ codeFromPush: true });
         }
     }
 
@@ -82,7 +82,7 @@ class ConfirmationScreen extends React.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps) {
-        const {pushNotifications} = this.props;
+        const { pushNotifications } = this.props;
         if (pushNotifications.status) {
             if (pushNotifications.notifications.length !== prevProps.pushNotifications.notifications.length) {
                 const pushNotificationData = pushNotifications.notifications.find((data) => {
@@ -92,13 +92,13 @@ class ConfirmationScreen extends React.Component<Props, State> {
                 const confirmCode = R.pathOr(false, ['code'], pushNotificationData.messageData);
                 if (confirmCode) {
                     // eslint-disable-next-line react/no-did-update-set-state
-                    this.setState({codeFromPush: true, code: confirmCode.toString()});
+                    this.setState({ codeFromPush: true, code: confirmCode.toString() });
                 }
             }
         }
     }
 
-    showResult = () => this.mounted && this.setState({visibleResult: true});
+    showResult = () => this.mounted && this.setState({ visibleResult: true });
 
     onError = (error: any, visibleResult: boolean = true) => {
         // delete all code push messages
@@ -114,7 +114,7 @@ class ConfirmationScreen extends React.Component<Props, State> {
     };
 
     onFinishInput = () => {
-        const {operationId} = this.props.operation;
+        const { operationId } = this.props.operation;
         doing.api.services
             .confirmOperationRequest(operationId || 0, this.state.code)
             .success(() => {
@@ -137,7 +137,7 @@ class ConfirmationScreen extends React.Component<Props, State> {
         this.overlayRef &&
             this.overlayRef.closeOverlay(440, () => {
                 const complete = this.props.withOutEnterCode || this.state.complete;
-                const {operationId} = this.props.operation || {};
+                const { operationId } = this.props.operation || {};
                 if (!complete && (operationId || 0) > 0) {
                     doing.api.services.cancelOperationRequest(operationId || 0).start();
                 }
@@ -151,7 +151,7 @@ class ConfirmationScreen extends React.Component<Props, State> {
     };
 
     onPressRepeatCode = () => {
-        const {operationId} = this.props.operation;
+        const { operationId } = this.props.operation;
         // delete all code push messages
         doing.app.notifications.deleteAllNotificationsByType(0);
         // call service
@@ -176,17 +176,17 @@ class ConfirmationScreen extends React.Component<Props, State> {
             this.props.operation &&
             (this.props.operation.operationId || 0) > 0;
         this.mounted &&
-            this.setState({code, error: '', loading: isFinished}, isFinished ? this.onFinishInput : undefined);
+            this.setState({ code, error: '', loading: isFinished }, isFinished ? this.onFinishInput : undefined);
     };
 
     confirmOperation = () => {
-        this.setState({error: '', loading: true}, () => this.onFinishInput());
+        this.setState({ error: '', loading: true }, () => this.onFinishInput());
     };
 
     onOverlayRef = (ref: any) => (this.overlayRef = ref);
 
     renderTitle = () => {
-        const {codeFromPush, code} = this.state;
+        const { codeFromPush, code } = this.state;
 
         if (codeFromPush && code.length === 5) {
             return (
@@ -210,7 +210,7 @@ class ConfirmationScreen extends React.Component<Props, State> {
     };
 
     renderCodeInput = () => {
-        const {codeFromPush, code} = this.state;
+        const { codeFromPush, code } = this.state;
         const hasError = this.state.error.length > 0;
         return (
             <Containers.KeyboardAvoiding style={styles.content}>
@@ -226,7 +226,7 @@ class ConfirmationScreen extends React.Component<Props, State> {
                         onPress={this.onPressClose}
                         disabled={this.state.loading}>
                         <Image
-                            style={[styles.closeIcon, this.state.loading ? {opacity: 0.5} : {}]}
+                            style={[styles.closeIcon, this.state.loading ? { opacity: 0.5 } : {}]}
                             source={require('../../resources/icons/ic-close.png')}
                             resizeMode="contain"
                         />
@@ -266,7 +266,7 @@ class ConfirmationScreen extends React.Component<Props, State> {
                         <View
                             style={[
                                 styles.bottomBorder,
-                                !this.state.loading && hasError ? {backgroundColor: '#DE4B43'} : undefined,
+                                !this.state.loading && hasError ? { backgroundColor: '#DE4B43' } : undefined,
                             ]}
                         />
                     </View>
@@ -280,7 +280,7 @@ class ConfirmationScreen extends React.Component<Props, State> {
                                         fontSize={12}
                                         variant="body1"
                                         style={styles.timerText}>
-                                        {i18n.t('confirmation.repeatAfterTime', {time: left})}
+                                        {i18n.t('confirmation.repeatAfterTime', { time: left })}
                                     </Typography>
                                 ) : (
                                     <Button variant="uncontained" tintColor="#fff" onPress={this.onPressRepeatCode}>
@@ -316,11 +316,11 @@ class ConfirmationScreen extends React.Component<Props, State> {
     };
 
     renderResult = () => {
-        const {operation} = this.props;
+        const { operation } = this.props;
         const isFail = (this.state.error || '').length > 0 || operation.result > 3;
         return (
             <View style={styles.content}>
-                <View style={{flex: 1}} />
+                <View style={{ flex: 1 }} />
                 <Animatable.View duration={334} useNativeDriver animation="fadeIn" style={styles.resultBlock}>
                     <View style={styles.resultStatusContainer}>
                         <View style={[styles.resultStatus, isFail ? styles.failStatusFill : styles.successStatusFill]}>
@@ -366,13 +366,13 @@ class ConfirmationScreen extends React.Component<Props, State> {
                         </>
                     ) : null}
                 </Animatable.View>
-                <View style={{flex: 1}} />
+                <View style={{ flex: 1 }} />
                 <Animatable.View
                     delay={250}
                     duration={334}
                     useNativeDriver
                     animation="fadeInDown"
-                    style={{marginTop: 20}}>
+                    style={{ marginTop: 20 }}>
                     <Button variant="icon" onPress={this.onPressClose} style={styles.bottomCloseButton}>
                         <Image
                             source={require('../../resources/icons/ic-close.png')}
@@ -386,20 +386,16 @@ class ConfirmationScreen extends React.Component<Props, State> {
     };
 
     render() {
-        const {withOutEnterCode} = this.props;
+        const { withOutEnterCode } = this.props;
         console.log('CONFIRM', this.props.pushNotifications);
         return (
-            <BlurOverlay
-                radius={20}
-                blurStyle="dark"
-                downsampling={2}
-                style={{flex: 1}}
-                brightness={-200}
+            <View
+                style={{ flex: 1 }}
                 testID="confirmation"
                 ref={this.onOverlayRef}
                 customStyles={styles.container}>
                 {withOutEnterCode || this.state.visibleResult ? this.renderResult() : this.renderCodeInput()}
-            </BlurOverlay>
+            </View>
         );
     }
 }
@@ -422,7 +418,7 @@ export function getNC(operation: Operation, props: any = {}, options: any = {}) 
                     backgroundColor: 'rgba(0,0,0,0)',
                     componentBackgroundColor: 'rgba(0,0,0,0)',
                 },
-                modalPresentationStyle: Platform.select({ios: 'overFullScreen', android: 'overCurrentContext'}),
+                modalPresentationStyle: Platform.select({ ios: 'overFullScreen', android: 'overCurrentContext' }),
                 ...(options || {}),
                 statusBar: {
                     visible: true,
