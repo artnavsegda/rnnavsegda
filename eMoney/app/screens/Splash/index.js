@@ -1,21 +1,21 @@
 // @flow
 import React from 'react';
-import {connect} from 'react-redux';
-import type {ReduxState} from '../../reducers';
+import { connect } from 'react-redux';
+import type { ReduxState } from '../../reducers';
 import Logo from '../../resources/svg/logo.svg';
-import {Navigation} from 'react-native-navigation';
-import {themeByName, type Theme} from '../../themes';
-import {View, Animated, InteractionManager, Alert} from 'react-native';
-import {MIN_SCREEN_SIZE} from '../../constants';
+import { Navigation } from 'react-native-navigation';
+import { themeByName, type Theme } from '../../themes';
+import { View, Animated, InteractionManager, Alert } from 'react-native';
+import { MIN_SCREEN_SIZE } from '../../constants';
 
-import {getNC as getMainTabsNC} from '../Tabs';
-import {getNC as getLockNC} from '../Lock';
+import { getNC as getMainTabsNC } from '../Tabs';
+import { getNC as getLockNC } from '../Lock';
 
 import doing from '../../doing';
 
 import styles from './styles';
 import Application from '../../modules/application';
-import {doneByPromise} from '../../utils';
+import { doneByPromise } from '../../utils';
 
 export type Props = {
     hasAccessCode: boolean,
@@ -83,7 +83,7 @@ class SplashScreen extends React.PureComponent<Props> {
                     })
                     .catch((error) => {
                         console.log('ERROR GET SETTINGS', error);
-                        Alert.alert('Error', 'Cannot communicate with server',[
+                        Alert.alert('Error', 'Cannot communicate with server', [
                             { text: "Try Again", onPress: () => this.componentDidAppear() }
                         ])
                         return;
@@ -91,13 +91,13 @@ class SplashScreen extends React.PureComponent<Props> {
             } else {
                 // need refresh
                 doing.api.auth.refreshToken().then(this.movingNext)
-                .catch((error) => {
-                    console.log('ERROR GET PUSH', error);
-                    Alert.alert('Error', 'Cannot communicate with push notifications serice',[
-                        { text: "Try Again", onPress: () => this.componentDidAppear() }
-                    ])
-                    return;
-                });
+                    .catch((error) => {
+                        console.log('ERROR GET PUSH', error);
+                        Alert.alert('Error', 'Cannot communicate with push notifications serice', [
+                            { text: "Try Again", onPress: () => this.componentDidAppear() }
+                        ])
+                        return;
+                    });
             }
         });
     }
@@ -138,8 +138,8 @@ class SplashScreen extends React.PureComponent<Props> {
         return (
             <View testID="splash" style={styles.container}>
                 <View style={styles.content}>
-                    <Animated.View style={[styles.logo, {opacity: this.opacity, transform: [{scale: this.scale}]}]}>
-                        <Logo width="100%" height="100%" fill={styles.logoColor} />
+                    <Animated.View style={[styles.logo, { opacity: this.opacity, transform: [{ scale: this.scale }] }]}>
+                        {/* <Logo width="100%" height="100%" fill={styles.logoColor} /> */}
                     </Animated.View>
                 </View>
             </View>
