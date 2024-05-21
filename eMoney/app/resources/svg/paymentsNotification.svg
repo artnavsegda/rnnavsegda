@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="46px" height="46px" viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>paymentsNotification</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="005-1.-Уведомления" transform="translate(-7.000000, -212.000000)">
+            <g id="Group-29" transform="translate(7.000000, 211.000000)">
+                <g id="paymentsNotification" transform="translate(0.000000, 1.000000)">
+                    <rect id="Rectangle" fill="#393AAA" x="0" y="0" width="46" height="46" rx="16"></rect>
+                    <g id="ic-32-wallet" transform="translate(7.000000, 7.000000)" fill="#FFFFFF">
+                        <g id="Combined-Shape">
+                            <path d="M24,6 C25.6568542,6 27,7.34314575 27,9 L27,9.5 L20,9.5 C18.6745166,9.5 17.5899613,10.5315359 17.5053177,11.8356243 L17.5,12 L17.5,19 C17.5,20.3807119 18.6192881,21.5 20,21.5 L20,21.5 L27,21.5 L27,23 C27,24.6568542 25.6568542,26 24,26 L8,26 C6.34314575,26 5,24.6568542 5,23 L5,9 C5,7.34314575 6.34314575,6 8,6 L24,6 Z" opacity="0.600000024"></path>
+                            <path d="M28,11 C28.5522847,11 29,11.4477153 29,12 L29,12 L29,19 C29,19.5522847 28.5522847,20 28,20 L28,20 L20,20 C19.4477153,20 19,19.5522847 19,19 L19,19 L19,12 C19,11.4477153 19.4477153,11 20,11 L20,11 Z M23.5,13 C22.6715729,13 22,13.6715729 22,14.5 C22,15.3284271 22.6715729,16 23.5,16 C24.3284271,16 25,15.3284271 25,14.5 C25,13.6715729 24.3284271,13 23.5,13 Z" opacity="0.900000036"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

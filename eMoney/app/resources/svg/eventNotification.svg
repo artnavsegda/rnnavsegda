@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="46px" height="46px" viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>eventNotification</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="005-1.-Уведомления" transform="translate(-7.000000, -117.000000)">
+            <g id="Group-29" transform="translate(7.000000, 110.000000)">
+                <g id="eventNotification" transform="translate(0.000000, 7.000000)">
+                    <rect id="Rectangle" fill="#2DC376" x="0" y="0" width="46" height="46" rx="16"></rect>
+                    <circle id="Oval" stroke="#FFFFFF" stroke-width="2.33333333" opacity="0.5" cx="12.5" cy="11.5" r="3.5"></circle>
+                    <polygon id="Star" fill="#FFFFFF" transform="translate(23.000000, 23.000000) rotate(8.000000) translate(-23.000000, -23.000000) " points="23 29 15.946577 32.7082039 17.2936609 24.854102 11.5873218 19.2917961 19.4732885 18.145898 23 11 26.5267115 18.145898 34.4126782 19.2917961 28.7063391 24.854102 30.053423 32.7082039"></polygon>
+                    <path d="M37.7692308,28 L37.769,32.23 L42,32.2307692 L42,34.7692308 L37.769,34.769 L37.7692308,39 L35.2307692,39 L35.23,34.769 L31,34.7692308 L31,32.2307692 L35.23,32.23 L35.2307692,28 L37.7692308,28 Z" id="Combined-Shape" fill="#FFFFFF" opacity="0.5"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
